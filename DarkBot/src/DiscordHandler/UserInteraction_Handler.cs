@@ -18,21 +18,25 @@ namespace DarkBot.src.Handler
 
             switch (selectedOption)
             {
-                case "ticketPokecoinDropdown":
-                case "ticketStardustDropdown":
-                case "ticketXpDropdown":
+                case "dd_TicketPokecoins":
+                case "dd_TicketStardust":
+                case "dd_TicketXp":
                     Ticket_Handler.HandlePoGoTickets(e, selectedOption);
                     break;
-                case "ticketSupportDropdown":
-                case "ticketUnbanDropdown":
-                case "ticketDonationDropdown":
-                case "ticketOwnerDropdown":
-                case "ticketApplyDropdown":
+                case "dd_TicketSupport":
+                case "dd_TicketUnban":
+                case "dd_TicketDonation":
+                case "dd_TicketOwner":
+                case "dd_TicketApplication":
                     Ticket_Handler.HandleGeneralTickets(e, selectedOption);
                     break;
                 case "dd_RolePokemonGo":
                 case "dd_RoleGamer":
                     AutoRole_Handler.GiveRoleToUser(e, selectedOption);
+                    break;
+
+                default:
+                    await e.Channel.SendMessageAsync("Error occured in RespondToInteraction(). No Respond Handler Method found");
                     break;
             }
 

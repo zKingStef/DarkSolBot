@@ -4,7 +4,7 @@ using DSharpPlus.Entities;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
 
-namespace DarkBot.src.Handler
+namespace DarkBot.src.CommandHandler
 {
     public class Ticket_Handler
     {
@@ -13,8 +13,7 @@ namespace DarkBot.src.Handler
             DiscordMember? user = e.User as DiscordMember;
             DiscordGuild guild = e.Guild;
 
-            var category = guild.GetChannel(1207086767623381092) as DiscordChannel;
-            if (category == null || category.Type != ChannelType.Category)
+            if (guild.GetChannel(1207086767623381092) is not DiscordChannel category || category.Type != ChannelType.Category)
             {
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().WithContent("Fehler beim Erstellen des Tickets: Eine Kategorie für Tickets konnte nicht gefunden werden.").AsEphemeral(true));
@@ -25,12 +24,11 @@ namespace DarkBot.src.Handler
                 {
                     new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
                     new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-
                 };
 
             DiscordChannel channel = await guild.CreateTextChannelAsync($"{e.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
 
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent(($"Dein neues Ticket ({channel.Mention}) wurde erstellt!")).AsEphemeral(true));
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Dein neues Ticket ({channel.Mention}) wurde erstellt!").AsEphemeral(true));
 
             var closeButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeTicketButton", "🔒 Close Ticket");
 
@@ -76,8 +74,7 @@ namespace DarkBot.src.Handler
             DiscordMember? user = e.User as DiscordMember;
             DiscordGuild guild = e.Guild;
 
-            var category = guild.GetChannel(1207086767623381092) as DiscordChannel;
-            if (category == null || category.Type != ChannelType.Category)
+            if (guild.GetChannel(1207086767623381092) is not DiscordChannel category || category.Type != ChannelType.Category)
             {
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().WithContent("Fehler beim Erstellen des Tickets: Eine Kategorie für Tickets konnte nicht gefunden werden.").AsEphemeral(true));
@@ -92,7 +89,7 @@ namespace DarkBot.src.Handler
 
             DiscordChannel channel = await guild.CreateTextChannelAsync($"{e.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
 
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent(($"Dein neues Ticket ({channel.Mention}) wurde erstellt!")).AsEphemeral(true));
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Dein neues Ticket ({channel.Mention}) wurde erstellt!").AsEphemeral(true));
 
             var closeButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeTicketButton", "🔒 Ticket schließen");
 
@@ -103,29 +100,29 @@ namespace DarkBot.src.Handler
 
             switch (ttype)
             {
-                case "ticketSupportDropdown":
+                case "dd_TicketSupport":
                     ticketDesc = "**Beachte:** Bitte beschreibe dein Problem mit ein paar Worten, " +
                                  "damit wir schnellstmöglich auf dein Ticket reagieren können, um " +
                                  "dein Anliegen schnellstmöglich zu lösen.";
                     ticketTitle = "Support Ticket";
                     break;
-                case "ticketUnbanDropdown":
+                case "dd_TicketUnban":
                     ticketDesc = "Bitte schreib folgende Informationen ins Ticket:\n" +
                                  "- Ingame Namen: \n" +
                                  "- Ban ID: \n" +
                                  "- Grund für die Entbannung";
                     ticketTitle = "Entbannungsantrag";
                     break;
-                case "ticketDonationDropdown":
+                case "dd_TicketDonation":
                     ticketDesc = "**Spenden sind freiwillig und keinesfalls Pflicht.**";
                     ticketTitle = "Spende";
                     break;
-                case "ticketOwnerDropdown":
+                case "dd_TicketOwner":
                     ticketDesc = "**Beachte:** Dieses Ticket geht direkt an den Inhaber und kann auch nur von ihm bearbeitet werden. " +
                                  "Eine höhere Wartzeit als bei normalen Tickets ist zu erwarten.";
                     ticketTitle = "Inhaber Anfrage";
                     break;
-                case "ticketApplyDropdown":
+                case "dd_TicketApplication":
                     ticketDesc = "**Beachte:** Bitte schreib erstmal ein paar Worte zu deiner Person " +
                                  "(Wer bist du ? Wie alt ?) und als was du dich bewerben möchtest?\n";
                     ticketTitle = "Teambewerbung";

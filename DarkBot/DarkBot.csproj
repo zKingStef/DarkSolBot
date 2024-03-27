@@ -15,6 +15,13 @@
     <PackageIcon></PackageIcon>
     <PackageReadmeFile></PackageReadmeFile>
     <PackAsTool>False</PackAsTool>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Version>1.0</Version>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -26,7 +33,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
     <DebugType>portable</DebugType>
-    <WarningLevel>9999</WarningLevel>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

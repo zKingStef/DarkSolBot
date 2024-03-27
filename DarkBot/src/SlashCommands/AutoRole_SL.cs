@@ -13,7 +13,7 @@ namespace DarkBot.src.SlashCommands
     public class AutoRole_SL : ApplicationCommandModule
     {
         [SlashCommand("autorole", "Erschaffe das automatische Rollensystem")]
-        public async Task AutomatedRoleSystem(InteractionContext ctx)
+        public static async Task AutomatedRoleSystem(InteractionContext ctx)
         {
             if (!CmdShortener.CheckPermissions(ctx, Permissions.Administrator))
             {
@@ -23,13 +23,13 @@ namespace DarkBot.src.SlashCommands
 
             var options = new List<DiscordSelectComponentOption>()
                 {
-                    new DiscordSelectComponentOption(
+                    new (
                         "Pokemon Go",
                         "dd_RolePokemonGo",
                         "Access to all Pokemon Go related Channels!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":PokemonGo:"))),
 
-                    new DiscordSelectComponentOption(
+                    new (
                         "Gamer",
                         "dd_RoleGamer",
                         "Access to all Gaming Channels",

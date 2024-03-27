@@ -18,7 +18,7 @@ namespace DarkBot
     {
         private static DiscordClient Client { get; set; }
         private IServiceProvider Services { get; }
-        private static EventId EventId { get; } = new EventId(1000, Program.Settings.Name);
+        private static EventId EventId { get; } = new (1000, Program.Settings.Name);
         private CommandsNextExtension Commands { get; }
         private InteractivityExtension Interactivity { get; }
         private VoiceNextExtension Voice { get; }
@@ -100,8 +100,9 @@ namespace DarkBot
         {
             var slash = Client.UseSlashCommands();
 
-            //slash.RegisterCommands<FunSL>(); // 1076192773776081029 GuildID
-            //slash.RegisterCommands<ModSL>();
+            slash.RegisterCommands<Troll_SL>(); // 1076192773776081029 GuildID
+            slash.RegisterCommands<Moderation_SL>();
+            slash.RegisterCommands<Poll_SL>();
             //slash.RegisterCommands<BasicSL>();
             slash.RegisterCommands<Ticket_SL>();
             //slash.RegisterCommands<GiveawaySL>();
@@ -110,7 +111,7 @@ namespace DarkBot
             //slash.RegisterCommands<CasinoSL>();
             //slash.RegisterCommands<MusicBotSL>();
             slash.RegisterCommands<AutoRole_SL>();
-            //slash.RegisterCommands<GameSL>();
+            slash.RegisterCommands<MiniGame_SL>();
             //slash.SlashCommandErrored += SlashCommand_Errored;
         }
 
