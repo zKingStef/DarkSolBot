@@ -40,17 +40,17 @@ namespace DarkBot.src.CommandHandler
 
             switch (ttype)
             {
-                case "ticketPokecoinDropdown":
+                case "dd_TicketPokecoins":
                     ticketDesc = "**Attention:** Please tell me the Amount of Pokecoins you want to order and what payment method you will be using.";
                     ticketTitle = "Pokecoin";
                     embedColor = DiscordColor.Yellow;
                     break;
-                case "ticketStardustDropdown":
+                case "dd_TicketStardust":
                     ticketDesc = "**[!]** Please tell me the Amount of **Stardust** you want to order and what payment method you will be using.\n";
                     ticketTitle = "Stardust";
                     embedColor = DiscordColor.HotPink;
                     break;
-                case "ticketXpDropdown":
+                case "dd_TicketXp":
                     ticketDesc = "**[!]** Please tell me if you want the 5 Hour XP Service or if you are looking for something else ?";
                     ticketTitle = "XP";
                     embedColor = DiscordColor.Blue;

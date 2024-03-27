@@ -14,6 +14,7 @@ using DarkBot.src.Common;
 
 namespace DarkBot.src.SlashCommands
 {
+    [SlashCommandGroup("ticket", "Slash Commands for the Ticketsystem.")]
     public class Ticket_SL : ApplicationCommandModule
     {
         [SlashCommand("system", "Erschaffe das Ticketsystem mit Buttons oder Dropdown Menu :)")]
