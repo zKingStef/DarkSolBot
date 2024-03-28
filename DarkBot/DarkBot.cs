@@ -106,7 +106,7 @@ namespace DarkBot
             //slash.RegisterCommands<BasicSL>();
             slash.RegisterCommands<Ticket_SL>();
             //slash.RegisterCommands<GiveawaySL>();
-            //slash.RegisterCommands<CalculatorSL>();
+            slash.RegisterCommands<Calculator_SL>();
             //slash.RegisterCommands<ImageSL>();
             //slash.RegisterCommands<CasinoSL>();
             //slash.RegisterCommands<MusicBotSL>();

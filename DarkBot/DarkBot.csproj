@@ -13,7 +13,7 @@
     <Product>DarkBot</Product>
     <Description>DiscordBot written in C#</Description>
     <PackageIcon></PackageIcon>
-    <PackageReadmeFile></PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackAsTool>False</PackAsTool>
     <NoWin32Manifest>true</NoWin32Manifest>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,6 +43,13 @@
 
   <ItemGroup>
     <Folder Include="src\PrefixCommands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

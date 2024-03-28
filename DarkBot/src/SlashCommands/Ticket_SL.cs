@@ -55,36 +55,26 @@ namespace DarkBot.src.SlashCommands
 
             else if (systemChoice == 1)
             {
-                var options = new List<DiscordSelectComponentOption>()
+                var dropdownComponents = new List<DiscordSelectComponentOption>()
                 {
                     new(
-                        "Support",
-                        "dd_TicketSupport",
-                        "Allgemeine Probleme, Fragen, Wünsche und sonstiges!",
+                        "Support", "dd_TicketSupport", "Allgemeine Probleme, Fragen, Wünsche und sonstiges!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":envelope:"))),
 
                     new(
-                        "Entbannung",
-                        "dd_TicketUnban",
-                        "Duskutiere über einen Bann!",
+                        "Entbannung", "dd_TicketUnban", "Duskutiere über einen Bann!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":tickets:"))),
 
                     new(
-                        "Spenden",
-                        "dd_TicketDonation",
-                        "Ticket für Donations!",
+                        "Spenden", "dd_TicketDonation", "Ticket für Donations!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":moneybag:"))),
 
                     new(
-                        "Inhaber",
-                        "dd_TicketOwner",
-                        "Dieses Ticket geht speziell an den Inhaber des Servers!",
+                        "Inhaber", "dd_TicketOwner", "Dieses Ticket geht speziell an den Inhaber des Servers!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":factory_worker:"))),
 
                     new(
-                        "Bewerben",
-                        "dd_TicketApplication",
-                        "Bewerbung für das Team!",
+                        "Bewerben", "dd_TicketApplication", "Bewerbung für das Team!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":writing_hand:")))
                 };
 
@@ -114,24 +104,18 @@ namespace DarkBot.src.SlashCommands
                 return;
             }
 
-            var options = new List<DiscordSelectComponentOption>()
+            var dropdownComponents = new List<DiscordSelectComponentOption>()
                 {
                     new(
-                        "Pokecoins",
-                        "dd_TicketPokecoins",
-                        "Order a Pokecoin Service!",
+                        "Pokecoins", "dd_TicketPokecoins", "Order a Pokecoin Service!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Pokecoin1:"))),
 
                     new(
-                        "Stardust",
-                        "dd_TicketStardust",
-                        "Order a Stardust Service!",
+                        "Stardust", "dd_TicketStardust", "Order a Stardust Service!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Stardust:"))),
 
                     new(
-                        "XP",
-                        "dd_TicketXp",
-                        "Order a XP Service!",
+                        "XP", "dd_TicketXp", "Order a XP Service!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Level40:")))
                 };
 
