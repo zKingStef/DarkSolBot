@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext.Attributes;
 using Newtonsoft.Json;
+using DarkBot.src.Common;
 
 namespace DarkBot.src.SlashCommands
 {
@@ -31,9 +32,10 @@ namespace DarkBot.src.SlashCommands
                 new DiscordInteractionResponseBuilder().AddEmbed(embedBuilder.Build()));
         }
 
+
         [SlashCommand("avatar", "Zeigt die Avatar-URL eines Users an")]
-        [Aliases("profilbild")]
-        public async Task AvatarCommand(InteractionContext ctx, [Option("user", "Der User, dessen Avatar angezeigt werden soll")] DiscordUser user = null)
+        public static async Task Avatar(InteractionContext ctx, 
+                                [Option("user", "Der User, dessen Avatar angezeigt werden soll")] DiscordUser? user = null)
         {
             var targetUser = user ?? ctx.User;
 
@@ -51,7 +53,6 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("server", "Zeigt Informationen zum Server an")]
-        [Aliases("info", "serverinfo")]
         public async Task ServerEmbed(InteractionContext ctx)
         {
             string serverDescription = $"**Servername:** {ctx.Guild.Name}\n" +
@@ -75,6 +76,7 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("currencytable", "Show Currency")]
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task StatsCommand(InteractionContext ctx)
         {
             if (!ctx.Member.Roles.Any(r => r.Name == "Techniker"))
@@ -94,16 +96,12 @@ namespace DarkBot.src.SlashCommands
             var sb = new StringBuilder();
 
             sb.AppendLine("```md");
-            sb.AppendLine("# Username        | Gesammelt  | Abgabe  | Kurs  | Betrag");
+            sb.AppendLine("# Service        | OriginalPrice  | DarkPrice  | LyraPrice  | Profit");
             sb.AppendLine("--------------------------------------------------------");
 
             foreach (UserData user in allUsers)
             {
-                decimal abgabe = user.Legendentitel ? 0 : GlobalAbgabe;
-                string legendentitelMarkierung = user.Legendentitel ? "*" : "";
-                decimal betrag = (user.Gesammelt - (user.Legendentitel ? 0 : abgabe)) * GlobalKurs;
-
-                sb.AppendLine($"  {user.Name + legendentitelMarkierung,-14} | {user.Gesammelt,-10:F0} | {abgabe,-7} | {GlobalKurs,-5} | {betrag,-7:F0}");
+                sb.AppendLine($"  {user.Service + user.OriginalPrice,-14} | {user.DarkPrice,-10:F0} | {user.LyraPrice,-7} | {5,-5} | {user.Profit,-7:F0}");
             }
 
             sb.AppendLine("```");
@@ -113,7 +111,7 @@ namespace DarkBot.src.SlashCommands
             await ctx.CreateResponseAsync(embed: embed);
         }
 
-        private UserData[] ReadAllUsers()
+        private static UserData[] ReadAllUsers()
         {
             if (File.Exists(JsonFilePath))
             {
@@ -121,16 +119,16 @@ namespace DarkBot.src.SlashCommands
                 return JsonConvert.DeserializeObject<UserData[]>(json);
             }
 
-            return new UserData[0];
+            return [];
         }
     }
     public class UserData
     {
-        public string Name { get; set; }
-        public decimal Gesammelt { get; set; }
-        public decimal Betrag { get; set; }
-        public bool Legendentitel { get; set; }
-        public bool Checked { get; set; }
+        public string Service { get; set; }
+        public decimal OriginalPrice { get; set; }
+        public decimal DarkPrice { get; set; }
+        public decimal LyraPrice { get; set; }
+        public decimal Profit { get; set; }
     }
 
     

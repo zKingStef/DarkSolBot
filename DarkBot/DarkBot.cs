@@ -1,4 +1,5 @@
 ﻿using DarkBot.src.Handler;
+using DarkBot.src.PrefixCommands;
 using DarkBot.src.SlashCommands;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -11,6 +12,7 @@ using DSharpPlus.SlashCommands;
 using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DarkBot
 {
@@ -61,12 +63,14 @@ namespace DarkBot
                 Services = Services,
                 PrefixResolver = PrefixResolverAsync, // Set the command prefix that will be used by the bot
                 EnableMentionPrefix = true,
-                EnableDms = true,
+                EnableDms = false,
                 EnableDefaultHelp = true,
             });
             //Commands.CommandExecuted += Command_Executed;
             //Commands.CommandErrored += Command_Errored;
             //Commands.SetHelpFormatter<HelpFormatter>();
+
+            //Commands.RegisterCommands<Misc_PX>();
 
             //4. Set the default timeout for Commands that use interactivity
             Interactivity = Client.UseInteractivity(new InteractivityConfiguration
@@ -81,56 +85,49 @@ namespace DarkBot
                 EnableIncoming = true
             });
 
-            // Register Slash/Prefix Commands
-            RegisterSlashCommands(Client);
 
-            Client.ComponentInteractionCreated += UserInteractionHandler;
+            Slash = Client.UseSlashCommands();
+            Client.GetSlashCommands();
+            Slash.RegisterCommands<AutoRole_SL>();
+            Slash.RegisterCommands<Calculator_SL>();
+            Slash.RegisterCommands<ImgFinder_SL>();
+            Slash.RegisterCommands<MiniGame_SL>();
+            Slash.RegisterCommands<Misc_SL>();
+            Slash.RegisterCommands<Moderation_SL>();
+            Slash.RegisterCommands<Poll_SL>();
+            Slash.RegisterCommands<Ticket_SL>();
+            Slash.RegisterCommands<Troll_SL>();
+            Slash.SlashCommandErrored += SlashCommandErrored;
+
+            Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;
 
             // Start the uptime counter
             Console.Title = $"{settings.Name}-{settings.Version}";
             settings.ProcessStarted = DateTime.Now;
+
+            Task.Delay(-1);
         }
 
-        private static async Task UserInteractionHandler(DiscordClient sender, DSharpPlus.EventArgs.ComponentInteractionCreateEventArgs e)
+        public Task SlashCommandErrored(SlashCommandsExtension sender, DSharpPlus.SlashCommands.EventArgs.SlashCommandErrorEventArgs e)
         {
-            await UserInteraction_Handler.RespondToInteraction(e);
+            Client.Logger.LogError(EventId, "SlashCommand did not execute...");
+            Client.Logger.LogError(EventId, $"Exception: {e.Exception}");
+            return Task.CompletedTask;
         }
 
-        private static void RegisterSlashCommands(DiscordClient Client)
+        public static async Task RunAsync()
         {
-            var slash = Client.UseSlashCommands();
-
-            slash.RegisterCommands<Troll_SL>(); // 1076192773776081029 GuildID
-            slash.RegisterCommands<Moderation_SL>();
-            slash.RegisterCommands<Poll_SL>();
-            //slash.RegisterCommands<BasicSL>();
-            slash.RegisterCommands<Ticket_SL>();
-            //slash.RegisterCommands<GiveawaySL>();
-            slash.RegisterCommands<Calculator_SL>();
-            //slash.RegisterCommands<ImageSL>();
-            //slash.RegisterCommands<CasinoSL>();
-            //slash.RegisterCommands<MusicBotSL>();
-            slash.RegisterCommands<AutoRole_SL>();
-            slash.RegisterCommands<MiniGame_SL>();
-            //slash.SlashCommandErrored += SlashCommand_Errored;
-        }
-
-        public async Task RunAsync()
-        {
-            // Update any other services that are being used.
-            Client.Logger.LogInformation(EventId, "Bot wird gestartet...");
-
             // Set the initial activity and connect the bot to Discord
-            var act = new DiscordActivity("zKingStef", ActivityType.ListeningTo);
+            var act = new DiscordActivity("Hacking", ActivityType.Competing);
             await Client.ConnectAsync(act, UserStatus.DoNotDisturb).ConfigureAwait(false);
         }
 
-        public async Task StopAsync()
+        public static async Task StopAsync()
         {
             await Client.DisconnectAsync().ConfigureAwait(false);
         }
 
-        private static Task<int> PrefixResolverAsync(DiscordMessage m)
+        private Task<int> PrefixResolverAsync(DiscordMessage m)
         {
             return Task.FromResult(m.GetStringPrefixLength(Program.Settings.Prefix));
         }

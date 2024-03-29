@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DarkBot.src.CommandHandler
 {
-    public static class AutoRole_Handler
+    public class AutoRole_Handler
     {
         public static async void GiveRoleToUser(ComponentInteractionCreateEventArgs e, string rolename)
         {
@@ -26,8 +26,8 @@ namespace DarkBot.src.CommandHandler
                     roleid = 978346565209042986;
                     role = e.Guild.GetRole(roleid);
                     break;
-                case "dd_Template2":
-                    roleid = 1221805367466528908;
+                case "dd_RoleDarkServices":
+                    roleid = 1222923387937226875;
                     role = e.Guild.GetRole(roleid);
                     break;
             }

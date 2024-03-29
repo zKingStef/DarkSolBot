@@ -12,7 +12,7 @@ namespace DarkBot.src.Handler
 {
     public static class UserInteraction_Handler
     {
-        public static async Task RespondToInteraction(ComponentInteractionCreateEventArgs e)
+        public static async Task HandleInteraction(DiscordClient client, ComponentInteractionCreateEventArgs e)
         {
             var selectedOption = e.Interaction.Data.Values.FirstOrDefault();
 
@@ -23,6 +23,7 @@ namespace DarkBot.src.Handler
                 case "dd_TicketXp":
                     Ticket_Handler.HandlePoGoTickets(e, selectedOption);
                     break;
+                case "dd_TicketDarkServices":
                 case "dd_TicketSupport":
                 case "dd_TicketUnban":
                 case "dd_TicketDonation":
@@ -32,11 +33,11 @@ namespace DarkBot.src.Handler
                     break;
                 case "dd_RolePokemonGo":
                 case "dd_RoleGamer":
+                case "dd_RoleDarkServices":
                     AutoRole_Handler.GiveRoleToUser(e, selectedOption);
                     break;
 
                 default:
-                    await e.Channel.SendMessageAsync("Error occured in RespondToInteraction(). No Respond Handler Method found");
                     break;
             }
 

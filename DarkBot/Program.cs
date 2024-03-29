@@ -39,7 +39,7 @@ namespace DarkBot
                 {
                     var client = new DarkBot(i);
                     Shards.Add(client);
-                    botList.Add(client.RunAsync());
+                    botList.Add(DarkBot.RunAsync());
                     await Task.Delay(7500).ConfigureAwait(false);
                 }
 
@@ -63,7 +63,7 @@ namespace DarkBot
             e.Cancel = true;
 
             foreach (var shard in Shards)
-                shard.StopAsync().GetAwaiter().GetResult();
+                DarkBot.StopAsync().GetAwaiter().GetResult();
 
             CancelTokenSource.Cancel();
         }

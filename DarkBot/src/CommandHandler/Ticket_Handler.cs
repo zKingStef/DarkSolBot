@@ -100,6 +100,11 @@ namespace DarkBot.src.CommandHandler
 
             switch (ttype)
             {
+                case "dd_TicketDarkServices":
+                    ticketDesc = "Please give us following Information:, " +
+                                 "- Which Service are you interested in ?\n What Payment Method will you be using ?";
+                    ticketTitle = "Dark Services";
+                    break;
                 case "dd_TicketSupport":
                     ticketDesc = "**Beachte:** Bitte beschreibe dein Problem mit ein paar Worten, " +
                                  "damit wir schnellstmöglich auf dein Ticket reagieren können, um " +

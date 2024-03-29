@@ -21,22 +21,24 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("rockpaper", "Play a game of Rock-Paper-Scissors against the Bot.")]
-        [Cooldown(1, 3, CooldownBucketType.Channel)]
+        [Cooldown(1, 3, CooldownBucketType.Global)]
         public async Task SSP(InteractionContext ctx,
                              [Choice("Scissors", "Scissors")]
                              [Choice("Rock", "Rock")]
                              [Choice("Paper", "Paper")]
                              [Option("Auswahl", "Rock/Paper/Scissors")] string choice)
         {
-            string[] choices = new string[3] { "Rock", "Paper", "Scissors" };
+            string[] choices = { "Rock", "Paper", "Scissors" };
 
-            Random rnd = new Random();
+            Random rnd = new();
             int n = rnd.Next(0, 12);
             if (n > 2)
-            { n %= 3; }
+            {
+                n %= 3;
+            }
             //the resulting win
-            string[] resultStr = [$"**{ctx.User.Username}** won"/* 0 */, "It's a **Tie**" /* 1 */ , "Haha, you lost" /* 2 */];
-            //emded for the winning result
+            string[] resultStr = { $"**{ctx.User.Username}** won", "It's a **Tie**", "Haha, you lost" };
+            //embed for the winning result
             var resultEmbed = new DiscordEmbedBuilder { Title = "Rock-Paper-Scissors" };
             StringBuilder resultSb = new();
 
@@ -61,7 +63,8 @@ namespace DarkBot.src.SlashCommands
                     break;
             }
 
-            await ctx.Channel.SendMessageAsync(embed: resultEmbed.Build()).ConfigureAwait(false);
+            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(resultEmbed.Build())).ConfigureAwait(false);
+
         }
     }
 }

@@ -15,7 +15,8 @@ namespace DarkBot.src.SlashCommands
 	public class Poll_SL : ApplicationCommandModule
 	{
         [SlashCommand("poll", "Start a poll")]
-        public static async Task Poll(InteractionContext ctx,
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
+        public  async Task Poll(InteractionContext ctx,
                         [Option("Title", "Poll Title")] string pollTitle,
                         [Option("Time", "Poll Time in Minutes")] long pollTime,
                         [Option("option1", "Option 1")] string option1,

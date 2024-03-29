@@ -18,9 +18,8 @@ namespace DarkBot.src.SlashCommands
     public class Ticket_SL : ApplicationCommandModule
     {
         [SlashCommand("system", "Erschaffe das Ticketsystem mit Buttons oder Dropdown Menu :)")]
-        [RequireBotPermissions(DSharpPlus.Permissions.Administrator, true)]
-        [RequireUserPermissions(DSharpPlus.Permissions.Administrator, true)]
-        public static async Task Ticketsystem(InteractionContext ctx,
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
+        public  async Task Ticketsystem(InteractionContext ctx,
                                 [Choice("Button", 0)]
                                 [Choice("Dropdown Menu", 1)]
                                 [Option("system", "Buttons oder Dropdown")] long systemChoice = 1)
@@ -42,11 +41,12 @@ namespace DarkBot.src.SlashCommands
                 )
                 .AddComponents(new DiscordComponent[]
                 {
-                    new DiscordButtonComponent(ButtonStyle.Success, "ticketSupportButton", "Support"),
-                    new DiscordButtonComponent(ButtonStyle.Danger, "ticketUnbanButton", "Entbannung"),
-                    new DiscordButtonComponent(ButtonStyle.Primary, "ticketDonationButton", "Spenden"),
-                    new DiscordButtonComponent(ButtonStyle.Secondary, "ticketOwnerButton", "Inhaber"),
-                    new DiscordButtonComponent(ButtonStyle.Success, "ticketApplyButton", "Bewerben")
+                    new DiscordButtonComponent(ButtonStyle.Success, "ticketDarkServiceBtn", "Support"),
+                    //new DiscordButtonComponent(ButtonStyle.Success, "ticketSupportBtn", "Support"),
+                    //new DiscordButtonComponent(ButtonStyle.Danger, "ticketUnbanBtn", "Entbannung"),
+                    //new DiscordButtonComponent(ButtonStyle.Primary, "ticketDonationBtn", "Spenden"),
+                    //new DiscordButtonComponent(ButtonStyle.Secondary, "ticketOwnerBtn", "Inhaber"),
+                    //new DiscordButtonComponent(ButtonStyle.Success, "ticketApplyBtn", "Bewerben")
                 });
 
                 var response = new DiscordInteractionResponseBuilder().AddEmbed(embedTicketButtons.Embeds[0]).AddComponents(embedTicketButtons.Components);
@@ -58,45 +58,50 @@ namespace DarkBot.src.SlashCommands
                 var dropdownComponents = new List<DiscordSelectComponentOption>()
                 {
                     new(
-                        "Support", "dd_TicketSupport", "Allgemeine Probleme, Fragen, Wünsche und sonstiges!",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":envelope:"))),
+                        "Dark Services", "dd_TicketDarkServices", "Order any Service here!",
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":DarkServices:"))),
 
-                    new(
-                        "Entbannung", "dd_TicketUnban", "Duskutiere über einen Bann!",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":tickets:"))),
-
-                    new(
-                        "Spenden", "dd_TicketDonation", "Ticket für Donations!",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":moneybag:"))),
-
-                    new(
-                        "Inhaber", "dd_TicketOwner", "Dieses Ticket geht speziell an den Inhaber des Servers!",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":factory_worker:"))),
-
-                    new(
-                        "Bewerben", "dd_TicketApplication", "Bewerbung für das Team!",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":writing_hand:")))
+                    //new(
+                    //    "Support", "dd_TicketSupport", "Allgemeine Probleme, Fragen, Wünsche und sonstiges!",
+                    //    emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":envelope:"))),
+                    //
+                    //new(
+                    //    "Entbannung", "dd_TicketUnban", "Duskutiere über einen Bann!",
+                    //    emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":tickets:"))),
+                    //
+                    //new(
+                    //    "Spenden", "dd_TicketDonation", "Ticket für Donations!",
+                    //    emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":moneybag:"))),
+                    //
+                    //new(
+                    //    "Inhaber", "dd_TicketOwner", "Dieses Ticket geht speziell an den Inhaber des Servers!",
+                    //    emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":factory_worker:"))),
+                    //
+                    //new(
+                    //    "Bewerben", "dd_TicketApplication", "Bewerbung für das Team!",
+                    //    emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":writing_hand:")))
                 };
 
-                var ticketDropdown = new DiscordSelectComponent("ticketDropdown", "Wähle eine passende Kategorie aus", options, false, 0, 1);
+                var ticketDropdown = new DiscordSelectComponent("ticketDropdown", "Open your Ticket here...", dropdownComponents, false, 0, 1);
 
                 var embedTicketDropdown = new DiscordMessageBuilder()
                     .AddEmbed(new DiscordEmbedBuilder()
 
                     .WithColor(DiscordColor.Goldenrod)
                     .WithTitle("**Ticketsystem**")
-                    .WithDescription("Öffne das Dropdown Menü und wähle eine passende Kategorie aus, um ein Ticket deiner Wahl zu erstellen")
+                    .WithDescription("Open the Dropdown Menu and click on the Category that you want to create a Ticket of")
                     )
                     .AddComponents(ticketDropdown);
 
-                await CmdShortener.SendAsEphemeral(ctx, "Ticketsystem erfolgreich geladen.");
+                await CmdShortener.SendAsEphemeral(ctx, "Ticketsystem loaded...");
 
                 await ctx.Channel.SendMessageAsync(embedTicketDropdown);
             }
         }
 
         [SlashCommand("pogosystem", "Erschaffe das Ticketsystem für Pokemon Go")]
-        public static async Task TicketsystemPOGO(InteractionContext ctx)
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
+        public async Task TicketsystemPOGO(InteractionContext ctx)
         {
             if (!CmdShortener.CheckPermissions(ctx, Permissions.Administrator))
             {
@@ -119,7 +124,7 @@ namespace DarkBot.src.SlashCommands
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Level40:")))
                 };
 
-            var ticketDropdown = new DiscordSelectComponent("ticketDropdown", "Choose a Ticket", options, false, 0, 1);
+            var ticketDropdown = new DiscordSelectComponent("ticketDropdown", "Choose a Ticket", dropdownComponents, false, 0, 1);
 
             var embedTicketDropdown = new DiscordMessageBuilder()
                 .AddEmbed(new DiscordEmbedBuilder()
@@ -137,8 +142,7 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("add", "Add a User to the Ticket")]
-        [RequireBotPermissions(DSharpPlus.Permissions.Administrator, true)]
-        [RequireUserPermissions(DSharpPlus.Permissions.Administrator, true)]
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task Add(InteractionContext ctx,
                              [Option("User", "The user which will be added to the ticket")] DiscordUser user)
         {
@@ -156,8 +160,7 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("remove", "Remove a User from the Ticket")]
-        [RequireBotPermissions(DSharpPlus.Permissions.Administrator, true)]
-        [RequireUserPermissions(DSharpPlus.Permissions.Administrator, true)]
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task Remove(InteractionContext ctx,
                              [Option("User", "The user, which will be removed from the ticket")] DiscordUser user)
         {
@@ -175,8 +178,7 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("rename", "Change the Name of the Ticket")]
-        [RequireBotPermissions(DSharpPlus.Permissions.Administrator, true)]
-        [RequireUserPermissions(DSharpPlus.Permissions.Administrator, true)]
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task Rename(InteractionContext ctx,
                              [Option("Name", "New Name of the Ticket")] string newChannelName)
         {
@@ -198,8 +200,7 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("close", "Close a Ticket")]
-        [RequireBotPermissions(DSharpPlus.Permissions.Administrator, true)]
-        [RequireUserPermissions(DSharpPlus.Permissions.Administrator, true)]
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task Close(InteractionContext ctx)
         {
             await CheckIfChannelIsTicket(ctx);

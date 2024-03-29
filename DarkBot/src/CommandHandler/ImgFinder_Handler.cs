@@ -51,7 +51,7 @@ namespace DarkBot.src.CommandHandler
         /// <returns>
         ///     The <see cref="Task" />.
         /// </returns>
-        public static async Task<string> GetResponseStringAsync(string url, IEnumerable<KeyValuePair<string, string>> headers = null, RequestHttpMethod method = RequestHttpMethod.Get)
+        public static async Task<string> GetResponseStringAsync(string url, IEnumerable<KeyValuePair<string, string>>? headers = null, RequestHttpMethod method = RequestHttpMethod.Get)
         {
             using (var streamReader = new StreamReader(await GetResponseStreamAsync(url, headers, method).ConfigureAwait(false)))
             {
@@ -77,7 +77,7 @@ namespace DarkBot.src.CommandHandler
         /// <exception cref="Exception">
         ///     Throws if incorrect method input.
         /// </exception>
-        private static async Task<Stream> GetResponseStreamAsync(string url, IEnumerable<KeyValuePair<string, string>> headers = null, RequestHttpMethod method = RequestHttpMethod.Get)
+        private static async Task<Stream> GetResponseStreamAsync(string url, IEnumerable<KeyValuePair<string, string>>? headers = null, RequestHttpMethod method = RequestHttpMethod.Get)
         {
             var cl = new HttpClient();
             cl.DefaultRequestHeaders.Clear();

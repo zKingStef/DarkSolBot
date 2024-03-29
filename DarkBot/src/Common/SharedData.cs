@@ -32,40 +32,40 @@ namespace DarkBot.src.Common
 
     public class Tokens
     {
-        [JsonProperty("Discord")] public string DiscordToken { get; set; }
+        [JsonProperty("Discord")] public string? DiscordToken { get; set; }
 
         [JsonProperty("Steam", NullValueHandling = NullValueHandling.Ignore)]
-        public string SteamToken { get; set; }
+        public string? SteamToken { get; set; }
 
         [JsonProperty("Imgur", NullValueHandling = NullValueHandling.Ignore)]
-        public string ImgurToken { get; set; }
+        public string? ImgurToken { get; set; }
 
         [JsonProperty("Pokemon", NullValueHandling = NullValueHandling.Ignore)]
-        public string PokemonToken { get; set; }
+        public string? PokemonToken { get; set; }
 
         [JsonProperty("OMDB", NullValueHandling = NullValueHandling.Ignore)]
-        public string OmdbToken { get; set; }
+        public string? OmdbToken { get; set; }
 
         [JsonProperty("Twitch", NullValueHandling = NullValueHandling.Ignore)]
-        public string TwitchToken { get; set; }
+        public string? TwitchToken { get; set; }
 
         [JsonProperty("TwitchAccess", NullValueHandling = NullValueHandling.Ignore)]
-        public string TwitchAccess { get; set; }
+        public string? TwitchAccess { get; set; }
 
         [JsonProperty("NASA", NullValueHandling = NullValueHandling.Ignore)]
-        public string NasaToken { get; set; }
+        public string? NasaToken { get; set; }
 
         [JsonProperty("TeamworkTF", NullValueHandling = NullValueHandling.Ignore)]
-        public string TeamworkToken { get; set; }
+        public string? TeamworkToken { get; set; }
 
         [JsonProperty("News", NullValueHandling = NullValueHandling.Ignore)]
-        public string NewsToken { get; set; }
+        public string? NewsToken { get; set; }
 
         [JsonProperty("Weather", NullValueHandling = NullValueHandling.Ignore)]
-        public string WeatherToken { get; set; }
+        public string? WeatherToken { get; set; }
 
         [JsonProperty("YouTube", NullValueHandling = NullValueHandling.Ignore)]
-        public string YouTubeToken { get; set; }
+        public string? YouTubeToken { get; set; }
     }
 
     public enum ResponseType

@@ -58,7 +58,8 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("try-to-eur", "Converts Turkish Lira (TRY) to Euro (EUR)")]
-        public async Task ConvertTryToEurAsync(InteractionContext ctx, [Option("amount", "The amount of Turkish Lira to convert")] double amount)
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
+        public async Task ConvertTryToEur(InteractionContext ctx, [Option("amount", "The amount of Turkish Lira to convert")] double amount)
         {
             try
             {
@@ -71,7 +72,7 @@ namespace DarkBot.src.SlashCommands
                         {
                             // JSON-Daten lesen und EUR zu TRY Wechselkurs extrahieren
                             var content = await response.Content.ReadAsStringAsync();
-                            dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                            dynamic? data = Newtonsoft.Json.JsonConvert.DeserializeObject(content);
                             double exchangeRate = data.rates.EUR;
 
                             // Umrechnung durchführen und auf 2 Nachkommastellen runden
