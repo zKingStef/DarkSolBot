@@ -34,16 +34,16 @@ namespace DarkBot.src.SlashCommands
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed.Build()));
         }
 
-        [SlashCommand("server", "Zeigt Informationen zum Server an")]
+        [SlashCommand("server", "Show Server Informations")]
         public async Task ServerEmbed(InteractionContext ctx)
         {
             string serverDescription = $"**Servername:** {ctx.Guild.Name}\n" +
                                         $"**Server ID:** {ctx.Guild.Id}\n" +
-                                        $"**Erstellt am:** {ctx.Guild.CreationTimestamp:dd/M/yyyy}\n" +
+                                        $"**Creation Date:** {ctx.Guild.CreationTimestamp:dd/M/yyyy}\n" +
                                         $"**Owner:** {ctx.Guild.Owner.Mention}\n\n" +
                                         $"**Users:** {ctx.Guild.MemberCount}\n" +
                                         $"**Channels:** {ctx.Guild.Channels.Count}\n" +
-                                        $"**Rollen:** {ctx.Guild.Roles.Count}\n" +
+                                        $"**Roles:** {ctx.Guild.Roles.Count}\n" +
                                         $"**Emojis:** {ctx.Guild.Emojis.Count}";
 
             var serverInformation = new DiscordEmbedBuilder

@@ -17,7 +17,7 @@ namespace DarkBot.src.SlashCommands
     [SlashCommandGroup("ticket", "Slash Commands for the Ticketsystem.")]
     public class Ticket_SL : ApplicationCommandModule
     {
-        [SlashCommand("system", "Erschaffe das Ticketsystem mit Buttons oder Dropdown Menu :)")]
+        [SlashCommand("system", "Summon Ticket System")]
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public  async Task Ticketsystem(InteractionContext ctx,
                                 [Choice("Button", 0)]
