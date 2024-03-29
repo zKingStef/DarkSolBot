@@ -64,39 +64,35 @@ namespace DarkBot.src.SlashCommands
             try
             {
                 // HTTP-Anforderung an die API senden
-                using (var httpClient = new HttpClient())
+                using var httpClient = new HttpClient();
+                using var response = await httpClient.GetAsync(ApiUrl);
+                if (response.IsSuccessStatusCode)
                 {
-                    using (var response = await httpClient.GetAsync(ApiUrl))
+                    // JSON-Daten lesen und EUR zu TRY Wechselkurs extrahieren
+                    var content = await response.Content.ReadAsStringAsync();
+                    dynamic? data = Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                    double exchangeRate = data.rates.EUR;
+
+                    // Umrechnung durchführen und auf 2 Nachkommastellen runden
+                    double result = Math.Round(amount * exchangeRate, 2);
+
+                    // Nachricht mit dem Ergebnis senden
+                    var calculatorEmbed = new DiscordEmbedBuilder
                     {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            // JSON-Daten lesen und EUR zu TRY Wechselkurs extrahieren
-                            var content = await response.Content.ReadAsStringAsync();
-                            dynamic? data = Newtonsoft.Json.JsonConvert.DeserializeObject(content);
-                            double exchangeRate = data.rates.EUR;
+                        Title = "Turkish Lira Converter ",
+                        Color = DiscordColor.CornflowerBlue,
+                        Description = $"**{amount}** TRY is currently equal to **{result}**€."
+                    };
 
-                            // Umrechnung durchführen und auf 2 Nachkommastellen runden
-                            double result = Math.Round(amount * exchangeRate, 2);
-
-                            // Nachricht mit dem Ergebnis senden
-                            var calculatorEmbed = new DiscordEmbedBuilder
-                            {
-                                Title = "Turkish Lira Converter ",
-                                Color = DiscordColor.CornflowerBlue,
-                                Description = $"**{amount}** TRY is currently equal to **{result}**€."
-                            };
-
-                            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(calculatorEmbed.Build()));
-                            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                                new DiscordInteractionResponseBuilder().WithContent($""));
-                        }
-                        else
-                        {
-                            // Fehlermeldung senden, wenn die API-Anfrage fehlschlägt
-                            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                                new DiscordInteractionResponseBuilder().WithContent("Failed to retrieve exchange rate data."));
-                        }
-                    }
+                    await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(calculatorEmbed.Build()));
+                    await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                        new DiscordInteractionResponseBuilder().WithContent($""));
+                }
+                else
+                {
+                    // Fehlermeldung senden, wenn die API-Anfrage fehlschlägt
+                    await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                        new DiscordInteractionResponseBuilder().WithContent("Failed to retrieve exchange rate data."));
                 }
             }
             catch (Exception ex)

@@ -13,9 +13,9 @@ namespace DarkBot.src.SlashCommands
 {
     public class AutoRole_SL : ApplicationCommandModule
     {
-        [SlashCommand("autorole", "Erschaffe das automatische Rollensystem")]
+        [SlashCommand("autorole", "Summon Autorole System")]
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
-        public async Task AutomatedRoleSystem(InteractionContext ctx)
+        public static async Task AutomatedRoleSystem(InteractionContext ctx)
         {
             if (!CmdShortener.CheckPermissions(ctx, Permissions.Administrator))
             {

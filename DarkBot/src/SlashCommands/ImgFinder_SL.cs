@@ -12,9 +12,9 @@ namespace DarkBot.src.SlashCommands
 {
     public class ImgFinder_SL : ApplicationCommandModule
     {
-        [SlashCommand("googlebild", "Google Bild Suche")]
+        [SlashCommand("googlebild", "Google Bild Search")]
         public async Task GoogleImageSearch(InteractionContext ctx,
-                                            [Option("suche", "Nach welchem Bild möchtest du suchen ? ")] string search)
+                                            [Option("search", "Nach welchem Bild möchtest du suchen ? ")] string search)
         {
             var imageUrl = await ImgFinder_Handler.GetImageUrl(search);
             if (!string.IsNullOrEmpty(imageUrl))
@@ -30,15 +30,15 @@ namespace DarkBot.src.SlashCommands
             else
             {
                 await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().WithContent("Keine Bilder gefunden."));
+                    new DiscordInteractionResponseBuilder().WithContent("No Pictures found."));
             }
         }
 
-        [SlashCommand("hund", "Generiere ein zufälliges Bild von einem Hund")]
-        public async Task Hund(InteractionContext ctx)
+        [SlashCommand("dog", "Generate a random dog picture")]
+        public static async Task DogImage(InteractionContext ctx)
         {
             var dog = "http://random.dog/" + await ImgFinder_Handler.GetResponseStringAsync("https://random.dog/woof").ConfigureAwait(false);
-            var embed = new DiscordEmbedBuilder().WithImageUrl(dog).WithTitle("so ein Feini").WithUrl(dog);
+            var embed = new DiscordEmbedBuilder().WithImageUrl(dog).WithTitle("Dog").WithUrl(dog);
 
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed.Build()));
 

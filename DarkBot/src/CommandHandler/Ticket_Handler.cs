@@ -89,7 +89,7 @@ namespace DarkBot.src.CommandHandler
 
             DiscordChannel channel = await guild.CreateTextChannelAsync($"{e.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
 
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Dein neues Ticket ({channel.Mention}) wurde erstellt!").AsEphemeral(true));
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Ticket created: ({channel.Mention})").AsEphemeral(true));
 
             var closeButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeTicketButton", "🔒 Ticket schließen");
 
