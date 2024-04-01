@@ -1,4 +1,5 @@
 ﻿using DarkBot.src.Handler;
+using DarkBot.src.Logs;
 using DarkBot.src.PrefixCommands;
 using DarkBot.src.SlashCommands;
 using DSharpPlus;
@@ -101,6 +102,7 @@ namespace DarkBot
             Slash.SlashCommandErrored += SlashCommandErrored;
 
             Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;
+            Client.GuildMemberAdded += DiscordLogger.Log_JoinLeave;
 
             // Start the uptime counter
             Console.Title = $"{settings.Name}-{settings.Version}";
@@ -108,6 +110,8 @@ namespace DarkBot
 
             Task.Delay(-1);
         }
+
+        
 
         public Task SlashCommandErrored(SlashCommandsExtension sender, DSharpPlus.SlashCommands.EventArgs.SlashCommandErrorEventArgs e)
         {
