@@ -10,7 +10,7 @@ namespace DarkBot.src.CommandHandler
 {
     public class DarkServices_Handler
     {
-        private const string JsonFilePath = "darkservices_data.json";
+        private const string JsonFilePath = "Database\\DarkServices\\darkservices_data.json";
 
         public class ServiceEntry
         {

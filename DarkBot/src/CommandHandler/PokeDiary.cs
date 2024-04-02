@@ -24,7 +24,7 @@ namespace DarkBot.src.CommandHandler
             public string? ImageUrl { get; set; } // URL zum Bild
         }
 
-        public void SaveDailyStats(List<DailyStatsEntry> entries)
+        public static void SaveDailyStats(List<DailyStatsEntry> entries)
         {
             // Erstelle den Dateinamen mit dem heutigen Datum
             string fileName = $"daily_stats_{DateTime.Today:yyyy-MM-dd}.json";
@@ -63,7 +63,7 @@ namespace DarkBot.src.CommandHandler
         public List<DailyStatsEntry> LoadDailyStats()
         {
             // Lade die Statistiken aus der JSON-Datei, falls vorhanden
-            if (File.Exists("daily_stats.json"))
+            if (File.Exists("Database\\PokeDiary\\daily_stats.json"))
             {
                 string json = File.ReadAllText("daily_stats.json");
                 return JsonConvert.DeserializeObject<List<DailyStatsEntry>>(json);
@@ -71,7 +71,7 @@ namespace DarkBot.src.CommandHandler
             else
             {
                 // Falls die Datei nicht existiert, gib eine leere Liste zurück
-                return new List<DailyStatsEntry>();
+                return []; // replaced new List<DailyStatsEntry>();
             }
         }
 

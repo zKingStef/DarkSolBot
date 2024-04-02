@@ -1,6 +1,9 @@
 ﻿using DarkBot.src.CommandHandler;
+using DarkBot.src.Common;
+using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.SlashCommands;
 using System;
 using System.Collections.Generic;
@@ -109,7 +112,6 @@ namespace DarkBot.src.SlashCommands
             }
         }
 
-        [SlashCommand("showallstats", "Show statistics for all days")]
         public async Task ShowAllStats(InteractionContext ctx)
         {
             // Lade alle täglichen Statistiken aus der JSON-Datei
@@ -117,7 +119,8 @@ namespace DarkBot.src.SlashCommands
 
             if (entries.Count == 0)
             {
-                await ctx.CreateResponseAsync("No statistics available.");
+                await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
+                    .WithContent("No statistics available."));
                 return;
             }
 
@@ -126,32 +129,37 @@ namespace DarkBot.src.SlashCommands
 
             // Erstelle die Embed-Nachricht für die erste Seite
             var embed = BuildStatsPageEmbed(entries, currentPageIndex);
-            var message = await ctx.CreateResponseAsync(embed: embed);
+            var components = ButtonPaginator.BuildNavigationButtons(currentPageIndex, totalPages);
+            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                                                    new DiscordInteractionResponseBuilder()
+                                                        .AddEmbed(embed)
+                                                        .AddComponents((IEnumerable<DiscordComponent>)components));
 
-            // Füge die Buttons für die Navigation hinzu
-            await message.CreateComponentsAsync(ButtonPaginator.BuildNavigationButtons(currentPageIndex, totalPages));
 
             // Warte auf Interaktionen mit den Buttons
             ComponentInteractionCreateEventArgs interaction;
 
-            do
-            {
-                interaction = await ctx.WaitForComponentAsync();
-
-                if (interaction != null)
-                {
-                    // Aktualisiere die Seite entsprechend der Button-Interaktion
-                    if (ButtonPaginator.TryNavigate(interaction, ref currentPageIndex, totalPages))
-                    {
-                        // Erstelle und sende die neue Embed-Nachricht für die aktualisierte Seite
-                        embed = BuildStatsPageEmbed(entries, currentPageIndex);
-                        await interaction.UpdateMessageAsync(embed: embed);
-                    }
-                }
-            } while (interaction != null);
+            //// Innerhalb der do-while-Schleife in der ShowAllStats-Methode
+            //do
+            //{
+            //    interaction = await ctx.Client.GetInteractivity().WaitForButtonAsync(interactionResponse.Id, ctx.User);
+            //
+            //    if (interaction != null)
+            //    {
+            //        // Aktualisiere die Seite entsprechend der Button-Interaktion
+            //        if (ButtonPaginator.TryNavigate(interaction, ref currentPageIndex, totalPages))
+            //        {
+            //            // Erstelle und sende die neue Embed-Nachricht für die aktualisierte Seite
+            //            embed = BuildStatsPageEmbed(entries, currentPageIndex);
+            //            components = ButtonPaginator.BuildNavigationButtons(currentPageIndex, totalPages);
+            //            await ctx.Channel.UpdateMessageAsync(interaction.Message.Id, new DiscordMessageBuilder().AddEmbed(embed).AddComponents(components));
+            //        }
+            //    }
+            //} while (interaction != null);
+            //
         }
 
-        private DiscordEmbedBuilder BuildStatsPageEmbed(List<DailyStatsEntry> entries, int pageIndex)
+        private static DiscordEmbedBuilder BuildStatsPageEmbed(List<DailyStatsEntry> entries, int pageIndex)
         {
             var embed = new DiscordEmbedBuilder
             {
