@@ -57,7 +57,7 @@ namespace DarkBot.src.SlashCommands
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(calculatorEmbed.Build()));
         }
 
-        [SlashCommand("try-to-eur", "Converts Turkish Lira (TRY) to Euro (EUR)")]
+        [SlashCommand("try-to-eur", "Converts Turkish Lira (TRY) to Euro (EUR).")]
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task ConvertTryToEur(InteractionContext ctx, [Option("amount", "The amount of Turkish Lira to convert")] double amount)
         {

@@ -242,7 +242,7 @@ namespace DarkBot.src.SlashCommands
             if (ctx.Channel.Parent.Id != categoryId || ctx.Channel.Parent == null)
             {
                 await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().WithContent("´´:warning:´´ **This Command is for Tickets only!**").AsEphemeral(true));
+                    new DiscordInteractionResponseBuilder().WithContent(":warning: **This Command is for Tickets only!**").AsEphemeral(true));
 
                 return true;
             }

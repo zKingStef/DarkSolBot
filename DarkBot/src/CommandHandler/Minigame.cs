@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkBot.src.CommandHandler
 {
-	public class MiniGame_Handler
+	internal class Minigame
 	{
         //rps fucntion returns 0 [Player Won] 1[tie] 2 [Player lost]
         public static int HandleRpsResult(string userChoice, string compChoice) //param: usrChoice of type string 

@@ -1,5 +1,4 @@
 ﻿using DarkBot.src.Handler;
-using DarkBot.src.Logs;
 using DarkBot.src.PrefixCommands;
 using DarkBot.src.SlashCommands;
 using DSharpPlus;
@@ -96,13 +95,14 @@ namespace DarkBot
             Slash.RegisterCommands<MiniGame_SL>();
             Slash.RegisterCommands<Misc_SL>();
             Slash.RegisterCommands<Moderation_SL>();
+            Slash.RegisterCommands<PokeDiary_SL>();
             Slash.RegisterCommands<Poll_SL>();
             Slash.RegisterCommands<Ticket_SL>();
             Slash.RegisterCommands<Troll_SL>();
             Slash.SlashCommandErrored += SlashCommandErrored;
 
             Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;
-            Client.GuildMemberAdded += DiscordLogger.Log_JoinLeave;
+            //Client.GuildMemberAdded += DiscordLogger.Log_JoinLeave;
 
             // Start the uptime counter
             Console.Title = $"{settings.Name}-{settings.Version}";

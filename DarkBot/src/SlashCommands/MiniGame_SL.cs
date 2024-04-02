@@ -44,11 +44,11 @@ namespace DarkBot.src.SlashCommands
 
             resultSb.AppendLine($"{ctx.User.Username} chooses **{choice}**");
             resultSb.AppendLine($"Bot chooses **{choices[n]}**\n");
-            resultSb.AppendLine(resultStr[MiniGame_Handler.HandleRpsResult(choice, choices[n])]);
+            resultSb.AppendLine(resultStr[Minigame.HandleRpsResult(choice, choices[n])]);
 
             resultEmbed.Description = resultSb.ToString();
 
-            switch (MiniGame_Handler.HandleRpsResult(choice, choices[n]))
+            switch (Minigame.HandleRpsResult(choice, choices[n]))
             {
                 case 0:
                     resultEmbed.WithThumbnail(ctx.User.AvatarUrl);

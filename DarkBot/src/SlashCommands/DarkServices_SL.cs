@@ -12,7 +12,7 @@ using static DarkBot.src.CommandHandler.DarkServices_Handler;
 
 namespace DarkBot.src.SlashCommands
 {
-    [SlashCommandGroup("darkservices", "Slash Commands Dark Services.")]
+    [SlashCommandGroup("darkservices", "Slash Commands Dark Services")]
     public class DarkServices_SL : ApplicationCommandModule
     {
         [SlashCommand("table", "Show Dark Services Table.")]

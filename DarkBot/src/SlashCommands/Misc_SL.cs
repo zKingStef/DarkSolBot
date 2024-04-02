@@ -15,9 +15,9 @@ namespace DarkBot.src.SlashCommands
     public class Misc_SL : ApplicationCommandModule
     {
 
-        [SlashCommand("avatar", "Zeigt die Avatar-URL eines Users an")]
+        [SlashCommand("avatar", "Show User Avatar")]
         public static async Task Avatar(InteractionContext ctx,
-                                [Option("user", "Der User, dessen Avatar angezeigt werden soll")] DiscordUser? user = null)
+                                [Option("User", "Choose any User to get their Avatar")] DiscordUser? user = null)
         {
             var targetUser = user ?? ctx.User;
 
