@@ -24,7 +24,7 @@ namespace DarkBot.src.CommandHandler
             public string? ImageUrl { get; set; } // URL zum Bild
         }
 
-        public static void SaveDailyStats(List<DailyStatsEntry> entries)
+        public void SaveDailyStats(DailyStatsEntry entry)
         {
             // Erstelle den Dateinamen mit dem heutigen Datum
             string fileName = $"daily_stats_{DateTime.Today:yyyy-MM-dd}.json";
@@ -34,11 +34,10 @@ namespace DarkBot.src.CommandHandler
             // Erstelle das Verzeichnis, falls es noch nicht existiert
             Directory.CreateDirectory(directoryPath);
 
-            // Speichere die Statistiken in der entsprechenden Datei
-            string json = JsonConvert.SerializeObject(entries, Formatting.Indented);
+            // Speichern des Eintrags in der entsprechenden Datei
+            string json = JsonConvert.SerializeObject(entry, Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
-
 
 
         public async Task<string> SaveImage(DiscordAttachment attachment)
@@ -60,20 +59,48 @@ namespace DarkBot.src.CommandHandler
             return filePath;
         }
 
-        public List<DailyStatsEntry> LoadDailyStats()
+
+        public List<DailyStatsEntry> LoadTodaysStats()
         {
-            // Lade die Statistiken aus der JSON-Datei, falls vorhanden
-            if (File.Exists("Database\\PokeDiary\\daily_stats.json"))
+            // Erstelle den Dateinamen mit dem heutigen Datum
+            string fileName = $"daily_stats_{DateTime.Today:yyyy-MM-dd}.json";
+            string filePath = Path.Combine("Database", "PokeDiary", fileName);
+
+            // Überprüfe, ob die Datei existiert
+            if (File.Exists(filePath))
             {
-                string json = File.ReadAllText("daily_stats.json");
+                // Lade die Statistiken aus der JSON-Datei
+                string json = File.ReadAllText(filePath);
+                return new List<DailyStatsEntry> { JsonConvert.DeserializeObject<DailyStatsEntry>(json) };
+            }
+            else
+            {
+                // Falls die Datei nicht existiert, gibt es keine Statistiken für heute
+                return new List<DailyStatsEntry>();
+            }
+        }
+
+
+        public List<DailyStatsEntry> LoadSpecificStats(string dateString)
+        {
+            // Erstelle den Dateinamen mit dem heutigen Datum
+            string fileName = $"daily_stats_{dateString}.json";
+            string filePath = Path.Combine("Database", "PokeDiary", fileName);
+
+            // Überprüfe, ob die Datei existiert
+            if (File.Exists(filePath))
+            {
+                // Lade die Statistiken aus der JSON-Datei
+                string json = File.ReadAllText(filePath);
                 return JsonConvert.DeserializeObject<List<DailyStatsEntry>>(json);
             }
             else
             {
                 // Falls die Datei nicht existiert, gib eine leere Liste zurück
-                return []; // replaced new List<DailyStatsEntry>();
+                return new List<DailyStatsEntry>();
             }
         }
+
 
 
 
