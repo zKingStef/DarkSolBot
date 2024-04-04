@@ -5,6 +5,7 @@ using DarkBot.src.SlashCommands;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
@@ -104,13 +105,31 @@ namespace DarkBot
             Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;
 
             //Client.ChannelUpdated += DiscordLogger.ChannelUpdate;
-            Client.GuildMemberAdded += DiscordLogger.Log_JoinLeave;
+            Client.GuildMemberAdded += JoinLeaveLogs.UserJoin;
+            Client.GuildMemberRemoved += JoinLeaveLogs.UserLeave;
+            
+
+            Client.UnknownEvent += UnknownEvent;
+
+            Client.InviteCreated += InviteLogs.InviteCreated;
+            Client.InviteDeleted += InviteLogs.InviteDeleted;
+
+            Client.GuildBanAdded += UnBanLogs.UserBanned;
+            Client.GuildBanRemoved += UnBanLogs.UserUnbanned;
 
             // Start the uptime counter
             Console.Title = $"{settings.Name}-{settings.Version}";
             settings.ProcessStarted = DateTime.Now;
 
             Task.Delay(-1);
+        }
+
+
+        private Task UnknownEvent(DiscordClient sender, DSharpPlus.EventArgs.UnknownEventArgs e)
+        {
+            Client.Logger.LogError(EventId, "UnkownEvent occured...");
+            Client.Logger.LogError(EventId, e.EventName);
+            return Task.CompletedTask;
         }
 
         public Task SlashCommandErrored(SlashCommandsExtension sender, DSharpPlus.SlashCommands.EventArgs.SlashCommandErrorEventArgs e)

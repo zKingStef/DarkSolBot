@@ -147,6 +147,7 @@ namespace DarkBot.src.SlashCommands
                 await ctx.CreateResponseAsync("Invalid date format. Please use the format yyyy-MM-dd.");
             }
         }
+
         /*
         [SlashCommand("allstats", "Get all statistics")]
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
