@@ -1,4 +1,6 @@
-﻿using DSharpPlus.Entities;
+﻿using DarkBot.src.Common;
+using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -71,6 +73,5 @@ namespace DarkBot.src.CommandHandler
 
             return embed.Build();
         }
-
     }
 }

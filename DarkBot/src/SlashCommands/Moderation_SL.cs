@@ -15,7 +15,6 @@ namespace DarkBot.src.SlashCommands
 	public class Moderation_SL : ApplicationCommandModule
 	{
         [SlashCommand("clear", "Delete messages from the chat")]
-        [RequireRoles(RoleCheckMode.Any, "Mitarbeiter")]
         public  async Task Clear(InteractionContext ctx,
                                [Option("amount", "Amount of to be deleted messages")] double delNumber)
         {
@@ -66,7 +65,6 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("banid", "Ban a user from the Discord")]
-        [RequireRoles(RoleCheckMode.Any, "Mitarbeiter")]
         [RequireBotPermissions(DSharpPlus.Permissions.Administrator, true)]
         [RequireUserPermissions(DSharpPlus.Permissions.Administrator, true)]
         public  async Task BanId(InteractionContext ctx,
@@ -79,7 +77,6 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("unban", "Unban a user from the Discord. Leave blank to open Banlist")]
-        [RequireRoles(RoleCheckMode.Any, "Mitarbeiter")]
         public  async Task UnbanOrListBans(InteractionContext ctx,
                                    [Option("UserId", "ID of the User")] string? userId = null,
                                    [Option("Grund", "Unban Reason")] string reason = "No Reason")
@@ -90,7 +87,6 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("banlist", "Zeige alle gebannten Spieler")]
-        [RequireRoles(RoleCheckMode.Any, "Mitarbeiter")]
         public  async Task Banlist(InteractionContext ctx)
         {
             await ctx.DeferAsync();
@@ -98,7 +94,6 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("mute", "Setze einen Timeout auf einen Benutzer.")]
-        [RequireRoles(RoleCheckMode.Any, "Mitarbeiter")]
         public  async Task Timeout(InteractionContext ctx,
                           [Option("User", "Der User, der einen Timeout erhalten soll")] DiscordUser user,
                           [Option("Duration", "Dauer des Timeouts in Minuten")] long durationInMinutes,
@@ -109,7 +104,6 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("unmute", "Hebt den Timeout eines Benutzers auf.")]
-        [RequireRoles(RoleCheckMode.Any, "Mitarbeiter")]
         public  async Task RemoveTimeout(InteractionContext ctx,
                                 [Option("User", "Der User, dessen Timeout aufgehoben werden soll")] DiscordUser user,
                                 [Option("Reason", "Grund für die Aufhebung des Timeouts")] string reason = "Kein Grund angegeben")
@@ -119,9 +113,10 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("lock", "Sperrt temporär den Schreibzugriff für alle User.")]
-        [RequireRoles(RoleCheckMode.Any, "Mitarbeiter")]
         public  async Task Lock(InteractionContext ctx)
         {
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
+
             await ctx.DeferAsync();
             await ctx.Channel.AddOverwriteAsync(ctx.Guild.EveryoneRole, Permissions.None, Permissions.SendMessages);
 
@@ -129,9 +124,10 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("unlock", "Gibt einen Channel wieder frei.")]
-        [RequireRoles(RoleCheckMode.Any, "Mitarbeiter")]
         public  async Task Unlock(InteractionContext ctx)
         {
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
+
             await ctx.DeferAsync();
             await ctx.Channel.AddOverwriteAsync(ctx.Guild.EveryoneRole, Permissions.SendMessages, Permissions.None);
 

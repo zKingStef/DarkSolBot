@@ -26,11 +26,7 @@ namespace DarkBot.src.SlashCommands
             var interactivity = ctx.Client.GetInteractivity();
             DateTimeOffset endTime = DateTimeOffset.UtcNow.AddMinutes(pollTime);
 
-            if (!CmdShortener.CheckPermissions(ctx, Permissions.Administrator))
-            {
-                await CmdShortener.SendNotification(ctx, "Error", "You have to be an Administrator to execute this Command.", DiscordColor.Red, 0);
-                return;
-            }
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
             var options = new List<DiscordSelectComponentOption>()
                 {

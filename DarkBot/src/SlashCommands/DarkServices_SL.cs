@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext.Attributes;
+﻿using DarkBot.src.Common;
+using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using Newtonsoft.Json;
@@ -16,14 +17,9 @@ namespace DarkBot.src.SlashCommands
     public class DarkServices_SL : ApplicationCommandModule
     {
         [SlashCommand("table", "Show Dark Services Table.")]
-        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public static async Task CurrencyTable(InteractionContext ctx)
         {
-            if (!ctx.Member.Roles.Any(r => r.Name == "🧰 CEO"))
-            {
-                await ctx.CreateResponseAsync("You need a higher role to execute this command.");
-                return;
-            }
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
             var table = LoadTableFromJson();
             var embed = BuildTableEmbed(table);
@@ -32,14 +28,9 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("addservice", "Add a new service to the table")]
-        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public static async Task AddService(InteractionContext ctx, [Option("service", "The name of the service to add")] string service)
         {
-            if (!ctx.Member.Roles.Any(r => r.Name == "🧰 CEO"))
-            {
-                await ctx.CreateResponseAsync("You need a higher role to execute this command.");
-                return;
-            }
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
             var table = LoadTableFromJson();
 
@@ -52,18 +43,13 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("addentry", "Add a new entry to the table")]
-        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public static async Task AddEntry(InteractionContext ctx,
                                          [Option("service", "The name of the service")] string service,
                                          [Option("price", "The price in Euro")] double price,
                                          [Option("lyraprice", "The price in Turkish Lyra")] double lyraPrice,
                                          [Option("sellprice", "The sell price in Euro")] double sellPrice)
         {
-            if (!ctx.Member.Roles.Any(r => r.Name == "🧰 CEO"))
-            {
-                await ctx.CreateResponseAsync("You need a higher role to execute this command.");
-                return;
-            }
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
             // Calculate profit
             double profit = Math.Round(sellPrice - lyraPrice, 2);
@@ -95,11 +81,7 @@ namespace DarkBot.src.SlashCommands
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public static async Task RemoveService(InteractionContext ctx, [Option("service", "The name of the service to remove")] string service)
         {
-            if (!ctx.Member.Roles.Any(r => r.Name == "🧰 CEO"))
-            {
-                await ctx.CreateResponseAsync("You need a higher role to execute this command.");
-                return;
-            }
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
             var table = LoadTableFromJson();
 
@@ -126,11 +108,7 @@ namespace DarkBot.src.SlashCommands
                                             [Option("lyraprice", "The new Lyra price in Euro")] double? lyraPrice = null,
                                             [Option("sellprice", "The new sell price in Euro")] double? sellPrice = null)
         {
-            if (!ctx.Member.Roles.Any(r => r.Name == "🧰 CEO"))
-            {
-                await ctx.CreateResponseAsync("You need a higher role to execute this command.");
-                return;
-            }
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
             var table = LoadTableFromJson();
 

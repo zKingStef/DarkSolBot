@@ -1,6 +1,7 @@
 ﻿using DarkBot.src.CommandHandler;
 using DarkBot.src.Common;
 using DSharpPlus;
+using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity.Extensions;
@@ -28,6 +29,8 @@ namespace DarkBot.src.SlashCommands
                           [Option("weekly_kilometers", "Kilometers walked in the week")] long weeklyKilometers,
                           [Option("image", "Image attachment")] DiscordAttachment image = null)
         {
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
+
             // Erstellen eines neuen DailyStatsEntry-Objekts
             var entry = new DailyStatsEntry
             {
@@ -144,54 +147,79 @@ namespace DarkBot.src.SlashCommands
                 await ctx.CreateResponseAsync("Invalid date format. Please use the format yyyy-MM-dd.");
             }
         }
-
+        /*
         [SlashCommand("allstats", "Get all statistics")]
+        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task ShowAllStats(InteractionContext ctx)
         {
-            // Lade alle täglichen Statistiken aus der JSON-Datei
-            //List<DailyStatsEntry> entries = ;//LoadTodaysStats""();
-            //
-            //if (entries.Count == 0)
-            //{
-            //    await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
-            //        .WithContent("No statistics available."));
-            //    return;
-            //}
-            //
-            //int currentPageIndex = 0;
-            //int totalPages = (int)Math.Ceiling((double)entries.Count / 5); // Anzahl der Seiten, wobei 5 Einträge pro Seite angezeigt werden
-            //
-            //// Erstelle die Embed-Nachricht für die erste Seite
-            //var embed = BuildStatsPageEmbed(entries, currentPageIndex);
-            //var components = ButtonPaginator.BuildNavigationButtons(currentPageIndex, totalPages);
-            //await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-            //                                        new DiscordInteractionResponseBuilder()
-            //                                            .AddEmbed(embed)
-            //                                            .AddComponents((IEnumerable<DiscordComponent>)components));
-            //
-            //
-            //// Warte auf Interaktionen mit den Buttons
-            //ComponentInteractionCreateEventArgs interaction;
+            await ctx.DeferAsync();
+            
+            // Lade die täglichen Statistiken aus der JSON-Datei
+            List<DailyStatsEntry> entries = LoadTodaysStats();
 
-            //// Innerhalb der do-while-Schleife in der ShowAllStats-Methode
-            //do
-            //{
-            //    interaction = await ctx.Client.GetInteractivity().WaitForButtonAsync(interactionResponse.Id, ctx.User);
-            //
-            //    if (interaction != null)
-            //    {
-            //        // Aktualisiere die Seite entsprechend der Button-Interaktion
-            //        if (ButtonPaginator.TryNavigate(interaction, ref currentPageIndex, totalPages))
-            //        {
-            //            // Erstelle und sende die neue Embed-Nachricht für die aktualisierte Seite
-            //            embed = BuildStatsPageEmbed(entries, currentPageIndex);
-            //            components = ButtonPaginator.BuildNavigationButtons(currentPageIndex, totalPages);
-            //            await ctx.Channel.UpdateMessageAsync(interaction.Message.Id, new DiscordMessageBuilder().AddEmbed(embed).AddComponents(components));
-            //        }
-            //    }
-            //} while (interaction != null);
-            //
+            // Suche nach den Statistiken für das angegebene Datum
+            DailyStatsEntry stats = entries.FirstOrDefault(e => e.Date.Date == DateTime.Today.Date);
+
+            if (stats != null)
+            {
+                // Wenn Statistiken für das angegebene Datum gefunden wurden, zeige sie an
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = $"Statistics for {DateTime.Today.Date.ToShortDateString()}",
+                    Color = DiscordColor.CornflowerBlue
+                };
+
+                // Hier kannst du den Embed nach deinen Wünschen formatieren und die Statistiken hinzufügen
+                embed.AddField("Distance walked", $"{stats.Distance.ToString("N0")} km", true);
+                embed.AddField("Pokémon caught", stats.Pokemon.ToString("N0"), true);
+                embed.AddField("PokéStops visited", stats.Pokestops.ToString("N0"), true);
+                embed.AddField("Total XP gained", stats.TotalXP.ToString("N0"), true);
+                embed.AddField("Stardust collected", stats.Stardust.ToString("N0"), true);
+                embed.AddField("Weekly kilometers", $"{stats.WeeklyKilometers} km", true);
+
+                if (!string.IsNullOrEmpty(stats.ImageUrl))
+                {
+                    embed.WithImageUrl(stats.ImageUrl);
+                }
+
+                // Erstelle die Buttons mit Emojis und benutzerdefinierten IDs
+                var buttonRow = new DiscordButtonComponent[]
+                {
+                    new DiscordButtonComponent(ButtonStyle.Primary, "previous_day", "Previous Day", emoji: new DiscordComponentEmoji("⬅️")),
+                    new DiscordButtonComponent(ButtonStyle.Secondary, "next_day", "Next Day", emoji: new DiscordComponentEmoji("➡️"))
+                };
+
+                // Erstelle die Interaktionsantwort mit den Buttons
+                var response = new DiscordInteractionResponseBuilder()
+                    .AddEmbed(embed)
+                    .AddComponents(buttonRow);
+
+                var interactionResponse = await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
+
+                // Warte auf die Button-Interaktion
+                var interactivity = ctx.Client.GetInteractivity();
+                var buttonResult = await interactivity.WaitForButtonAsync(interactionResponse.Id, ctx.User);
+
+                if (buttonResult != null)
+                {
+                    // Handle button interaction
+                    if (buttonResult.Id == "previous_day")
+                    {
+                        // Logic for showing statistics for the previous day
+                    }
+                    else if (buttonResult.Id == "next_day")
+                    {
+                        // Logic for showing statistics for the next day
+                    }
+                }
+            }
+            else
+            {
+                // Wenn keine Statistiken für das angegebene Datum gefunden wurden, gib eine entsprechende Nachricht aus
+                await ctx.CreateResponseAsync($"No statistics found for today.");
+            }
         }
+        */
 
         private static DiscordEmbedBuilder BuildStatsPageEmbed(List<DailyStatsEntry> entries, int pageIndex)
         {

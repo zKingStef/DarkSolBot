@@ -43,10 +43,13 @@ namespace DarkBot.src.Handler
 
             switch (e.Interaction.Data.CustomId)
             {
-                case "entryGiveawayButton":
-                    await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
-                                                    .WithContent("Du bist dem **Gewinnspiel** erfolgreich beigetreten! Viel Glück:tada:").AsEphemeral(true));
-                    break;
+                case "pokeDiaryPreviousDay_Btn":
+                        
+                        break;
+
+                case "pokeDiaryNextDay_Btn":
+                        
+                        break;
 
                 default:
                     //await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent("Ein Fehler ist aufgetreten. Bitte kontaktiere einen <@&1210230414011011124>"));

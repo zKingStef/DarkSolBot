@@ -17,11 +17,7 @@ namespace DarkBot.src.SlashCommands
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public static async Task AutomatedRoleSystem(InteractionContext ctx)
         {
-            if (!CmdShortener.CheckPermissions(ctx, Permissions.Administrator))
-            {
-                await CmdShortener.SendNotification(ctx, "Keinen Zugriff", "Du hast nicht die nötigen Rechte, um diesen Befehl auszuführen.", DiscordColor.Red, 0);
-                return;
-            }
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
             var options = new List<DiscordSelectComponentOption>()
                 {

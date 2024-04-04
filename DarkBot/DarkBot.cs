@@ -86,7 +86,6 @@ namespace DarkBot
                 EnableIncoming = true
             });
 
-
             Slash = Client.UseSlashCommands();
             Client.GetSlashCommands();
             Slash.RegisterCommands<AutoRole_SL>();
@@ -104,7 +103,7 @@ namespace DarkBot
 
             Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;
 
-            Client.ChannelUpdated += DiscordLogger.ChannelUpdate;
+            //Client.ChannelUpdated += DiscordLogger.ChannelUpdate;
             Client.GuildMemberAdded += DiscordLogger.Log_JoinLeave;
 
             // Start the uptime counter

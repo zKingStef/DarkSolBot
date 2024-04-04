@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using DSharpPlus.Entities;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
+using DarkBot.src.Common;
+using DSharpPlus.SlashCommands;
 
 namespace DarkBot.src.CommandHandler
 {
@@ -145,5 +147,15 @@ namespace DarkBot.src.CommandHandler
                     .AddComponents(closeButton);
             await channel.SendMessageAsync(ticketMessage);
         }
-    }
+
+        public static async Task CheckIfUserHasTicketPermissions(InteractionContext ctx)
+        {
+            if (!CmdShortener.CheckRole(ctx, 978352059617280010))
+            {
+                await CmdShortener.SendNotification(ctx, "No access", "You do not have the necessary permissions to execute this command.", DiscordColor.Red, 0);
+                return;
+            }
+        }
+        
+}
 }

@@ -31,9 +31,6 @@ namespace DarkBot.src.CommandHandler
             string directoryPath = Path.Combine("Database", "PokeDiary");
             string filePath = Path.Combine(directoryPath, fileName);
 
-            // Erstelle das Verzeichnis, falls es noch nicht existiert
-            Directory.CreateDirectory(directoryPath);
-
             // Speichern des Eintrags in der entsprechenden Datei
             string json = JsonConvert.SerializeObject(entry, Formatting.Indented);
             File.WriteAllText(filePath, json);
@@ -92,11 +89,11 @@ namespace DarkBot.src.CommandHandler
             {
                 // Lade die Statistiken aus der JSON-Datei
                 string json = File.ReadAllText(filePath);
-                return JsonConvert.DeserializeObject<List<DailyStatsEntry>>(json);
+                return new List<DailyStatsEntry> { JsonConvert.DeserializeObject<DailyStatsEntry>(json) };
             }
             else
             {
-                // Falls die Datei nicht existiert, gib eine leere Liste zurück
+                // Falls die Datei nicht existiert, gibt es keine Statistiken für heute
                 return new List<DailyStatsEntry>();
             }
         }

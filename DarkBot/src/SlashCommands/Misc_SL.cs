@@ -14,15 +14,14 @@ namespace DarkBot.src.SlashCommands
 {
     public class Misc_SL : ApplicationCommandModule
     {
-
         [SlashCommand("avatar", "Show User Avatar")]
         public static async Task Avatar(InteractionContext ctx,
                                 [Option("User", "Choose any User to get their Avatar")] DiscordUser? user = null)
         {
             var targetUser = user ?? ctx.User;
-
+        
             var avatarUrl = targetUser.AvatarUrl;
-
+        
             var embed = new DiscordEmbedBuilder
             {
                 Title = $"{targetUser.Username}'s Avatar",
@@ -30,7 +29,7 @@ namespace DarkBot.src.SlashCommands
                 Color = DiscordColor.HotPink,
                 Description = ctx.User.AvatarUrl,
             };
-
+        
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed.Build()));
         }
 

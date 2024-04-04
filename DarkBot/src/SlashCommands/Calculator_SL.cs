@@ -58,7 +58,6 @@ namespace DarkBot.src.SlashCommands
         }
 
         [SlashCommand("try-to-eur", "Converts Turkish Lira (TRY) to Euro (EUR).")]
-        [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task ConvertTryToEur(InteractionContext ctx, [Option("amount", "The amount of Turkish Lira to convert")] double amount)
         {
             try

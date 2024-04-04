@@ -11,6 +11,7 @@ using System.Text;
 using System.Linq;
 using DarkBot.src.Handler;
 using DarkBot.src.Common;
+using DarkBot.src.CommandHandler;
 
 namespace DarkBot.src.SlashCommands
 {
@@ -24,11 +25,9 @@ namespace DarkBot.src.SlashCommands
                                 [Choice("Dropdown Menu", 1)]
                                 [Option("system", "Buttons oder Dropdown")] long systemChoice = 1)
         {
-            if (!CmdShortener.CheckPermissions(ctx, Permissions.Administrator))
-            {
-                await CmdShortener.SendNotification(ctx, "Keinen Zugriff", "Du hast nicht die nötigen Rechte, um diesen Befehl auszuführen.", DiscordColor.Red, 0);
-                return;
-            }
+            // Pre Execution Checks
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
+            await CheckIfChannelIsTicket(ctx);
 
             if (systemChoice == 0)
             {
@@ -103,11 +102,9 @@ namespace DarkBot.src.SlashCommands
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task TicketsystemPOGO(InteractionContext ctx)
         {
-            if (!CmdShortener.CheckPermissions(ctx, Permissions.Administrator))
-            {
-                await CmdShortener.SendNotification(ctx, "Keinen Zugriff", "Du hast nicht die nötigen Rechte, um diesen Befehl auszuführen.", DiscordColor.Red, 0);
-                return;
-            }
+            // Pre Execution Checks
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
+            await CheckIfChannelIsTicket(ctx);
 
             var dropdownComponents = new List<DiscordSelectComponentOption>()
                 {
@@ -146,6 +143,8 @@ namespace DarkBot.src.SlashCommands
         public async Task Add(InteractionContext ctx,
                              [Option("User", "The user which will be added to the ticket")] DiscordUser user)
         {
+            // Pre Execution Checks
+            await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
             await CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
@@ -164,6 +163,8 @@ namespace DarkBot.src.SlashCommands
         public async Task Remove(InteractionContext ctx,
                              [Option("User", "The user, which will be removed from the ticket")] DiscordUser user)
         {
+            // Pre Execution Checks
+            await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
             await CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
@@ -182,6 +183,8 @@ namespace DarkBot.src.SlashCommands
         public async Task Rename(InteractionContext ctx,
                              [Option("Name", "New Name of the Ticket")] string newChannelName)
         {
+            // Pre Execution Checks
+            await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
             await CheckIfChannelIsTicket(ctx);
 
             var oldChannelName = ctx.Channel.Mention;
@@ -203,6 +206,8 @@ namespace DarkBot.src.SlashCommands
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task Close(InteractionContext ctx)
         {
+            // Pre Execution Checks
+            await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
             await CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
@@ -223,14 +228,14 @@ namespace DarkBot.src.SlashCommands
                 content.AppendLine($"{message.Author.Username} ({message.Author.Id}) - {message.Content}");
             }
 
+            await Task.Delay(TimeSpan.FromSeconds(60));
+
             using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(content.ToString())))
             {
                 var msg = await new DiscordMessageBuilder()
                     .AddFile("transript.txt", memoryStream)
                     .SendAsync(ctx.Guild.GetChannel(978669571483500574));
             }
-
-            await Task.Delay(TimeSpan.FromSeconds(60));
 
             await ctx.Channel.DeleteAsync("Ticket closed");
         }

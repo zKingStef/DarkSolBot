@@ -94,8 +94,8 @@ namespace DarkBot.src.Common
             {
                 Title = title,
                 Description = "**Server:** " + ctx.Guild.Name +
-                              "\n**Grund:** " + description +
-                              "\n\n**Verantwortlicher Moderator:** " + ctx.Member.Mention,
+                              "\n**Reason:** " + description +
+                              "\n\n**Responsible Moderator:** " + ctx.Member.Mention,
                 Color = color,
                 Timestamp = DateTime.UtcNow
             };
@@ -110,10 +110,25 @@ namespace DarkBot.src.Common
             return ctx.Member.Permissions.HasPermission(requiredPermissions);
         }
 
+        public static bool CheckRole(InteractionContext ctx, ulong roleId)
+        {
+            var member = ctx.Member;
+            return member.Roles.Any(r => r.Id == roleId);
+        }
+
+        public static async Task CheckIfUserHasCeoRole(InteractionContext ctx)
+        {
+            if (!CmdShortener.CheckRole(ctx, 978352059617280010))
+            {
+                await CmdShortener.SendNotification(ctx, "No access", "You do not have the necessary permissions to execute this command.", DiscordColor.Red, 0);
+                return;
+            }
+        }
+
         // Methode zur Fehlerbehandlung
         public static async Task HandleException(InteractionContext ctx, Exception e)
         {
-            string errorMessage = $"Ein Fehler ist aufgetreten: {e.Message}";
+            string errorMessage = $"Exception occured: {e.Message}";
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(errorMessage));
         }
 
