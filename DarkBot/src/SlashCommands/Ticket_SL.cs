@@ -92,7 +92,7 @@ namespace DarkBot.src.SlashCommands
                     )
                     .AddComponents(ticketDropdown);
 
-                await CmdShortener.SendAsEphemeral(ctx, "Ticketsystem loaded...");
+                await CmdShortener.SendAsEphemeral(ctx, "Ticketsystem successfully loaded.");
 
                 await ctx.Channel.SendMessageAsync(embedTicketDropdown);
             }
@@ -133,7 +133,7 @@ namespace DarkBot.src.SlashCommands
                 )
                 .AddComponents(ticketDropdown);
 
-            await CmdShortener.SendAsEphemeral(ctx, "Ticketsystem erfolgreich geladen.");
+            await CmdShortener.SendAsEphemeral(ctx, "Ticketsystem successfully loaded.");
 
             await ctx.Channel.SendMessageAsync(embedTicketDropdown);
         }

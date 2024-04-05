@@ -1,5 +1,5 @@
 ﻿using DarkBot.src.Handler;
-using DarkBot.src.Logs;
+//using DarkBot.src.Logs;
 using DarkBot.src.PrefixCommands;
 using DarkBot.src.SlashCommands;
 using DSharpPlus;
@@ -105,17 +105,17 @@ namespace DarkBot
             Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;
 
             //Client.ChannelUpdated += DiscordLogger.ChannelUpdate;
-            Client.GuildMemberAdded += JoinLeaveLogs.UserJoin;
-            Client.GuildMemberRemoved += JoinLeaveLogs.UserLeave;
+            //Client.GuildMemberAdded += JoinLeaveLogs.UserJoin;
+            //Client.GuildMemberRemoved += JoinLeaveLogs.UserLeave;
             
-
             Client.UnknownEvent += UnknownEvent;
+            Client.ClientErrored += ClientErrored;
 
-            Client.InviteCreated += InviteLogs.InviteCreated;
-            Client.InviteDeleted += InviteLogs.InviteDeleted;
+            //Client.InviteCreated += InviteLogs.InviteCreated;
+            //Client.InviteDeleted += InviteLogs.InviteDeleted;
 
-            Client.GuildBanAdded += UnBanLogs.UserBanned;
-            Client.GuildBanRemoved += UnBanLogs.UserUnbanned;
+            //Client.GuildBanAdded += UnBanLogs.UserBanned;
+            //Client.GuildBanRemoved += UnBanLogs.UserUnbanned;
 
             // Start the uptime counter
             Console.Title = $"{settings.Name}-{settings.Version}";
@@ -124,6 +124,12 @@ namespace DarkBot
             Task.Delay(-1);
         }
 
+        private Task ClientErrored(DiscordClient sender, ClientErrorEventArgs e)
+        {
+            Client.Logger.LogError(EventId, "Bot errored...");
+            Client.Logger.LogError(EventId, e.EventName);
+            return Task.CompletedTask;
+        }
 
         private Task UnknownEvent(DiscordClient sender, DSharpPlus.EventArgs.UnknownEventArgs e)
         {
