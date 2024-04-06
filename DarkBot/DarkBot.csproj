@@ -59,6 +59,7 @@
     <PackageReference Include="Lavalink4NET" Version="4.0.17" />
     <PackageReference Include="Lavalink4NET.DSharpPlus" Version="4.0.17" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Npgsql" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
