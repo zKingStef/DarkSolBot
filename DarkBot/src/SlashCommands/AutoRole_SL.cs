@@ -34,9 +34,9 @@ namespace DarkBot.src.SlashCommands
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":video_game:"))),
 
                     new (
-                        "DarkServices",
+                        "DarkSolutions",
                         "dd_RoleDarkServices",
-                        "Access to all DarkServices Channels",
+                        "Access to all DarkSolutions Channels",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":DarkServices:"))),
                    };
 
@@ -53,7 +53,7 @@ namespace DarkBot.src.SlashCommands
 
             await ctx.Channel.SendMessageAsync(embedAutoRoleDropdown);
 
-            await CmdShortener.SendAsEphemeral(ctx, "Auto-Rollensystem geladen...");
+            await CmdShortener.SendAsEphemeral(ctx, "Auto-Rolesystem loaded...");
         }
     }
 }
