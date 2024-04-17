@@ -22,10 +22,10 @@ namespace DarkBot.src.CommandHandler
                     roleid = 1221805367466528908;
                     role = e.Guild.GetRole(roleid);
                     break;
-                case "dd_RoleGamer":
-                    roleid = 978346565209042986;
-                    role = e.Guild.GetRole(roleid);
-                    break;
+                //case "dd_RoleGamer":
+                //    roleid = 978346565209042986;
+                //    role = e.Guild.GetRole(roleid);
+                //    break;
                 case "dd_RoleDarkServices":
                     roleid = 1222923387937226875;
                     role = e.Guild.GetRole(roleid);
