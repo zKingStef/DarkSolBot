@@ -23,7 +23,7 @@ namespace DarkBot.src.Handler
                 case "dd_TicketXp":
                     Ticket_Handler.HandlePoGoTickets(e, selectedOption);
                     break;
-                case "dd_TicketDarkServices":
+                case "dd_TicketDarkSolutions":
                 case "dd_TicketSupport":
                 case "dd_TicketUnban":
                 case "dd_TicketDonation":

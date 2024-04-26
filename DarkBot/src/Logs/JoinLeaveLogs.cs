@@ -13,6 +13,16 @@ namespace DarkBot.src.Logs
     {
         public static async Task UserJoin(DiscordClient sender, DSharpPlus.EventArgs.GuildMemberAddEventArgs e)
         {
+
+            if (!e.Member.IsBot)
+            {
+                var role = e.Guild.GetRole(1222923387937226875);
+
+                if (role != null)
+                {
+                    await e.Member.GrantRoleAsync(role);
+                }
+            }
             var welcomeChannel = e.Guild.GetDefaultChannel();
 
             var welcomeEmbed = new DiscordEmbedBuilder()

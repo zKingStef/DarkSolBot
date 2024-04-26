@@ -35,7 +35,7 @@ namespace DarkBot.src.SlashCommands
                 .AddEmbed(new DiscordEmbedBuilder()
 
                 .WithColor(DiscordColor.White)
-                .WithTitle("**Ticketsystem**")
+                .WithTitle("**Ticket-System**")
                 .WithDescription("Klicke auf einen Button, um ein Ticket der jeweiligen Kategorie zu erstellen")
                 )
                 .AddComponents(new DiscordComponent[]
@@ -57,7 +57,7 @@ namespace DarkBot.src.SlashCommands
                 var dropdownComponents = new List<DiscordSelectComponentOption>()
                 {
                     new(
-                        "Dark Services", "dd_TicketDarkServices", "Order any Service here!",
+                        "Dark Solutions", "dd_TicketDarkSolutions", "Order any Service here!",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":DarkServices:"))),
 
                     //new(
@@ -86,9 +86,9 @@ namespace DarkBot.src.SlashCommands
                 var embedTicketDropdown = new DiscordMessageBuilder()
                     .AddEmbed(new DiscordEmbedBuilder()
 
-                    .WithColor(DiscordColor.Goldenrod)
-                    .WithTitle("**Ticketsystem**")
-                    .WithDescription("Open the Dropdown Menu and click on the Category that you want to create a Ticket of")
+                    .WithColor(DiscordColor.Cyan)
+                    .WithTitle("**DarkSolutions Ticket-System**")
+                    .WithDescription("Open the Dropdown Menu and click on the Category you want to create a Ticket of")
                     )
                     .AddComponents(ticketDropdown);
 
@@ -97,7 +97,7 @@ namespace DarkBot.src.SlashCommands
                 await ctx.Channel.SendMessageAsync(embedTicketDropdown);
             }
         }
-
+        
         [SlashCommand("pogosystem", "Erschaffe das Ticketsystem für Pokemon Go")]
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
         public async Task TicketsystemPOGO(InteractionContext ctx)

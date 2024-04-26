@@ -1,4 +1,6 @@
 ﻿using DarkBot.src.Handler;
+using DarkBot.src.Logs;
+
 //using DarkBot.src.Logs;
 using DarkBot.src.PrefixCommands;
 using DarkBot.src.SlashCommands;
@@ -104,18 +106,17 @@ namespace DarkBot
 
             Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;
 
-            //Client.ChannelUpdated += DiscordLogger.ChannelUpdate;
-            //Client.GuildMemberAdded += JoinLeaveLogs.UserJoin;
-            //Client.GuildMemberRemoved += JoinLeaveLogs.UserLeave;
+            Client.GuildMemberAdded += JoinLeaveLogs.UserJoin;
+            Client.GuildMemberRemoved += JoinLeaveLogs.UserLeave;
             
             Client.UnknownEvent += UnknownEvent;
             Client.ClientErrored += ClientErrored;
 
-            //Client.InviteCreated += InviteLogs.InviteCreated;
-            //Client.InviteDeleted += InviteLogs.InviteDeleted;
+            Client.InviteCreated += InviteLogs.InviteCreated;
+            Client.InviteDeleted += InviteLogs.InviteDeleted;
 
-            //Client.GuildBanAdded += UnBanLogs.UserBanned;
-            //Client.GuildBanRemoved += UnBanLogs.UserUnbanned;
+            Client.GuildBanAdded += UnBanLogs.UserBanned;
+            Client.GuildBanRemoved += UnBanLogs.UserUnbanned;
 
             // Start the uptime counter
             Console.Title = $"{settings.Name}-{settings.Version}";
@@ -148,8 +149,8 @@ namespace DarkBot
         public static async Task RunAsync()
         {
             // Set the initial activity and connect the bot to Discord
-            var act = new DiscordActivity("Hacking", ActivityType.Competing);
-            await Client.ConnectAsync(act, UserStatus.DoNotDisturb).ConfigureAwait(false);
+            var act = new DiscordActivity("Developed by zKingStef", ActivityType.ListeningTo);
+            await Client.ConnectAsync(act, UserStatus.Online).ConfigureAwait(false);
         }
 
         public static async Task StopAsync()
