@@ -32,7 +32,12 @@ namespace DarkBot
                 if (!File.Exists(fileName))
                 {
                     fileName = "bin\\Debug\\net8.0\\Resources\\config.json";
+                    if (!File.Exists(fileName))
+                    {
+                        fileName = "bin/Debug/net8.0/Resources/config.json";
+                    }
                 }
+
                 var json = await new StreamReader(File.OpenRead(fileName), new UTF8Encoding(false)).ReadToEndAsync();
                 Settings = JsonConvert.DeserializeObject<BotSettings>(json);
 
