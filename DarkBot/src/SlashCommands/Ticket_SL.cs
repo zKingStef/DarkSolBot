@@ -27,7 +27,6 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await CmdShortener.CheckIfUserHasCeoRole(ctx);
-            await CheckIfChannelIsTicket(ctx);
 
             if (systemChoice == 0)
             {
@@ -104,7 +103,6 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await CmdShortener.CheckIfUserHasCeoRole(ctx);
-            await CheckIfChannelIsTicket(ctx);
 
             var dropdownComponents = new List<DiscordSelectComponentOption>()
                 {

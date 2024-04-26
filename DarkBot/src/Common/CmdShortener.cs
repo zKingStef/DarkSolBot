@@ -33,7 +33,7 @@ namespace DarkBot.src.Common
             };
 
             if (channelId == 0)
-                await ctx.EditResponseAsync(new DiscordWebhookBuilder().AddEmbed(message));
+                await ctx.CreateResponseAsync(message);
             else if (channelId == 1)
                 await ctx.Channel.SendMessageAsync(message);
             else
@@ -118,7 +118,7 @@ namespace DarkBot.src.Common
 
         public static async Task CheckIfUserHasCeoRole(InteractionContext ctx)
         {
-            if (!CmdShortener.CheckRole(ctx, 978352059617280010))
+            if (!CmdShortener.CheckRole(ctx, 978346565225816152))
             {
                 await CmdShortener.SendNotification(ctx, "No access", "You do not have the necessary permissions to execute this command.", DiscordColor.Red, 0);
                 return;

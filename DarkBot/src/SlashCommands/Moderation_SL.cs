@@ -86,7 +86,7 @@ namespace DarkBot.src.SlashCommands
 
         }
 
-        [SlashCommand("banlist", "Zeige alle gebannten Spieler")]
+        [SlashCommand("banlist", "Show all banned Users")]
         public  async Task Banlist(InteractionContext ctx)
         {
             await ctx.DeferAsync();
