@@ -28,16 +28,11 @@ namespace DarkBot
                 Console.CancelKeyPress += ConsoleOnCancelKeyPress;
 
                 // Load Settings
-                var fileName = "bin\\Debug\\net8.0\\Resources\\config.json";
+                var fileName = "Resources\\config.json";
                 if (!File.Exists(fileName))
                 {
-                    fileName = "Resources\\config.json";
-                    if (!File.Exists(fileName))
-                    {
-                        Console.WriteLine("config.json File not Found! Expection in Program.cs");
-                    }
+                    fileName = "bin\\Debug\\net8.0\\Resources\\config.json";
                 }
-
                 var json = await new StreamReader(File.OpenRead(fileName), new UTF8Encoding(false)).ReadToEndAsync();
                 Settings = JsonConvert.DeserializeObject<BotSettings>(json);
 
