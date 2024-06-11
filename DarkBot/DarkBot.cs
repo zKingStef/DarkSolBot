@@ -99,7 +99,6 @@ namespace DarkBot
             Slash.RegisterCommands<Misc_SL>();
             Slash.RegisterCommands<Moderation_SL>();
             Slash.RegisterCommands<PokeDiary_SL>();
-            Slash.RegisterCommands<Poll_SL>();
             Slash.RegisterCommands<Ticket_SL>();
             Slash.RegisterCommands<Troll_SL>();
             Slash.SlashCommandErrored += SlashCommandErrored;
