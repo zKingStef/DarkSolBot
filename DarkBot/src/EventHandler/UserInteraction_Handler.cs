@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DarkBot.src.CommandHandler;
+using DSharpPlus.Interactivity.Extensions;
+using Microsoft.Extensions.Options;
+using System.ComponentModel.Design;
+using DarkBot.src.Common;
+using System.Reflection;
 
 namespace DarkBot.src.Handler
 {
@@ -18,23 +23,7 @@ namespace DarkBot.src.Handler
 
             switch (selectedOption)
             {
-                case "dd_TicketPokecoins":
-                case "dd_TicketStardust":
-                case "dd_TicketXp":
-                    Ticket_Handler.HandlePoGoTickets(e, selectedOption);
-                    break;
-                case "dd_TicketDarkSolutions":
-                case "dd_TicketSupport":
-                case "dd_TicketUnban":
-                case "dd_TicketDonation":
-                case "dd_TicketOwner":
-                case "dd_TicketApplication":
-                    Ticket_Handler.HandleGeneralTickets(e, selectedOption);
-                    break;
-                case "dd_RolePokemonGo":
-                case "dd_RoleGamer":
-                case "dd_RoleDarkServices":
-                    AutoRole_Handler.GiveRoleToUser(e, selectedOption);
+                case "Template1":
                     break;
 
                 default:
@@ -43,16 +32,35 @@ namespace DarkBot.src.Handler
 
             switch (e.Interaction.Data.CustomId)
             {
-                case "pokeDiaryPreviousDay_Btn":
-                        
-                        break;
-
-                case "pokeDiaryNextDay_Btn":
-                        
-                        break;
+                case "ticketPokemonGoBtn":
+                    await Modals.CreateClanModal(e, "modalValoClanForm");
+                    break;
+                case "ticketCS2ClanBtn":
+                    await Modals.CreateClanModal(e, "modalCS2ClanForm");
+                    break;
+                case "ticketCoachingBtn":
+                    await Modals.CreateCoachingModal(e, "modalCoachingForm");
+                    break;
+                case "ticketTechnicBtn":
+                    await Modals.CreateTechnicModal(e, "modalTechnicForm");
+                    break;
+                case "claimTicketButton":
+                    if (Ticket_Handler.CheckIfUserHasTicketPermissions(e))
+                    {
+                        await Ticket_Handler.RemoveClaimButtonAsync(e);
+                        await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                        new DiscordInteractionResponseBuilder().WithContent($"Das Ticket wird jetzt von {e.User.Mention} bearbeitet"));
+                    }
+                    break;
+                case "closeTicketButton":
+                    await Ticket_Handler.CloseTicket(e);
+                    break;
+                case "closeReasonTicketButton":
+                    await Modals.CreateReasonModal(e, "modalCloseReasonForm");
+                    break;
 
                 default:
-                    //await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent("Ein Fehler ist aufgetreten. Bitte kontaktiere einen <@&1210230414011011124>"));
+                    Console.WriteLine(e.Message);
                     break;
             }
         }

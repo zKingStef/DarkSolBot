@@ -12,6 +12,7 @@ using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using System.IO;
 using System.Net.Http;
+using DSharpPlus.EventArgs;
 
 namespace DarkBot.src.Common
 {
@@ -33,7 +34,7 @@ namespace DarkBot.src.Common
             };
 
             if (channelId == 0)
-                await ctx.EditResponseAsync(new DiscordWebhookBuilder().AddEmbed(message));
+                await ctx.CreateResponseAsync(message);
             else if (channelId == 1)
                 await ctx.Channel.SendMessageAsync(message);
             else
@@ -41,7 +42,22 @@ namespace DarkBot.src.Common
         }
 
         public static async Task SendAsEphemeral(InteractionContext ctx,
-                                                  string text)
+                                                 string text)
+        {
+            await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
+                                                     .WithContent((text)).AsEphemeral(true));
+        }
+
+
+        public static async Task SendAsEphemeral(ComponentInteractionCreateEventArgs ctx,
+                                                 string text)
+        {
+            await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
+                                                     .WithContent((text)).AsEphemeral(true));
+        }
+
+        public static async Task SendAsEphemeral(ModalSubmitEventArgs ctx,
+                                                 string text)
         {
             await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
                                                      .WithContent((text)).AsEphemeral(true));
@@ -116,11 +132,31 @@ namespace DarkBot.src.Common
             return member.Roles.Any(r => r.Id == roleId);
         }
 
+        public static bool CheckRole(ComponentInteractionCreateEventArgs ctx, ulong roleId)
+        {
+            var user = ctx.User;
+            if (user is DiscordMember member)
+            {
+                return member.Roles.Any(r => r.Id == roleId);
+            }
+            return false;
+        }
+
+        public static bool CheckRole(ModalSubmitEventArgs ctx, ulong roleId)
+        {
+            var user = ctx.Interaction.User;
+            if (user is DiscordMember member)
+            {
+                return member.Roles.Any(r => r.Id == roleId);
+            }
+            return false;
+        }
+
         public static async Task CheckIfUserHasCeoRole(InteractionContext ctx)
         {
-            if (!CmdShortener.CheckRole(ctx, 978352059617280010))
+            if (!CmdShortener.CheckRole(ctx, 1209284430229803008))
             {
-                await CmdShortener.SendNotification(ctx, "No access", "You do not have the necessary permissions to execute this command.", DiscordColor.Red, 0);
+                await CmdShortener.SendNotification(ctx, "Keine Rechte", "Du benötigst die Techniker Rolle für diesen Befehl!", DiscordColor.Red, 0);
                 return;
             }
         }
@@ -128,7 +164,7 @@ namespace DarkBot.src.Common
         // Methode zur Fehlerbehandlung
         public static async Task HandleException(InteractionContext ctx, Exception e)
         {
-            string errorMessage = $"Exception occured: {e.Message}";
+            string errorMessage = $"Fehler aufgetreten: {e.Message}\n Bitte melde das Problem bei einem Techniker";
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(errorMessage));
         }
 

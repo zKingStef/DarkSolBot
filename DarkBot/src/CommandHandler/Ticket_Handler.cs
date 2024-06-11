@@ -5,157 +5,334 @@ using DSharpPlus;
 using DSharpPlus.EventArgs;
 using DarkBot.src.Common;
 using DSharpPlus.SlashCommands;
+using System.ComponentModel.Design;
+using System.Text;
 
 namespace DarkBot.src.CommandHandler
 {
     public class Ticket_Handler
     {
-        public static async void HandlePoGoTickets(ComponentInteractionCreateEventArgs e, string ttype)
-        {
-            DiscordMember? user = e.User as DiscordMember;
-            DiscordGuild guild = e.Guild;
+        private static DiscordMessage ticketMessage;
 
-            if (guild.GetChannel(1207086767623381092) is not DiscordChannel category || category.Type != ChannelType.Category)
+        private static Dictionary<ulong, ulong> ticketChannelMap = new Dictionary<ulong, ulong>();
+
+        public string username { get; set; }
+        public string issue { get; set; }
+        public ulong ticketId { get; set; }
+        public static async Task HandleGeneralTickets(ModalSubmitEventArgs e)
+        {
+            DiscordMember? user = e.Interaction.User as DiscordMember;
+            DiscordGuild guild = e.Interaction.Guild;
+
+            if (guild.GetChannel(1197912790208356422) is not DiscordChannel category || category.Type != ChannelType.Category)
             {
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().WithContent("Fehler beim Erstellen des Tickets: Eine Kategorie für Tickets konnte nicht gefunden werden.").AsEphemeral(true));
+                    new DiscordInteractionResponseBuilder().WithContent("Error occured while creating a Ticket: No ticket category found!").AsEphemeral(true));
                 return;
             }
 
+            string ticketDesc = "Error! Please report to Developer";
+            string ticketTitle = "**Error!**";
+            ulong roleId = 999999999999;
+            var closeButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeTicketButton", "🔒 Close");
+            var closeReasonButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeReasonTicketButton", "🔒 Close Reason");
+            var claimButton = new DiscordButtonComponent(ButtonStyle.Primary, "claimTicketButton", "☑️ Claim");
+            DiscordChannel ticketChannel = e.Interaction.Channel;
+
             var overwrites = new List<DiscordOverwriteBuilder>
-                {
-                    new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                    new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                };
-
-            DiscordChannel channel = await guild.CreateTextChannelAsync($"{e.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
-
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Dein neues Ticket ({channel.Mention}) wurde erstellt!").AsEphemeral(true));
-
-            var closeButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeTicketButton", "🔒 Close Ticket");
-
-            _ = await channel.SendMessageAsync($"||{user.Mention}||");
-
-            string ticketDesc = "ERROR";
-            string ticketTitle = "ERROR";
-            var embedColor = DiscordColor.White;
-
-            switch (ttype)
             {
-                case "dd_TicketPokecoins":
-                    ticketDesc = "**Attention:** Please tell me the Amount of Pokecoins you want to order and what payment method you will be using.";
-                    ticketTitle = "Pokecoin";
-                    embedColor = DiscordColor.Yellow;
+                new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
+            };
+
+            switch (e.Interaction.Data.CustomId)
+            {
+                case "modalValoClanForm":
+                    ticketDesc = $"**Name / Ingamename:** {e.Values["nameTextBox"]}\n" +
+                                 $"**Alter:** {e.Values["ageTextBox"]}\n" +
+                                 $"**Aktueller Rank:** {e.Values["rankTextBox"]}\n" +
+                                 $"**Kurze Vorstellung:** {e.Values["vorstellTextBox"]}\n\n" +
+                                 "Der __Bereichsleiter__ wird sich sobald wie möglich um deine Bewerbung kümmern!";
+                    ticketTitle = "Valorant Clan Bewerbung";
+
+                    roleId = 1220804206269567087;
+
+                    overwrites =
+                    [
+                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                        new DiscordOverwriteBuilder(guild.GetRole(roleId)).Allow(Permissions.AccessChannels), // Bereichsleiter Valorant Rolle
+                        new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
+                    ];
                     break;
-                case "dd_TicketStardust":
-                    ticketDesc = "**[!]** Please tell me the Amount of **Stardust** you want to order and what payment method you will be using.\n";
-                    ticketTitle = "Stardust";
-                    embedColor = DiscordColor.HotPink;
+
+                case "modalCS2ClanForm":
+                    ticketDesc = $"**Name / Ingamename:** {e.Values["nameTextBox"]}\n" +
+                                 $"**Alter:** {e.Values["ageTextBox"]}\n" +
+                                 $"**Aktueller Rank:** {e.Values["rankTextBox"]}\n" +
+                                 $"**Kurze Vorstellung:** {e.Values["vorstellTextBox"]}\n\n" +
+                                 "Der __Bereichsleiter__ wird sich sobald wie möglich um deine Bewerbung kümmern!";
+                    ticketTitle = "CS2 Clan Bewerbung";
+
+                    roleId = 1220803957560049724;
+
+                    overwrites =
+                    [
+                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                        new DiscordOverwriteBuilder(guild.GetRole(1220803957560049724)).Allow(Permissions.AccessChannels), // Bereichsleiter CS2 Rolle
+                        new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
+                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                    ];
                     break;
-                case "dd_TicketXp":
-                    ticketDesc = "**[!]** Please tell me if you want the 5 Hour XP Service or if you are looking for something else ?";
-                    ticketTitle = "XP";
-                    embedColor = DiscordColor.Blue;
+
+                case "modalCoachingForm":
+                    overwrites =
+                    [
+                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                        new DiscordOverwriteBuilder(guild.GetRole(1207357073025794079)).Allow(Permissions.AccessChannels), // Coach Rolle
+                        new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
+                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                    ];
+
+                    // Die ID der Kategorie, in der der Sprachkanal erstellt werden soll
+                    ulong categoryId = 1245048697822249090;
+
+                    // Holen Sie sich die Kategorie anhand der ID
+                    DiscordChannel voiceCategory = guild.GetChannel(categoryId);
+
+                    // Erstellen Sie den Sprachkanal innerhalb der angegebenen Kategorie
+                    DiscordChannel coachingVoice = await guild.CreateVoiceChannelAsync(
+                        $"Coaching-{e.Interaction.User.Username}",
+                        voiceCategory,
+                        overwrites: overwrites,
+                        position: 0
+                    );
+
+                    ticketDesc = $"**Aktuelle Elo:** {e.Values["eloTextBox"]}\n" +
+                                                     $"**Ich möchte folgendes trainieren:** {e.Values["whatTextBox"]}\n" +
+                                                     $"**An diesen Tagen habe ich Zeit:** {e.Values["dayTextBox"]}\n\n" +
+                                                     "Ein __Coach__ wird sich sobald wie möglich bei dir melden!\n\n" +
+                                                     $"Dein persönlicher Coaching Sprachkanal: <#{coachingVoice.Id}>";
+                    ticketTitle = "Valorant Coaching";
+
+                    roleId = 1207357073025794079;
+
+                    ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
+
+                    ticketChannelMap[ticketChannel.Id] = coachingVoice.Id;
+                    break;
+                case "modalTechnicForm":
+                    ticketDesc = $"**Problem:** {e.Values["issueTextBox"]}\n\n" +
+                                 "Danke für deine Anfrage. Wir werden uns sobald wie möglich bei dir melden!";
+                    ticketTitle = "Technische Hilfe";
+
+                    roleId = 1209284430229803008;
+
+                    overwrites =
+                    [
+                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                        new DiscordOverwriteBuilder(guild.GetRole(1183217936513630229)).Allow(Permissions.AccessChannels), // Gründer Rolle
+                        new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
+                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                    ];
                     break;
             }
 
-            var ticketMessage = new DiscordMessageBuilder()
+            if (e.Interaction.Data.CustomId != "modalCoachingForm")
+            {
+                ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
+            }
+
+            //var random = new Random();
+            //
+            //ulong minValue = 1000000000000000000;
+            //ulong maxValue = 9999999999999999999;
+            //
+            //ulong randomNumber = (ulong)random.Next((int)(minValue >> 32), int.MaxValue) << 32 | (ulong) random.Next(); 
+            //ulong result = randomNumber % (maxValue - minValue + 1) + minValue;
+
+            //var supportTicket = new Ticket_Handler()
+            //{
+            //    username = e.Interaction.User.Username,
+            //    issue = e.Values.Values.First(),
+            //    ticketId = 1 //result
+            //};
+
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Ticket erstellt: {ticketChannel.Mention}").AsEphemeral(true));
+
+            var ticketEmbed = new DiscordMessageBuilder()
                     .AddEmbed(new DiscordEmbedBuilder()
-                    .WithColor(embedColor)
-                    .WithTitle("__" + ticketTitle + " Service__")
+                    .WithColor(DiscordColor.Cyan)
+                    .WithTitle($"__{ticketTitle}__")
                     .WithThumbnail(guild.IconUrl)
-                    .WithDescription("**Thank you for opening a Ticket!\n\n" +
-                                     "<@293068127049089024> will respond as soon as possible.**\n\n" + ticketDesc)
-                    )
-                    .AddComponents(closeButton);
-            await channel.SendMessageAsync(ticketMessage);
+                    .WithDescription(ticketDesc))
+                    .AddComponents(closeButton, closeReasonButton, claimButton);
+
+            // Mention the User in the Chat and then remove the Message
+            var mentionMessage = await ticketChannel.SendMessageAsync(user.Mention + $"<@&{roleId}>");
+            await ticketChannel.DeleteMessageAsync(mentionMessage);
+
+            await ticketChannel.SendMessageAsync(ticketEmbed);
         }
 
-        public static async void HandleGeneralTickets(ComponentInteractionCreateEventArgs e, string ttype)
+        public static async Task RemoveClaimButtonAsync(ComponentInteractionCreateEventArgs e)
         {
-            DiscordMember? user = e.User as DiscordMember;
-            DiscordGuild guild = e.Guild;
-
-            if (guild.GetChannel(1207086767623381092) is not DiscordChannel category || category.Type != ChannelType.Category)
+            // Überprüfen, ob der Button claimTicketButton angeklickt wurde
+            if (e.Interaction.Data.CustomId == "claimTicketButton")
             {
-                await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().WithContent("Fehler beim Erstellen des Tickets: Eine Kategorie für Tickets konnte nicht gefunden werden.").AsEphemeral(true));
-                return;
-            }
-
-            var overwrites = new List<DiscordOverwriteBuilder>
+                // Überprüfen, ob die ticketMessage vorhanden ist und einen claimButton enthält
+                if (ticketMessage != null && ticketMessage.Components.Any(c => c.CustomId == "claimTicketButton"))
                 {
-                    new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                    new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                };
+                    // Entfernen des claimButton aus der Nachricht
+                    var components = ticketMessage.Components.ToList();
+                    var claimButtonIndex = components.FindIndex(c => c.CustomId == "claimTicketButton");
+                    components.RemoveAt(claimButtonIndex);
 
-            DiscordChannel channel = await guild.CreateTextChannelAsync($"{e.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
+                    // Bearbeiten der Nachricht, um den entfernten Button anzuwenden
+                    await ticketMessage.ModifyAsync(message =>
+                    {
+                        message.ClearComponents();
+                        foreach (var component in components)
+                        {
+                            message.AddComponents(component);
+                        }
+                    });
+                }
+            }
+        }
 
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Ticket created: ({channel.Mention})").AsEphemeral(true));
 
-            var closeButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeTicketButton", "🔒 Ticket schließen");
 
-            await channel.SendMessageAsync($"||{user.Mention}||");
+        public static async Task CloseTicket(ComponentInteractionCreateEventArgs e)
+        {
+            if (!CheckIfUserHasTicketPermissions(e))
+                return;
 
-            string ticketDesc = "ERROR";
-            string ticketTitle = "ERROR";
-
-            switch (ttype)
+            var embedMessage = new DiscordEmbedBuilder()
             {
-                case "dd_TicketDarkSolutions":
-                    ticketDesc = "Please give us following Information:, " +
-                                 "- Which Service are you interested in ?\n What Payment Method will you be using ?";
-                    ticketTitle = "Dark Services";
-                    break;
-                case "dd_TicketSupport":
-                    ticketDesc = "**Beachte:** Bitte beschreibe dein Problem mit ein paar Worten, " +
-                                 "damit wir schnellstmöglich auf dein Ticket reagieren können, um " +
-                                 "dein Anliegen schnellstmöglich zu lösen.";
-                    ticketTitle = "Support Ticket";
-                    break;
-                case "dd_TicketUnban":
-                    ticketDesc = "Bitte schreib folgende Informationen ins Ticket:\n" +
-                                 "- Ingame Namen: \n" +
-                                 "- Ban ID: \n" +
-                                 "- Grund für die Entbannung";
-                    ticketTitle = "Entbannungsantrag";
-                    break;
-                case "dd_TicketDonation":
-                    ticketDesc = "**Spenden sind freiwillig und keinesfalls Pflicht.**";
-                    ticketTitle = "Spende";
-                    break;
-                case "dd_TicketOwner":
-                    ticketDesc = "**Beachte:** Dieses Ticket geht direkt an den Inhaber und kann auch nur von ihm bearbeitet werden. " +
-                                 "Eine höhere Wartzeit als bei normalen Tickets ist zu erwarten.";
-                    ticketTitle = "Inhaber Anfrage";
-                    break;
-                case "dd_TicketApplication":
-                    ticketDesc = "**Beachte:** Bitte schreib erstmal ein paar Worte zu deiner Person " +
-                                 "(Wer bist du ? Wie alt ?) und als was du dich bewerben möchtest?\n";
-                    ticketTitle = "Teambewerbung";
-                    break;
+                Title = "🔒 Ticket geschlossen!",
+                Description = $"Das Ticket wurde von {e.User.Mention} geschlossen!\n" +
+                              $"Der Kanal wird in <t:{DateTimeOffset.UtcNow.AddSeconds(60).ToUnixTimeSeconds()}:R> gelöscht.",
+                Timestamp = DateTime.UtcNow
+            };
+
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                                                     new DiscordInteractionResponseBuilder().AddEmbed(embedMessage));
+
+
+            var messages = await e.Channel.GetMessagesAsync(999);
+
+            var content = new StringBuilder();
+            content.AppendLine($"Transcript Ticket {e.Channel.Name}:");
+            foreach (var message in messages)
+            {
+                content.AppendLine($"{message.Author.Username} ({message.Author.Id}) - {message.Content}");
             }
 
-            var ticketMessage = new DiscordMessageBuilder()
-                    .AddEmbed(new DiscordEmbedBuilder()
-                    .WithColor(DiscordColor.Orange)
-                    .WithTitle("__" + ticketTitle + "__")
-                    .WithThumbnail(guild.IconUrl)
-                    .WithDescription("**In Kürze wird sich jemand um dich kümmern!**\n" +
-                                     "Sollte dein Anliegen bereits erledigt sein dann drücke auf 🔒 um dein Ticket zu schließen!\n\n" + ticketDesc)
-                    )
-                    .AddComponents(closeButton);
-            await channel.SendMessageAsync(ticketMessage);
+            await Task.Delay(TimeSpan.FromSeconds(60));
+
+            using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(content.ToString())))
+            {
+                var msg = await new DiscordMessageBuilder()
+                    .AddFile($"{e.Interaction.Channel.Name}.txt", memoryStream)
+                    .SendAsync(e.Guild.GetChannel(1209297588915015730));
+            }
+
+
+
+            var ticketChannelId = e.Channel.Id;
+            var guild = e.Guild;
+            var ticketChannel = guild.GetChannel(ticketChannelId);
+            await ticketChannel.DeleteAsync("Ticket geschlossen");
+
+            if (ticketChannelMap.TryGetValue(ticketChannelId, out var voiceChannelId))
+            {
+                var voiceChannel = guild.GetChannel(voiceChannelId);
+                await voiceChannel.DeleteAsync("Ticket geschlossen");
+
+                // Remove the entry from the dictionary
+                ticketChannelMap.Remove(ticketChannelId);
+            }
+
+            //await e.Channel.DeleteAsync("Ticket geschlossen");
+        }
+
+        public static async Task CloseTicket(ModalSubmitEventArgs e)
+        {
+            if (!Ticket_Handler.CheckIfUserHasTicketPermissions(e))
+                return;
+
+            var embedMessage = new DiscordEmbedBuilder()
+            {
+                Title = "🔒 Ticket geschlossen!",
+                Description = $"Das Ticket wurde von {e.Interaction.User.Mention} mit dem Grund **{e.Values.Values.First()}** geschlossen!\n" +
+                              $"Der Kanal wird in <t:{DateTimeOffset.UtcNow.AddSeconds(60).ToUnixTimeSeconds()}:R> gelöscht.",
+                Timestamp = DateTime.UtcNow
+            };
+
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                                                     new DiscordInteractionResponseBuilder().AddEmbed(embedMessage));
+
+
+            var messages = await e.Interaction.Channel.GetMessagesAsync(999);
+
+            var content = new StringBuilder();
+            content.AppendLine($"Ticket geschlossen von {e.Interaction.User.Mention} mit dem Grund {e.Values.Values.First()}\n" +
+                               $"Transcript Ticket {e.Interaction.Channel.Name}:");
+            foreach (var message in messages)
+            {
+                content.AppendLine($"{message.Author.Username} ({message.Author.Id}) - {message.Content}");
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(60));
+
+            using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(content.ToString())))
+            {
+                var msg = await new DiscordMessageBuilder()
+                    .AddFile($"{e.Interaction.Channel.Name}.txt", memoryStream)
+                    .SendAsync(e.Interaction.Guild.GetChannel(1209297588915015730));
+            }
+
+            await e.Interaction.Channel.DeleteAsync(e.Values.Values.First());
         }
 
         public static async Task CheckIfUserHasTicketPermissions(InteractionContext ctx)
         {
-            if (!CmdShortener.CheckRole(ctx, 978352059617280010))
+            if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
+             || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
+             || !CmdShortener.CheckRole(ctx, 1216171388830744686) // DarkBot Role
+             || !CmdShortener.CheckRole(ctx, 1239551770238255147))) // Spezial Rolle 
             {
-                await CmdShortener.SendNotification(ctx, "No access", "You do not have the necessary permissions to execute this command.", DiscordColor.Red, 0);
+                await CmdShortener.SendNotification(ctx, "Error", "You are not allowed to use Ticket Commands!", DiscordColor.Red, 0);
                 return;
             }
         }
-        
-}
+
+        public static bool CheckIfUserHasTicketPermissions(ComponentInteractionCreateEventArgs ctx)
+        {
+            if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
+             || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
+             || !CmdShortener.CheckRole(ctx, 1216171388830744686) // DarkBot Role
+             || !CmdShortener.CheckRole(ctx, 1239551770238255147))) // Spezial Rolle 
+            {
+                CmdShortener.SendAsEphemeral(ctx, "You are not allowed to use Ticket Commands!");
+                return false;
+            }
+            return true;
+
+        }
+
+        public static bool CheckIfUserHasTicketPermissions(ModalSubmitEventArgs ctx)
+        {
+            if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
+             || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
+             || !CmdShortener.CheckRole(ctx, 1216171388830744686) // DarkBot Role
+             || !CmdShortener.CheckRole(ctx, 1239551770238255147))) // Spezial Rolle 
+            {
+                CmdShortener.SendAsEphemeral(ctx, "You are not allowed to use Ticket Commands!");
+                return false;
+            }
+            return true;
+        }
+    }
 }
