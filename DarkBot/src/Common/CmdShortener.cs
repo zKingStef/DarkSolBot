@@ -154,9 +154,9 @@ namespace DarkBot.src.Common
 
         public static async Task CheckIfUserHasCeoRole(InteractionContext ctx)
         {
-            if (!CmdShortener.CheckRole(ctx, 1209284430229803008))
+            if (!CmdShortener.CheckRole(ctx, 978346565225816152))
             {
-                await CmdShortener.SendNotification(ctx, "Keine Rechte", "Du benötigst die Techniker Rolle für diesen Befehl!", DiscordColor.Red, 0);
+                await CmdShortener.SendNotification(ctx, "Error", "CEO Role needed for this Command!", DiscordColor.Red, 0);
                 return;
             }
         }

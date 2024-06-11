@@ -47,15 +47,14 @@ namespace DarkBot.src.CommandHandler
 
             switch (e.Interaction.Data.CustomId)
             {
-                case "modalValoClanForm":
-                    ticketDesc = $"**Name / Ingamename:** {e.Values["nameTextBox"]}\n" +
-                                 $"**Alter:** {e.Values["ageTextBox"]}\n" +
-                                 $"**Aktueller Rank:** {e.Values["rankTextBox"]}\n" +
-                                 $"**Kurze Vorstellung:** {e.Values["vorstellTextBox"]}\n\n" +
-                                 "Der __Bereichsleiter__ wird sich sobald wie möglich um deine Bewerbung kümmern!";
-                    ticketTitle = "Valorant Clan Bewerbung";
+                case "modalPokemonGoForm":
+                    ticketDesc = $"**Your Order:** {e.Values["orderTextBox"]}\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - Pokemon Go ";
 
-                    roleId = 1220804206269567087;
+                    roleId = 978346565225816152;
 
                     overwrites =
                     [
@@ -66,36 +65,15 @@ namespace DarkBot.src.CommandHandler
                     ];
                     break;
 
-                case "modalCS2ClanForm":
-                    ticketDesc = $"**Name / Ingamename:** {e.Values["nameTextBox"]}\n" +
-                                 $"**Alter:** {e.Values["ageTextBox"]}\n" +
-                                 $"**Aktueller Rank:** {e.Values["rankTextBox"]}\n" +
-                                 $"**Kurze Vorstellung:** {e.Values["vorstellTextBox"]}\n\n" +
-                                 "Der __Bereichsleiter__ wird sich sobald wie möglich um deine Bewerbung kümmern!";
-                    ticketTitle = "CS2 Clan Bewerbung";
-
-                    roleId = 1220803957560049724;
-
-                    overwrites =
-                    [
-                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(guild.GetRole(1220803957560049724)).Allow(Permissions.AccessChannels), // Bereichsleiter CS2 Rolle
-                        new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
-                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                    ];
-                    break;
-
                 case "modalCoachingForm":
                     overwrites =
                     [
                         new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(guild.GetRole(1207357073025794079)).Allow(Permissions.AccessChannels), // Coach Rolle
-                        new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
                         new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
                     ];
 
                     // Die ID der Kategorie, in der der Sprachkanal erstellt werden soll
-                    ulong categoryId = 1245048697822249090;
+                    ulong categoryId = 1207086767623381092;
 
                     // Holen Sie sich die Kategorie anhand der ID
                     DiscordChannel voiceCategory = guild.GetChannel(categoryId);
@@ -264,9 +242,9 @@ namespace DarkBot.src.CommandHandler
 
             var embedMessage = new DiscordEmbedBuilder()
             {
-                Title = "🔒 Ticket geschlossen!",
-                Description = $"Das Ticket wurde von {e.Interaction.User.Mention} mit dem Grund **{e.Values.Values.First()}** geschlossen!\n" +
-                              $"Der Kanal wird in <t:{DateTimeOffset.UtcNow.AddSeconds(60).ToUnixTimeSeconds()}:R> gelöscht.",
+                Title = "🔒 Ticket closed!",
+                Description = $"Ticket closed by {e.Interaction.User.Mention} with reason **{e.Values.Values.First()}**.\n" +
+                              $"Channel will be deleted in <t:{DateTimeOffset.UtcNow.AddSeconds(60).ToUnixTimeSeconds()}:R>.",
                 Timestamp = DateTime.UtcNow
             };
 

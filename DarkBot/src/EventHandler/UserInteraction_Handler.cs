@@ -33,10 +33,10 @@ namespace DarkBot.src.Handler
             switch (e.Interaction.Data.CustomId)
             {
                 case "ticketPokemonGoBtn":
-                    await Modals.CreateClanModal(e, "modalValoClanForm");
+                    await Modals.CreatePokemonGoModal(e, "modalPokemonGoForm");
                     break;
                 case "ticketCS2ClanBtn":
-                    await Modals.CreateClanModal(e, "modalCS2ClanForm");
+                    await Modals.CreatePokemonGoModal(e, "modalCS2ClanForm");
                     break;
                 case "ticketCoachingBtn":
                     await Modals.CreateCoachingModal(e, "modalCoachingForm");

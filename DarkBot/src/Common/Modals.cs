@@ -12,7 +12,7 @@ namespace DarkBot.src.Common
         public static async Task HandleModal(DiscordClient client, ModalSubmitEventArgs e)
         {
             if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalValoClanForm"
+             && e.Interaction.Data.CustomId == "modalPokemonGoForm"
              || e.Interaction.Data.CustomId == "modalCS2ClanForm")
             {
                 await Ticket_Handler.HandleGeneralTickets(e);
@@ -35,37 +35,21 @@ namespace DarkBot.src.Common
 
         }
 
-        public static async Task CreateClanModal(ComponentInteractionCreateEventArgs e, string modalId)
+        public static async Task CreatePokemonGoModal(ComponentInteractionCreateEventArgs e, string modalId)
         {
             var modal = new DiscordInteractionResponseBuilder()
-                .WithTitle("Clan Beitrittsformular")
+                .WithTitle("DarkSolutions")
                 .WithCustomId(modalId)
                 .AddComponents(
-                    new TextInputComponent("Name / Ingamename", "nameTextBox", value: ""))
+                    new TextInputComponent("What do you want to order", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Dein aktueller Rank", "rankTextBox", value: ""))
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(
-                new TextInputComponent("Dein Alter", "ageTextBox", value: ""))
-                .AddComponents(
-                new TextInputComponent("Kurze Vorstellung von dir", "vorstellTextBox", value: ""));
+                new TextInputComponent("Login Method (PTC, Google, FB)", "loginTextBox", value: ""));
 
             await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
         }
 
-        public static async Task CreateCoachingModal(ComponentInteractionCreateEventArgs e, string modalId)
-        {
-            var modal = new DiscordInteractionResponseBuilder()
-                .WithTitle("Training beantragen")
-                .WithCustomId(modalId)
-                .AddComponents(
-                    new TextInputComponent("Welche Elo bist du aktuell", "eloTextBox", value: ""))
-                .AddComponents(
-                    new TextInputComponent("Was soll trainiert werden", "whatTextBox", value: ""))
-                .AddComponents(
-                    new TextInputComponent("Nenne 3 Tage an den zu Zeit hast", "dayTextBox", value: ""));
-
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
-        }
 
         public static async Task CreateReasonModal(ComponentInteractionCreateEventArgs e, string modalId)
         {
