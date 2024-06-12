@@ -12,8 +12,7 @@ namespace DarkBot.src.Common
         public static async Task HandleModal(DiscordClient client, ModalSubmitEventArgs e)
         {
             if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalPokemonGoForm"
-             || e.Interaction.Data.CustomId == "modalCS2ClanForm")
+             && e.Interaction.Data.CustomId == "modalPokemonGoForm")
             {
                 await Ticket_Handler.HandleGeneralTickets(e);
             }
@@ -21,11 +20,6 @@ namespace DarkBot.src.Common
              && e.Interaction.Data.CustomId == "modalCloseReasonForm")
             {
                 await Ticket_Handler.CloseTicket(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalCoachingForm")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
             }
             if (e.Interaction.Type == InteractionType.ModalSubmit
              && e.Interaction.Data.CustomId == "modalTechnicForm")
