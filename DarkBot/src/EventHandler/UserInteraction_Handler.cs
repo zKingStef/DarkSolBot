@@ -38,9 +38,6 @@ namespace DarkBot.src.Handler
                 case "ticketCS2ClanBtn":
                     await Modals.CreatePokemonGoModal(e, "modalCS2ClanForm");
                     break;
-                case "ticketCoachingBtn":
-                    await Modals.CreateCoachingModal(e, "modalCoachingForm");
-                    break;
                 case "ticketTechnicBtn":
                     await Modals.CreateTechnicModal(e, "modalTechnicForm");
                     break;
