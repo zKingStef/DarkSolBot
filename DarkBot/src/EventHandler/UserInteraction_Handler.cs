@@ -45,7 +45,7 @@ namespace DarkBot.src.Handler
                     {
                         await Ticket_Handler.RemoveClaimButtonAsync(e);
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                        new DiscordInteractionResponseBuilder().WithContent($"Das Ticket wird jetzt von {e.User.Mention} bearbeitet"));
+                        new DiscordInteractionResponseBuilder().WithContent($"Ticket claimed by {e.User.Mention}"));
                     }
                     break;
                 case "closeTicketButton":

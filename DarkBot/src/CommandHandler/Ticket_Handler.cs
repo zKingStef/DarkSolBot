@@ -24,7 +24,7 @@ namespace DarkBot.src.CommandHandler
             DiscordMember? user = e.Interaction.User as DiscordMember;
             DiscordGuild guild = e.Interaction.Guild;
 
-            if (guild.GetChannel(1197912790208356422) is not DiscordChannel category || category.Type != ChannelType.Category)
+            if (guild.GetChannel(1207086767623381092) is not DiscordChannel category || category.Type != ChannelType.Category)
             {
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().WithContent("Error occured while creating a Ticket: No ticket category found!").AsEphemeral(true));
@@ -48,9 +48,9 @@ namespace DarkBot.src.CommandHandler
             switch (e.Interaction.Data.CustomId)
             {
                 case "modalPokemonGoForm":
-                    ticketDesc = $"**Your Order:** {e.Values["orderTextBox"]}\n" +
-                                 $"**Login Method:** {e.Values["loginTextBox"]}\n" +
-                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n" +
+                    ticketDesc = $"**Your Order:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - Pokemon Go ";
 
@@ -60,66 +60,26 @@ namespace DarkBot.src.CommandHandler
                     [
                         new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
                         new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                        new DiscordOverwriteBuilder(guild.GetRole(roleId)).Allow(Permissions.AccessChannels), // Bereichsleiter Valorant Rolle
-                        new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
+                        new DiscordOverwriteBuilder(guild.GetRole(roleId)).Allow(Permissions.AccessChannels), // CEO Role
                     ];
-                    break;
-
-                case "modalCoachingForm":
-                    overwrites =
-                    [
-                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                    ];
-
-                    // Die ID der Kategorie, in der der Sprachkanal erstellt werden soll
-                    ulong categoryId = 1207086767623381092;
-
-                    // Holen Sie sich die Kategorie anhand der ID
-                    DiscordChannel voiceCategory = guild.GetChannel(categoryId);
-
-                    // Erstellen Sie den Sprachkanal innerhalb der angegebenen Kategorie
-                    DiscordChannel coachingVoice = await guild.CreateVoiceChannelAsync(
-                        $"Coaching-{e.Interaction.User.Username}",
-                        voiceCategory,
-                        overwrites: overwrites,
-                        position: 0
-                    );
-
-                    ticketDesc = $"**Aktuelle Elo:** {e.Values["eloTextBox"]}\n" +
-                                                     $"**Ich möchte folgendes trainieren:** {e.Values["whatTextBox"]}\n" +
-                                                     $"**An diesen Tagen habe ich Zeit:** {e.Values["dayTextBox"]}\n\n" +
-                                                     "Ein __Coach__ wird sich sobald wie möglich bei dir melden!\n\n" +
-                                                     $"Dein persönlicher Coaching Sprachkanal: <#{coachingVoice.Id}>";
-                    ticketTitle = "Valorant Coaching";
-
-                    roleId = 1207357073025794079;
-
-                    ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
-
-                    ticketChannelMap[ticketChannel.Id] = coachingVoice.Id;
                     break;
                 case "modalTechnicForm":
                     ticketDesc = $"**Problem:** {e.Values["issueTextBox"]}\n\n" +
                                  "Danke für deine Anfrage. Wir werden uns sobald wie möglich bei dir melden!";
                     ticketTitle = "Technische Hilfe";
 
-                    roleId = 1209284430229803008;
+                    roleId = 978346565225816152;
 
                     overwrites =
                     [
                         new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(guild.GetRole(1183217936513630229)).Allow(Permissions.AccessChannels), // Gründer Rolle
-                        new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
                         new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                        new DiscordOverwriteBuilder(guild.GetRole(roleId)).Allow(Permissions.AccessChannels), // CEO Role
                     ];
                     break;
             }
 
-            if (e.Interaction.Data.CustomId != "modalCoachingForm")
-            {
-                ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
-            }
+            ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
 
             //var random = new Random();
             //
@@ -237,6 +197,7 @@ namespace DarkBot.src.CommandHandler
 
         public static async Task CloseTicket(ModalSubmitEventArgs e)
         {
+
             if (!Ticket_Handler.CheckIfUserHasTicketPermissions(e))
                 return;
 
@@ -255,8 +216,8 @@ namespace DarkBot.src.CommandHandler
             var messages = await e.Interaction.Channel.GetMessagesAsync(999);
 
             var content = new StringBuilder();
-            content.AppendLine($"Ticket geschlossen von {e.Interaction.User.Mention} mit dem Grund {e.Values.Values.First()}\n" +
-                               $"Transcript Ticket {e.Interaction.Channel.Name}:");
+            content.AppendLine($"Ticket closed by {e.Interaction.User.Mention} with the reason {e.Values.Values.First()}\n" +
+                               $"Transcript of {e.Interaction.Channel.Name}:");
             foreach (var message in messages)
             {
                 content.AppendLine($"{message.Author.Username} ({message.Author.Id}) - {message.Content}");
