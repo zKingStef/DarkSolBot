@@ -23,7 +23,9 @@ namespace DarkBot.src.Handler
 
             switch (selectedOption)
             {
-                case "Template1":
+                case "dd_RoleDarkServices":
+                case "dd_RolePokemonGo":
+                    AutoRole_Handler.GiveRoleToUser(e, selectedOption);
                     break;
 
                 default:
