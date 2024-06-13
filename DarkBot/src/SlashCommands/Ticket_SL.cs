@@ -21,10 +21,8 @@ namespace DarkBot.src.SlashCommands
         [SlashCommand("system", "Ticket System")]
         public static async Task Ticketsystem(InteractionContext ctx,
                                 [Choice("PokemonGo", 0)]
-                                [Choice("CS2", 1)]
-                                [Choice("Coaching", 2)]
-                                [Choice("Technik", 3)]
-                                [Option("form", "Wähle eine Ticket Form")] long systemChoice)
+                                [Choice("Technic", 1)]
+                                [Option("form", "Choose a form")] long systemChoice)
         {
             // Pre Execution Checks
             await CmdShortener.CheckIfUserHasCeoRole(ctx);
@@ -201,12 +199,12 @@ namespace DarkBot.src.SlashCommands
 
         private async Task<bool> CheckIfChannelIsTicket(InteractionContext ctx)
         {
-            const ulong categoryId = 1197912790208356422;
+            const ulong categoryId = 1207086767623381092;
 
             if (ctx.Channel.Parent.Id != categoryId || ctx.Channel.Parent == null)
             {
                 await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().WithContent(":warning: **Dieser Befehl ist nur für Tickets geeignet!**").AsEphemeral(true));
+                    new DiscordInteractionResponseBuilder().WithContent(":warning: **This command is for tickets only!**").AsEphemeral(true));
 
                 return true;
             }
