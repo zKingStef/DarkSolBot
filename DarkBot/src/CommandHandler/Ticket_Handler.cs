@@ -148,9 +148,9 @@ namespace DarkBot.src.CommandHandler
 
             var embedMessage = new DiscordEmbedBuilder()
             {
-                Title = "🔒 Ticket geschlossen!",
-                Description = $"Das Ticket wurde von {e.User.Mention} geschlossen!\n" +
-                              $"Der Kanal wird in <t:{DateTimeOffset.UtcNow.AddSeconds(60).ToUnixTimeSeconds()}:R> gelöscht.",
+                Title = "🔒 Ticket closed!",
+                Description = $"Ticket closed by {e.User.Mention}!\n" +
+                              $"Channel will be deleted in <t:{DateTimeOffset.UtcNow.AddSeconds(60).ToUnixTimeSeconds()}:R>.",
                 Timestamp = DateTime.UtcNow
             };
 
@@ -161,32 +161,30 @@ namespace DarkBot.src.CommandHandler
             var messages = await e.Channel.GetMessagesAsync(999);
 
             var content = new StringBuilder();
-            content.AppendLine($"Transcript Ticket {e.Channel.Name}:");
+            content.AppendLine($"Ticket LOG: {e.Channel.Name}:");
             foreach (var message in messages)
             {
                 content.AppendLine($"{message.Author.Username} ({message.Author.Id}) - {message.Content}");
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(60));
-
             using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(content.ToString())))
             {
                 var msg = await new DiscordMessageBuilder()
                     .AddFile($"{e.Interaction.Channel.Name}.txt", memoryStream)
-                    .SendAsync(e.Guild.GetChannel(1209297588915015730));
+                    .SendAsync(e.Guild.GetChannel(978669571483500574));
             }
 
-
+            await Task.Delay(TimeSpan.FromSeconds(58));
 
             var ticketChannelId = e.Channel.Id;
             var guild = e.Guild;
             var ticketChannel = guild.GetChannel(ticketChannelId);
-            await ticketChannel.DeleteAsync("Ticket geschlossen");
+            await ticketChannel.DeleteAsync("Ticket closed");
 
             if (ticketChannelMap.TryGetValue(ticketChannelId, out var voiceChannelId))
             {
                 var voiceChannel = guild.GetChannel(voiceChannelId);
-                await voiceChannel.DeleteAsync("Ticket geschlossen");
+                await voiceChannel.DeleteAsync("Ticket closed");
 
                 // Remove the entry from the dictionary
                 ticketChannelMap.Remove(ticketChannelId);
