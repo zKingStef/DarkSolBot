@@ -94,12 +94,12 @@ namespace DarkBot
             Client.GetSlashCommands();
             Slash.RegisterCommands<AutoRole_SL>();
             Slash.RegisterCommands<Calculator_SL>();
-            Slash.RegisterCommands<DarkServices_SL>();
+            //Slash.RegisterCommands<DarkServices_SL>();
             Slash.RegisterCommands<ImgFinder_SL>();
             Slash.RegisterCommands<MiniGame_SL>();
             Slash.RegisterCommands<Misc_SL>();
             Slash.RegisterCommands<Moderation_SL>();
-            Slash.RegisterCommands<PokeDiary_SL>();
+            //Slash.RegisterCommands<PokeDiary_SL>();
             Slash.RegisterCommands<Ticket_SL>();
             Slash.RegisterCommands<Troll_SL>();
             Slash.SlashCommandErrored += SlashCommandErrored;

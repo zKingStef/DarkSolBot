@@ -26,7 +26,7 @@ namespace DarkBot.src.SlashCommands
                              [Choice("Scissors", "Scissors")]
                              [Choice("Rock", "Rock")]
                              [Choice("Paper", "Paper")]
-                             [Option("Auswahl", "Rock/Paper/Scissors")] string choice)
+                             [Option("selection", "You can only choose one. Good luck")] string choice)
         {
             string[] choices = { "Rock", "Paper", "Scissors" };
 
