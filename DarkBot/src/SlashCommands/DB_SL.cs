@@ -23,7 +23,7 @@ namespace DarkBot.src.SlashCommands
             await ctx.CreateResponseAsync($"The highest SALES_Id is: {SALES_Id}");
         }
 
-        
+        /*
         [SlashCommand("AddSalesEntry", "Performs an insert into the Sales Table")]
         public static async Task AddSalesEntry(InteractionContext ctx,
                                               [Option("ART_Nr", "")]        long ART_Nr,
@@ -46,6 +46,6 @@ namespace DarkBot.src.SlashCommands
             var dbCommands = new DB_Commands();
             var SALES_Id = await dbCommands.NewSalesEntry(sales);
             await ctx.CreateResponseAsync($"New Entry in Sales Table successfully added! ID: {sales.SALES_Id}");
-        }
+        }*/
     }
 }
