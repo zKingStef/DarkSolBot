@@ -20,7 +20,7 @@ namespace DarkBot.src.DatabaseDarkSol
         //
         // INSERT INTO bmocfdpnmiqmcbuykudg.SALES
         // (SALES_Id, ART_Nr, CUS_Id, SALES_Price, SALES_Profit, PLAT_Id, PAYMENT_Id, SALES_Desc, SALES_GenDate, SALES_ModDate)
-        // VALUES(208, 7, 29, 55, 5, 1, 2, '14500 Pokecoins - Discord', now(), now());
+        // VALUES(208, 7, 29, 55, 5, 2, 1, 'TestArtikel - Discord', now(), now());
         public async Task<bool> NewSalesEntry(SalesData sales)
         {
             var SALES_Id = await GetTopSalesId();
