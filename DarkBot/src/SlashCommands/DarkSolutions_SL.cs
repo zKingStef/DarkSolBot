@@ -4,6 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
+using DSharpPlus;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DSharpPlus.CommandsNext.Attributes;
+using Newtonsoft.Json;
+using DarkBot.src.Common;
 
 namespace DarkBot.src.SlashCommands
 {
