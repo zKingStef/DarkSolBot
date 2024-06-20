@@ -35,12 +35,12 @@ namespace DarkBot.src.SlashCommands
                                               [Option("SALES_Desc", "")]    string SALES_Desc)
         {
             SalesData sales = new SalesData();
-            sales.ART_Nr = ART_Nr;
-            sales.CUS_Id = CUS_Id;
+            sales.ART_Nr = (int)ART_Nr;
+            sales.CUS_Id = (int)CUS_Id;
             sales.SALES_Price = SALES_Price;
             sales.SALES_Profit = SALES_Profit;
-            sales.PLAT_Id = PLAT_Id;
-            sales.PAYMENT_Id = PAYMENT_Id;
+            sales.PLAT_Id = (int)PLAT_Id;
+            sales.PAYMENT_Id = (int)PAYMENT_Id;
             sales.SALES_Desc = SALES_Desc;
 
             var dbCommands = new DB_Commands();
