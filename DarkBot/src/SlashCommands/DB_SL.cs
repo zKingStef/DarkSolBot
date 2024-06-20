@@ -23,15 +23,15 @@ namespace DarkBot.src.SlashCommands
             await ctx.CreateResponseAsync($"The highest SALES_Id is: {SALES_Id}");
         }
 
-
+        
         [SlashCommand("AddSalesEntry", "Performs an insert into the Sales Table")]
         public static async Task AddSalesEntry(InteractionContext ctx,
-                                              [Option("ART_Nr", "")]        double ART_Nr,
-                                              [Option("CUS_Id", "")]        double CUS_Id,
+                                              [Option("ART_Nr", "")]        long ART_Nr,
+                                              [Option("CUS_Id", "")]        long CUS_Id,
                                               [Option("SALES_Price", "")]   double SALES_Price,
                                               [Option("SALES_Profit", "")]  double SALES_Profit,
-                                              [Option("PLAT_Id", "")]       double PLAT_Id,
-                                              [Option("PAYMENT_Id", "")]    double PAYMENT_Id,
+                                              [Option("PLAT_Id", "")]       long PLAT_Id,
+                                              [Option("PAYMENT_Id", "")]    long PAYMENT_Id,
                                               [Option("SALES_Desc", "")]    string SALES_Desc)
         {
             SalesData sales = new SalesData();
