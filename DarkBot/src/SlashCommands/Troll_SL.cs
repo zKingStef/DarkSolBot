@@ -20,7 +20,7 @@ namespace DarkBot.src.SlashCommands
             await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
                                                      .WithContent(($"PingSpam started...")).AsEphemeral(true));
 
-            if (amtPing > 100)
+            if (amtPing > 50)
             {
                 await ctx.Channel.SendMessageAsync("Bro chill, why would you do this");
                 return;

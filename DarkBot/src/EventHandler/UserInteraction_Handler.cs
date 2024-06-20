@@ -34,6 +34,7 @@ namespace DarkBot.src.Handler
 
             switch (e.Interaction.Data.CustomId)
             {
+                // Cases for Ticket Buttons
                 case "ticketPokemonGoBtn":
                     await Modals.CreatePokemonGoModal(e, "modalPokemonGoForm");
                     break;
@@ -55,6 +56,19 @@ namespace DarkBot.src.Handler
                     await Modals.CreateReasonModal(e, "modalCloseReasonForm");
                     break;
 
+                // Cases for New-Order Buttons
+                case "orderDeliverBtn":
+                    break;
+                case "orderPendingBtn":
+                    break;
+                case "orderCancelBtn":
+                    break;
+                case "AccDetailsBtn":
+                    break;
+                case "OrderDetailsBtn":
+                    break;
+                case "PictureBtn":
+                    break;
                 default:
                     Console.WriteLine(e.Message);
                     break;

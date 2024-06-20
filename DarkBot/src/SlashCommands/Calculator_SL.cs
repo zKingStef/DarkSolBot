@@ -14,7 +14,7 @@ namespace DarkBot.src.SlashCommands
     {
         private const string ApiUrl = "https://api.exchangerate-api.com/v4/latest/TRY"; // API-URL für türkische Lira
         
-        [SlashCommand("calculate", "Calculator")]
+        [SlashCommand("calculate", "Simple Calculator")]
         public async Task Calculate(InteractionContext ctx,
                                 [Option("Number1", "Enter first number")] double num1,
                                 [Option("Operator", "Operator ( + - * / )")] string op,
