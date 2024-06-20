@@ -67,4 +67,28 @@ namespace DarkBot.src.SlashCommands
 
         }
     }
+
+
+    [SlashCommand("roll", "Roll a Number between 1 and the choosen number")]
+    public async Task RollCommand(InteractionContext ctx, [Option("number", "highest number")] long number)
+    {
+        Random rnd = new Random();
+        int result = rnd.Next(1, (int)number + 1);
+        await ctx.CreateResponseAsync($"You rolled a {result}!");
+    }
+
+
+    [SlashCommand("joke", "Tell a random joke")]
+    public async Task JokeCommand(InteractionContext ctx)
+    {
+        string[] jokes = {
+        "If there is a hole, there is a goal.",
+        "Who put the muffin in the freezer ? Bomboclaut.",
+        "D"
+    };
+        Random rnd = new Random();
+        string joke = jokes[rnd.Next(jokes.Length)];
+        await ctx.CreateResponseAsync(joke);
+    }
+
 }

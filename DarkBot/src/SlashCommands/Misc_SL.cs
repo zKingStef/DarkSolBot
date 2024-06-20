@@ -14,6 +14,13 @@ namespace DarkBot.src.SlashCommands
 {
     public class Misc_SL : ApplicationCommandModule
     {
+        [SlashCommand("ping", "Check Response Time of the Bot")]
+        public async Task PingCommand(InteractionContext ctx)
+        {
+            var ping = ctx.Client.Ping;
+            await ctx.CreateResponseAsync($"Pong! Response Time is {ping} ms.");
+        }
+
         [SlashCommand("avatar", "Show User Avatar")]
         public static async Task Avatar(InteractionContext ctx,
                                 [Option("User", "Choose any User to get their Avatar")] DiscordUser? user = null)
