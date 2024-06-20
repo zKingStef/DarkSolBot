@@ -23,6 +23,7 @@ namespace DarkBot.src.SlashCommands
         [SlashCommand("new-order", "Creates a new Order")]
         public static async Task CreateNewOrder(InteractionContext ctx)
         {
+            DiscordGuild guild = ctx.Interaction.Guild;
             var embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("**New Order created**")
                     .WithColor(DiscordColor.CornflowerBlue)
@@ -38,9 +39,9 @@ namespace DarkBot.src.SlashCommands
             var orderEmbed = new DiscordMessageBuilder()
                     .AddEmbed(new DiscordEmbedBuilder()
                     .WithColor(DiscordColor.Cyan)
-                    .WithTitle($"__{ticketTitle}__")
+                    .WithTitle("**New Order created**")
                     .WithThumbnail(guild.IconUrl)
-                    .WithDescription(ticketDesc))
+                    .WithDescription("change the order description"))
                     .AddComponents(orderDeliverBtn, orderPendingBtn, orderCancelBtn, accDetailsBtn, orderDetailsBtn);
 
             await ctx.Channel.SendMessageAsync(orderEmbed);
