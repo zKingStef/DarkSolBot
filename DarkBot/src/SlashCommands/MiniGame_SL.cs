@@ -20,13 +20,13 @@ namespace DarkBot.src.SlashCommands
             await CmdShortener.SendResponseAsync(ctx, $":coin:  **{ctx.User.Username}** threw a Coin and got **{Formatter.Bold(Convert.ToBoolean(new Random().Next(0, 2)) ? "Heads" : "Tails")}**").ConfigureAwait(false);
         }
 
-        [SlashCommand("rockpaper", "Play a game of Rock-Paper-Scissors against the Bot.")]
+        [SlashCommand("rockpaper", "Play a game of Rock-Paper-Scissors against the Bot")]
         [Cooldown(1, 3, CooldownBucketType.Global)]
         public async Task SSP(InteractionContext ctx,
                              [Choice("Scissors", "Scissors")]
                              [Choice("Rock", "Rock")]
                              [Choice("Paper", "Paper")]
-                             [Option("selection", "You can only choose one. Good luck")] string choice)
+                             [Option("selection", "You can only choose one. Good luck!")] string choice)
         {
             string[] choices = { "Rock", "Paper", "Scissors" };
 
