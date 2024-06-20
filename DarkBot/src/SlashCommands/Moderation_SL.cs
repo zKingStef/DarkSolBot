@@ -25,7 +25,7 @@ namespace DarkBot.src.SlashCommands
             }
 
             await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
-                                                     .WithContent(($"The last {delNumber} Messages have been deleted!")).AsEphemeral(true));
+                                                     .WithContent(($"The last {delNumber} messages have been deleted!")).AsEphemeral(true));
 
             var messages = await ctx.Channel.GetMessagesAsync((int)(delNumber));
 
@@ -44,10 +44,10 @@ namespace DarkBot.src.SlashCommands
             }
 
             await CmdShortener.SendNotification(ctx,
-                                                 $"Nachrichten mit /clear gelöscht!",
-                                                 $"Anzahl Nachrichten: **{delNumber}**\n\n" +
+                                                 $"Messages deleted with /clear !",
+                                                 $"Amount Messages: **{delNumber}**\n\n" +
                                                  $"Channel: {ctx.Channel.Mention} - {ctx.Channel.Name}\n" +
-                                                 $"Verantwortlicher Moderator: {ctx.User.Mention}",
+                                                 $"Deleted by: {ctx.User.Mention}",
                                                  DiscordColor.Yellow,
                                                  1143516841357086870);
 
@@ -112,7 +112,7 @@ namespace DarkBot.src.SlashCommands
             await Moderation_Handler.ExecuteRemoveTimeoutAction(ctx, (DiscordMember)user, reason);
         }
 
-        [SlashCommand("lock", "Sperrt temporär den Schreibzugriff für alle User.")]
+        [SlashCommand("lock", "Lock any Channel")]
         public  async Task Lock(InteractionContext ctx)
         {
             await CmdShortener.CheckIfUserHasCeoRole(ctx);
@@ -120,10 +120,10 @@ namespace DarkBot.src.SlashCommands
             await ctx.DeferAsync();
             await ctx.Channel.AddOverwriteAsync(ctx.Guild.EveryoneRole, Permissions.None, Permissions.SendMessages);
 
-            await CmdShortener.SendNotification(ctx, "Channel gesperrt!", "Bitte warte bis der Channel von einem Admin freigeschalten wird.", DiscordColor.HotPink, 0);
+            await CmdShortener.SendNotification(ctx, "Channel locked!", "Please wait until the Channel is unlocked by an Administrator.", DiscordColor.HotPink, 0);
         }
 
-        [SlashCommand("unlock", "Gibt einen Channel wieder frei.")]
+        [SlashCommand("unlock", "Unlock any Channel.")]
         public  async Task Unlock(InteractionContext ctx)
         {
             await CmdShortener.CheckIfUserHasCeoRole(ctx);
@@ -131,7 +131,7 @@ namespace DarkBot.src.SlashCommands
             await ctx.DeferAsync();
             await ctx.Channel.AddOverwriteAsync(ctx.Guild.EveryoneRole, Permissions.SendMessages, Permissions.None);
 
-            await CmdShortener.SendNotification(ctx, "Channel freigeschalten!", "Der Channel ist jetzt wieder offen. Danke für eure Geduld!", DiscordColor.HotPink, 0);
+            await CmdShortener.SendNotification(ctx, "Channel unlocked!", "Channel is now unlocked. Everyone can chat again!", DiscordColor.HotPink, 0);
         }
     }
 }
