@@ -24,6 +24,8 @@ namespace DarkBot.src.DatabaseDarkSol
         public async Task<bool> NewSalesEntry(SalesData sales)
         {
             var SALES_Id = await GetTopSalesId();
+            var SALES_GenDate = DateTime.Now;
+            var SALES_ModDate = DateTime.Now;
 
             try
             {
@@ -31,28 +33,28 @@ namespace DarkBot.src.DatabaseDarkSol
                 {
                     await conn.OpenAsync();
 
-                    string query = "insert into bmocfdpnmiqmcbuykudg.SALES ("         +
-                                                                    "SALES_Id, "      +
-                                                                    "ART_Nr, "        +
-                                                                    "CUS_Id, "        +
-                                                                    "SALES_Price, "   +
-                                                                    "SALES_Profit, "  +
-                                                                    "PLAT_Id, "       +
-                                                                    "PAYMENT_Id, "    +
-                                                                    "SALES_Desc, "    +
-                                                                    "SALES_GenDate, " +
-                                                                    "SALES_ModDate)"  +
-                                  $"values (" +
-                                  $" '{SALES_Id + 1}'," +
-                                  $" '{sales.ART_Nr}'," +
-                                  $" '{sales.CUS_Id}'," +
-                                  $" '{sales.SALES_Price}'," +
-                                  $" '{sales.SALES_Profit}'," +
-                                  $" '{sales.PLAT_Id}'," +
-                                  $" '{sales.PAYMENT_Id}'," +
-                                  $" '{sales.SALES_Desc}'," +
-                                  $" '{sales.SALES_GenDate}'," +
-                                  $" '{sales.SALES_ModDate}')";
+                    string query = "insert into bmocfdpnmiqmcbuykudg.SALES ("                       +
+                                                                    "SALES_Id, "                    +
+                                                                    "ART_Nr, "                      +
+                                                                    "CUS_Id, "                      +
+                                                                    "SALES_Price, "                 +
+                                                                    "SALES_Profit, "                +
+                                                                    "PLAT_Id, "                     +
+                                                                    "PAYMENT_Id, "                  +
+                                                                    "SALES_Desc, "                  +
+                                                                    "SALES_GenDate, "               +
+                                                                    "SALES_ModDate)"                +
+                                                           $"values ("                              +
+                                                                    $" '{SALES_Id + 1}',"           +
+                                                                    $" '{sales.ART_Nr}',"           +
+                                                                    $" '{sales.CUS_Id}',"           +
+                                                                    $" '{sales.SALES_Price}',"      +
+                                                                    $" '{sales.SALES_Profit}',"     +
+                                                                    $" '{sales.PLAT_Id}',"          +
+                                                                    $" '{sales.PAYMENT_Id}',"       +
+                                                                    $" '{sales.SALES_Desc}',"       +
+                                                                    $" '{sales.SALES_GenDate}',"    +
+                                                                    $" '{sales.SALES_ModDate}')";
 
                     using (var cmd = new NpgsqlCommand(query, conn))
                     {

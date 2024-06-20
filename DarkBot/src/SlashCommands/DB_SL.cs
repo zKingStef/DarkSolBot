@@ -22,5 +22,30 @@ namespace DarkBot.src.SlashCommands
             var SALES_Id = await dbCommands.GetTopSalesId();
             await ctx.CreateResponseAsync($"The highest SALES_Id is: {SALES_Id}");
         }
+
+
+        [SlashCommand("AddSalesEntry", "Performs an insert into the Sales Table")]
+        public static async Task AddSalesEntry(InteractionContext ctx,
+                                              [Option("ART_Nr", "")]        int ART_Nr,
+                                              [Option("CUS_Id", "")]        int CUS_Id,
+                                              [Option("SALES_Price", "")]   double SALES_Price,
+                                              [Option("SALES_Profit", "")]  double SALES_Profit,
+                                              [Option("PLAT_Id", "")]       int PLAT_Id,
+                                              [Option("PAYMENT_Id", "")]    int PAYMENT_Id,
+                                              [Option("SALES_Desc", "")]    string SALES_Desc)
+        {
+            SalesData sales = new SalesData();
+            sales.ART_Nr = ART_Nr;
+            sales.CUS_Id = CUS_Id;
+            sales.SALES_Price = SALES_Price;
+            sales.SALES_Profit = SALES_Profit;
+            sales.PLAT_Id = PLAT_Id;
+            sales.PAYMENT_Id = PAYMENT_Id;
+            sales.SALES_Desc = SALES_Desc;
+
+            var dbCommands = new DB_Commands();
+            var SALES_Id = await dbCommands.NewSalesEntry(sales);
+            await ctx.CreateResponseAsync($"New Entry in Sales Table successfully added! ID: {sales.SALES_Id}");
+        }
     }
 }
