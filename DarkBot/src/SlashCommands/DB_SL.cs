@@ -26,12 +26,12 @@ namespace DarkBot.src.SlashCommands
 
         [SlashCommand("AddSalesEntry", "Performs an insert into the Sales Table")]
         public static async Task AddSalesEntry(InteractionContext ctx,
-                                              [Option("ART_Nr", "")]        int ART_Nr,
-                                              [Option("CUS_Id", "")]        int CUS_Id,
+                                              [Option("ART_Nr", "")]        double ART_Nr,
+                                              [Option("CUS_Id", "")]        double CUS_Id,
                                               [Option("SALES_Price", "")]   double SALES_Price,
                                               [Option("SALES_Profit", "")]  double SALES_Profit,
-                                              [Option("PLAT_Id", "")]       int PLAT_Id,
-                                              [Option("PAYMENT_Id", "")]    int PAYMENT_Id,
+                                              [Option("PLAT_Id", "")]       double PLAT_Id,
+                                              [Option("PAYMENT_Id", "")]    double PAYMENT_Id,
                                               [Option("SALES_Desc", "")]    string SALES_Desc)
         {
             SalesData sales = new SalesData();
