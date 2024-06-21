@@ -25,11 +25,15 @@ namespace DarkBot.src.SlashCommands
     {
         [SlashCommand("new-order", "Creates a new Order")]
         public async Task CreateNewOrder(InteractionContext ctx,
-                                [Choice("Pokecoins", 0)]
-                                [Choice("Stardust", 1)]
-                                [Choice("XP", 2)]
-                                [Choice("Raids", 3)]
-                                [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type)
+                                        [Choice("Pokecoins", 0)]
+                                        [Choice("Stardust", 1)]
+                                        [Choice("XP", 2)]
+                                        [Choice("Raids", 3)]
+                                        [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
+                                        [Option("Article", "Further Description of the Article")] string Article,
+                                        [Option("Price", "Price of the Article")] string SALES_Price,
+                                        [Option("Profit", "Profit of that Order")] string SALES_Profit,
+                                        [Option("Customer", "Name of the Customer")] string CUS_Name)
         {
             // Pre Execution Checks
             //await CmdShortener.CheckIfUserHasCeoRole(ctx);
@@ -54,17 +58,19 @@ namespace DarkBot.src.SlashCommands
 
             DiscordGuild guild = ctx.Interaction.Guild;
 
-            var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderDeliverBtn", "✅ Order delivered");
-            var orderPendingBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderPendingBtn", "🕖 Delivery pending");
-            var orderCancelBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderCancelBtn", "❌ Order canceled");
-            var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
-            var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "OrderDetailsBtn", "🛄 Order Details");
+            var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderDeliverBtn",  "✅ Order delivered");
+            var orderPendingBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderPendingBtn",  "🕖 Delivery pending");
+            var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Secondary, "orderCancelBtn",   "❌ Order canceled");
+            var accDetailsBtn   = new DiscordButtonComponent(ButtonStyle.Primary,   "AccDetailsBtn",    "🛃 Account Details");
+            var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary,   "OrderDetailsBtn",  "🛄 Order Details");
 
             var orderEmbed = new DiscordEmbedBuilder()
                 .WithColor(DiscordColor.Cyan)
-                .WithTitle("**New Order created**")
+                .WithTitle("Order: " + Article)
                 .WithThumbnail(pictureURL)
-                .WithDescription("Order Status: 🕖 Delivery pending");
+                .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n" +
+                                 $"💰 Article Price:  **{SALES_Price}€** 🤑 Profit:  **{SALES_Profit}€**\n\n" +
+                                  "🚦 Order Status: **:orange_square: Delivery pending**");
 
             var responseBuilder = new DiscordInteractionResponseBuilder()
                 .AddEmbed(orderEmbed)

@@ -32,6 +32,9 @@ namespace DarkBot.src.Handler
                     break;
             }
 
+            // Used for the New-Order Buttons
+            var originalEmbed = e.Message.Embeds.FirstOrDefault();
+
             switch (e.Interaction.Data.CustomId)
             {
                 // Cases for Ticket Buttons
@@ -58,10 +61,57 @@ namespace DarkBot.src.Handler
 
                 // Cases for New-Order Buttons
                 case "orderDeliverBtn":
+                    
+                    if (originalEmbed != null)
+                    {
+
+                        var newEmbed = new DiscordEmbedBuilder(originalEmbed)
+                            .WithDescription(originalEmbed.Description.Replace(":orange_square: Delivery pending", ":green_square: Order delivered"));
+
+                        // Original Buttons wieder hinzufügen
+                        var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderDeliverBtn", "✅ Order delivered");
+                        var orderPendingBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderPendingBtn", "🕖 Delivery pending");
+                        var orderCancelBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderCancelBtn", "❌ Order canceled");
+                        var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
+                        var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "OrderDetailsBtn", "🛄 Order Details");
+
+                        var responseBuilder = new DiscordInteractionResponseBuilder()
+                            .AddEmbed(newEmbed)
+                            .AddComponents(orderDeliverBtn, orderPendingBtn, orderCancelBtn)
+                            .AddComponents(accDetailsBtn, orderDetailsBtn);
+
+                        await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+                    }
                     break;
                 case "orderPendingBtn":
+                    if (originalEmbed != null)
+                    {
+                        var newEmbed = new DiscordEmbedBuilder(originalEmbed)
+                            .WithDescription(originalEmbed.Description.Replace(":green_square: Order delivered", ":orange_square: Delivery pending"));
+
+                        // Original Buttons wieder hinzufügen
+                        var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderDeliverBtn", "✅ Order delivered");
+                        var orderPendingBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderPendingBtn", "🕖 Delivery pending");
+                        var orderCancelBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderCancelBtn", "❌ Order canceled");
+                        var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
+                        var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "OrderDetailsBtn", "🛄 Order Details");
+
+                        var responseBuilder = new DiscordInteractionResponseBuilder()
+                            .AddEmbed(newEmbed)
+                            .AddComponents(orderDeliverBtn, orderPendingBtn, orderCancelBtn)
+                            .AddComponents(accDetailsBtn, orderDetailsBtn);
+
+                        await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+                    }
                     break;
                 case "orderCancelBtn":
+                    if (originalEmbed != null)
+                    {
+                        var newEmbed = new DiscordEmbedBuilder(originalEmbed)
+                            .WithDescription(originalEmbed.Description.Replace(":orange_square: Delivery pending", ":red_square: Order canceled").Replace(":green_square: Order delivered", ":red_square: Order canceled"));
+
+                        await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, new DiscordInteractionResponseBuilder().AddEmbed(newEmbed));
+                    }
                     break;
                 case "AccDetailsBtn":
                     break;
