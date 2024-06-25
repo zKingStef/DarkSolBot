@@ -30,7 +30,6 @@ namespace DarkBot.src.SlashCommands
                                         [Choice("Stardust+Shadow", 2)]
                                         [Choice("XP", 3)]
                                         [Choice("Raids", 4)]
-                                        [Choice("Custom", 5)]
                                         [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
                                         [Option("Article", "Further Description of the Article")] string Article,
                                         [Option("Price", "Price of the Article")] string SALES_Price,
@@ -51,10 +50,17 @@ namespace DarkBot.src.SlashCommands
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtPs4Cf0pQpN_EVeISKk4TaeCVoAvz68AvgQ&s";
                     break;
                 case 2:
-                    pictureURL = "https://cdn-icons-png.flaticon.com/256/6712/6712589.png";
+                    pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiMVLiCD_zCwC007NHW9g4tUpScVMQwpdXA&s";
                     break;
                 case 3:
+                    pictureURL = "https://cdn-icons-png.flaticon.com/256/6712/6712589.png";
+                    break;
+                case 4:
                     pictureURL = "https://gogames.news/wp-content/uploads/2019/12/tipps-fuer-den-lapras-raid-tag-guide-1.png";
+                    break;
+
+                default:
+                    pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3lNWPVHvbBJiFpnJ_Yo3kspQKdvh24grZYA&s";
                     break;
             }
 
@@ -71,7 +77,7 @@ namespace DarkBot.src.SlashCommands
                 .WithTitle("Order: " + Article)
                 .WithThumbnail(pictureURL)
                 .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n" +
-                                 $"💰 Article Price:  **{SALES_Price}€** 🤑 Profit:  **{SALES_Profit}€**\n\n" +
+                                 $"💰 Article Price:  **{SALES_Price}€**\n🤑 Profit:  **{SALES_Profit}€**\n\n" +
                                   "🚦 Order Status: **:orange_square: Delivery pending**");
 
             var responseBuilder = new DiscordInteractionResponseBuilder()
