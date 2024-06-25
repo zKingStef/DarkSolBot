@@ -35,11 +35,11 @@ namespace DarkBot.src.SlashCommands
                     .WithDescription("Open a Ticket here")
                     .WithImageUrl("https://i.ebayimg.com/images/g/TncAAOSwz7FfP~5R/s-l400.jpg");
 
-                var buttonComponent = new DiscordButtonComponent(ButtonStyle.Primary, "ticketPokemonGoBtn", "📩 Create Ticket");
+                var pokemonGoBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_TicketPokemonGo", "📩 Create Ticket");
 
                 var messageBuilder = new DiscordMessageBuilder()
                     .WithEmbed(embedTicketButtons)
-                    .AddComponents(buttonComponent);
+                    .AddComponents(pokemonGoBtn);
 
                 await ctx.Channel.SendMessageAsync(messageBuilder);
             }

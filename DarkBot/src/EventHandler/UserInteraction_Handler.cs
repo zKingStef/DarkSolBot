@@ -43,7 +43,7 @@ namespace DarkBot.src.Handler
             switch (e.Interaction.Data.CustomId)
             {
                 // Cases for Ticket Buttons
-                case "ticketPokemonGoBtn":
+                case "Button_TicketPokemonGo":
                     await Modals.CreatePokemonGoModal(e, "modalPokemonGoForm");
                     break;
                 case "ticketTechnicBtn":

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DarkBot.src.CommandHandler;
 
 namespace DarkBot.src.SlashCommands
 {
@@ -28,6 +29,26 @@ namespace DarkBot.src.SlashCommands
 
             for (int i = 0; i < amtPing; i++)
                 await ctx.Channel.SendMessageAsync(user.Mention);
+        }
+
+        [SlashCommand("troll", "Sends a random troll message or image")]
+        public async Task TrollCommand(InteractionContext ctx)
+        {
+            var random = new Random();
+            int choice = random.Next(3); // Drei mögliche Trolling-Aktionen
+
+            switch (choice)
+            {
+                case 0:
+                    await Troll_Handler.SendFunnyMessage(ctx);
+                    break;
+                case 1:
+                    await Troll_Handler.SendFunnyImage(ctx);
+                    break;
+                case 2:
+                    await Troll_Handler.SendWeirdEmoji(ctx);
+                    break;
+            }
         }
     }
 }

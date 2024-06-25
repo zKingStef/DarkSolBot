@@ -30,10 +30,13 @@ namespace DarkBot.src.SlashCommands
                                         [Choice("Stardust+Shadow", 2)]
                                         [Choice("XP", 3)]
                                         [Choice("Raids", 4)]
+                                        [Choice("Custom", 5)]
                                         [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
                                         [Option("Article", "Further Description of the Article")] string Article,
                                         [Option("Price", "Price of the Article")] string SALES_Price,
-                                        [Option("Profit", "Profit of that Order")] string SALES_Profit,
+                                        [Choice("Ebay", "Ebay")]
+                                        [Choice("Discord", "Discord")]
+                                        [Option("Platform", "Selling platform")] string Platform,
                                         [Option("Customer", "Name of the Customer")] string CUS_Name)
         {
             // Pre Execution Checks
@@ -64,8 +67,6 @@ namespace DarkBot.src.SlashCommands
                     break;
             }
 
-            DiscordGuild guild = ctx.Interaction.Guild;
-
             var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_DeliveryPending",  "✅ Order delivered");
             var inProgressBtn   = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_InProgress",    "⚙️ In Progress");
             var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderCancel",   "❌ Order canceled");
@@ -76,8 +77,8 @@ namespace DarkBot.src.SlashCommands
                 .WithColor(DiscordColor.Cyan)
                 .WithTitle("Order: " + Article)
                 .WithThumbnail(pictureURL)
-                .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n" +
-                                 $"💰 Article Price:  **{SALES_Price}€**\n🤑 Profit:  **{SALES_Profit}€**\n\n" +
+                .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n🛒 Platform:  {Platform}\n" +
+                                 $"💰 Article Price:  **{SALES_Price}€**\n\n" +
                                   "🚦 Order Status: **:orange_square: Delivery pending**");
 
             var responseBuilder = new DiscordInteractionResponseBuilder()
