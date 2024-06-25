@@ -83,7 +83,7 @@ namespace DarkBot.src.SlashCommands
 
             var responseBuilder = new DiscordInteractionResponseBuilder()
                 .AddEmbed(orderEmbed)
-                .AddComponents(orderDeliverBtn, inProgressBtn, deliveryPendingBtn, orderCancelBtn)
+                .AddComponents(orderDeliverBtn, inProgressBtn, orderDeliverBtn, orderCancelBtn)
                 .AddComponents(accDetailsBtn, orderDetailsBtn);
 
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, responseBuilder);

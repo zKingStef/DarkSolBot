@@ -101,7 +101,7 @@ namespace DarkBot.src.Handler
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
-                            .AddComponents(orderDeliverBtn, inProgressBtn, deliveryPendingBtn)
+                            .AddComponents(orderDeliverBtn, deliveryPendingBtn)
                             .AddComponents(accDetailsBtn, orderDetailsBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
@@ -122,7 +122,7 @@ namespace DarkBot.src.Handler
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
-                            .AddComponents(orderDeliverBtn, inProgressBtn, deliveryPendingBtn, orderCancelBtn)
+                            .AddComponents(orderDeliverBtn, inProgressBtn, orderCancelBtn)
                             .AddComponents(accDetailsBtn, orderDetailsBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
@@ -135,7 +135,7 @@ namespace DarkBot.src.Handler
                             .WithDescription(originalEmbed.Description
                             .Replace(DelPending, OrdCancel)
                             .Replace(OrdDel, OrdCancel)
-                            .Replace(InPr, OrdCancel));
+                            .Replace(InProgress, OrdCancel));
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, new DiscordInteractionResponseBuilder().AddEmbed(newEmbed));
                     }

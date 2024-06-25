@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +11,7 @@ namespace DarkBot.src.CommandHandler
 {
     public class Troll_Handler
     {
-        private async Task SendFunnyMessage(InteractionContext ctx)
+        public static async Task SendFunnyMessage(InteractionContext ctx)
         {
             string[] funnyMessages = {
             "Warum können Geister so schlecht lügen? Weil man durch sie hindurchsehen kann!",
@@ -27,7 +30,7 @@ namespace DarkBot.src.CommandHandler
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed));
         }
 
-        private async Task SendFunnyImage(InteractionContext ctx)
+        public static async Task SendFunnyImage(InteractionContext ctx)
         {
             string[] funnyImages = {
             "https://i.imgur.com/8K3hYMe.png",
@@ -46,7 +49,7 @@ namespace DarkBot.src.CommandHandler
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed));
         }
 
-        private async Task SendWeirdEmoji(InteractionContext ctx)
+        public static async Task SendWeirdEmoji(InteractionContext ctx)
         {
             string[] weirdEmojis = {
             "🤡", "👾", "🦄", "🌈", "🍕"
