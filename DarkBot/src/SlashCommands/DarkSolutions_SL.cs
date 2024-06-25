@@ -59,6 +59,7 @@ namespace DarkBot.src.SlashCommands
             DiscordGuild guild = ctx.Interaction.Guild;
 
             var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderDeliverBtn",  "✅ Order delivered");
+            var inProgressBtn   = new DiscordButtonComponent(ButtonStyle.Secondary, "inProgressBtn",    "⚙️ In Progress");
             var orderPendingBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderPendingBtn",  "🕖 Delivery pending");
             var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Secondary, "orderCancelBtn",   "❌ Order canceled");
             var accDetailsBtn   = new DiscordButtonComponent(ButtonStyle.Primary,   "AccDetailsBtn",    "🛃 Account Details");
@@ -74,7 +75,7 @@ namespace DarkBot.src.SlashCommands
 
             var responseBuilder = new DiscordInteractionResponseBuilder()
                 .AddEmbed(orderEmbed)
-                .AddComponents(orderDeliverBtn, orderPendingBtn, orderCancelBtn)
+                .AddComponents(orderDeliverBtn, inProgressBtn, orderPendingBtn, orderCancelBtn)
                 .AddComponents(accDetailsBtn, orderDetailsBtn);
 
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, responseBuilder);
