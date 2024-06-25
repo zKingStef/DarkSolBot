@@ -27,8 +27,10 @@ namespace DarkBot.src.SlashCommands
         public async Task CreateNewOrder(InteractionContext ctx,
                                         [Choice("Pokecoins", 0)]
                                         [Choice("Stardust", 1)]
-                                        [Choice("XP", 2)]
-                                        [Choice("Raids", 3)]
+                                        [Choice("Stardust+Shadow", 2)]
+                                        [Choice("XP", 3)]
+                                        [Choice("Raids", 4)]
+                                        [Choice("Custom", 5)]
                                         [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
                                         [Option("Article", "Further Description of the Article")] string Article,
                                         [Option("Price", "Price of the Article")] string SALES_Price,
@@ -58,12 +60,11 @@ namespace DarkBot.src.SlashCommands
 
             DiscordGuild guild = ctx.Interaction.Guild;
 
-            var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderDeliverBtn",  "✅ Order delivered");
-            var inProgressBtn   = new DiscordButtonComponent(ButtonStyle.Secondary, "inProgressBtn",    "⚙️ In Progress");
-            var orderPendingBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "orderPendingBtn",  "🕖 Delivery pending");
-            var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Secondary, "orderCancelBtn",   "❌ Order canceled");
-            var accDetailsBtn   = new DiscordButtonComponent(ButtonStyle.Primary,   "AccDetailsBtn",    "🛃 Account Details");
-            var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary,   "OrderDetailsBtn",  "🛄 Order Details");
+            var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_DeliveryPending",  "✅ Order delivered");
+            var inProgressBtn   = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_InProgress",    "⚙️ In Progress");
+            var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderCancel",   "❌ Order canceled");
+            var accDetailsBtn   = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails",    "🛃 Account Details");
+            var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_OrderDetails",  "🛄 Order Details");
 
             var orderEmbed = new DiscordEmbedBuilder()
                 .WithColor(DiscordColor.Cyan)
@@ -75,7 +76,7 @@ namespace DarkBot.src.SlashCommands
 
             var responseBuilder = new DiscordInteractionResponseBuilder()
                 .AddEmbed(orderEmbed)
-                .AddComponents(orderDeliverBtn, inProgressBtn, orderPendingBtn, orderCancelBtn)
+                .AddComponents(orderDeliverBtn, inProgressBtn, deliveryPendingBtn, orderCancelBtn)
                 .AddComponents(accDetailsBtn, orderDetailsBtn);
 
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, responseBuilder);
