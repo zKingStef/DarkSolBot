@@ -34,15 +34,27 @@ namespace DarkBot.src.SlashCommands
                                         [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
                                         [Option("Article", "Further Description of the Article")] string Article,
                                         [Option("Price", "Price of the Article")] string SALES_Price,
-                                        [Choice("Ebay", "Ebay")]
-                                        [Choice("Discord", "Discord")]
-                                        [Option("Platform", "Selling platform")] string Platform,
+                                        [Choice("Ebay", 0)]
+                                        [Choice("Discord", 1)]
+                                        [Option("Platform", "Selling platform")] long Platform,
                                         [Option("Customer", "Name of the Customer")] string CUS_Name)
         {
             // Pre Execution Checks
-            //await CmdShortener.CheckIfUserHasCeoRole(ctx);
+            await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
-            string pictureURL = "ERROR";
+            string pictureURL = "Error.pictureURL";
+            string platformName = "Error.platformName";
+
+            switch (Platform)
+            {
+                case 0:
+                    platformName = "Ebay";
+                    break;
+                case 1:
+                    platformName = "Discord";
+                    break;
+
+            }    
 
             switch (ART_Type)
             {  
@@ -67,9 +79,8 @@ namespace DarkBot.src.SlashCommands
                     break;
             }
 
-            var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_DeliveryPending",  "✅ Order delivered");
-            var inProgressBtn   = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_InProgress",    "⚙️ In Progress");
-            var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderCancel",   "❌ Order canceled");
+            var startProcessBtn   = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_StartProcess", "🚩 Start Process");
+            var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderCancel",   "❌ Cancel Order");
             var accDetailsBtn   = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails",    "🛃 Account Details");
             var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_OrderDetails",  "🛄 Order Details");
 
@@ -77,13 +88,13 @@ namespace DarkBot.src.SlashCommands
                 .WithColor(DiscordColor.Cyan)
                 .WithTitle("Order: " + Article)
                 .WithThumbnail(pictureURL)
-                .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n🛒 Platform:  {Platform}\n" +
+                .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n🛒 Platform:  **{platformName}**\n" +
                                  $"💰 Article Price:  **{SALES_Price}€**\n\n" +
-                                  "🚦 Order Status: **:orange_square: Delivery pending**");
+                                  "🚦 Order Status: **:no_entry: Process not started**");
 
             var responseBuilder = new DiscordInteractionResponseBuilder()
                 .AddEmbed(orderEmbed)
-                .AddComponents(orderDeliverBtn, inProgressBtn, orderDeliverBtn, orderCancelBtn)
+                .AddComponents(startProcessBtn, orderCancelBtn)
                 .AddComponents(accDetailsBtn, orderDetailsBtn);
 
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, responseBuilder);
