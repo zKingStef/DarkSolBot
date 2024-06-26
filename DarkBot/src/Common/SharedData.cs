@@ -41,7 +41,7 @@ namespace DarkBot.src.Common
         public string? YouTubeToken { get; set; }
     }
 
-    public class Roles
+    public static class Roles
     {
         public long ceo = 978346565225816152;
 
