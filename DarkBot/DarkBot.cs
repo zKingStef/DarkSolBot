@@ -8,7 +8,6 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
-using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +24,6 @@ namespace DarkBot
         private CommandsNextExtension Commands { get; }
         private InteractivityExtension Interactivity { get; }
         private VoiceNextExtension Voice { get; }
-        private LavalinkExtension Lavalink { get; }
         private SlashCommandsExtension Slash { get; }
 
         public DarkBot(int shardId = 0)
@@ -47,14 +45,6 @@ namespace DarkBot
                 ShardId = shardId,
                 ShardCount = settings.ShardCount
             });
-
-
-            // Setup Services
-            Services = new ServiceCollection()
-                //.AddSingleton<MusicService>()
-                //.AddSingleton(new LavalinkService(Client))
-                .AddSingleton(this)
-                .BuildServiceProvider(true);
 
             // Setup Commands
             Commands = Client.UseCommandsNext(new CommandsNextConfiguration

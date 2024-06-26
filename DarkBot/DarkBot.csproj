@@ -53,12 +53,9 @@
     <PackageReference Include="DSharpPlus" Version="4.4.6" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.4.6" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.4.6" />
-    <PackageReference Include="DSharpPlus.Lavalink" Version="4.4.6" />
     <PackageReference Include="DSharpPlus.Rest" Version="4.4.6" />
     <PackageReference Include="DSharpPlus.SlashCommands" Version="4.4.6" />
     <PackageReference Include="DSharpPlus.VoiceNext" Version="4.4.6" />
-    <PackageReference Include="Lavalink4NET" Version="4.0.17" />
-    <PackageReference Include="Lavalink4NET.DSharpPlus" Version="4.0.17" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql" Version="8.0.2" />
   </ItemGroup>

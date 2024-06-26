@@ -1,17 +1,8 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DarkBot.src.CommandHandler;
-using DSharpPlus.Interactivity.Extensions;
-using Microsoft.Extensions.Options;
-using System.ComponentModel.Design;
 using DarkBot.src.Common;
-using System.Reflection;
 
 namespace DarkBot.src.Handler
 {
