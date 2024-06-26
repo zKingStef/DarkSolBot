@@ -54,13 +54,11 @@ namespace DarkBot.src.CommandHandler
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - Pokemon Go ";
 
-                    roleId = 978346565225816152;
-
                     overwrites =
                     [
                         new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
                         new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                        new DiscordOverwriteBuilder(guild.GetRole(roleId)).Allow(Permissions.AccessChannels), // CEO Role
+                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
                     ];
                     break;
                 case "modalTechnicForm":
@@ -68,13 +66,11 @@ namespace DarkBot.src.CommandHandler
                                  "Danke für deine Anfrage. Wir werden uns sobald wie möglich bei dir melden!";
                     ticketTitle = "Technische Hilfe";
 
-                    roleId = 978346565225816152;
-
                     overwrites =
                     [
                         new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
                         new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                        new DiscordOverwriteBuilder(guild.GetRole(roleId)).Allow(Permissions.AccessChannels), // CEO Role
+                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
                     ];
                     break;
             }

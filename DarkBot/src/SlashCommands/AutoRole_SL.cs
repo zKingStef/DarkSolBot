@@ -22,18 +22,6 @@ namespace DarkBot.src.SlashCommands
             var options = new List<DiscordSelectComponentOption>()
                 {
                     new (
-                        "Pokemon Go",
-                        "dd_RolePokemonGo",
-                        "Access to all Pokemon Go related Channels!",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":PokemonGo:"))),
-
-                    //new (
-                    //    "Gamer",
-                    //    "dd_RoleGamer",
-                    //    "Access to all Gaming Channels",
-                    //    emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":video_game:"))),
-
-                    new (
                         "DarkSolutions",
                         "dd_RoleDarkServices",
                         "Access to all DarkSolutions Channels",
@@ -52,8 +40,6 @@ namespace DarkBot.src.SlashCommands
                 .AddComponents(autoRoleDropdown);
 
             await ctx.Channel.SendMessageAsync(embedAutoRoleDropdown);
-
-            await CmdShortener.SendAsEphemeral(ctx, "Auto-Rolesystem loaded...");
         }
     }
 }
