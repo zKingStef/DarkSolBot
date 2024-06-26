@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DarkBot.src.DatabaseDarkSol
+namespace DarkBot.src.Database
 {
     public class SalesData
     {
