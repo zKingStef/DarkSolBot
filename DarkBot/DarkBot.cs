@@ -1,9 +1,5 @@
 ﻿using DarkBot.src.Common;
 using DarkBot.src.Handler;
-using DarkBot.src.Logs;
-
-//using DarkBot.src.Logs;
-using DarkBot.src.PrefixCommands;
 using DarkBot.src.SlashCommands;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;

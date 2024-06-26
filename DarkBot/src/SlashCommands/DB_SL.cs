@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DarkBot.src.CommandHandler;
-using DarkBot.src.DatabaseDarkSol;
+using DarkBot.src.Database;
 
 namespace DarkBot.src.SlashCommands
 {

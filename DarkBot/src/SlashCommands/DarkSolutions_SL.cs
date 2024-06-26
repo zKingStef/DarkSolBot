@@ -1,4 +1,4 @@
-﻿using DarkBot.src.DatabaseDarkSol;
+﻿using DarkBot.src.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
