@@ -94,13 +94,8 @@ namespace DarkBot
             Client.GetSlashCommands();
             Slash.RegisterCommands<AutoRole_SL>();
             Slash.RegisterCommands<Calculator_SL>();
-            //Slash.RegisterCommands<DarkServices_SL>();
             Slash.RegisterCommands<DarkSolutions_SL>();
             Slash.RegisterCommands<DB_SL>();
-            Slash.RegisterCommands<ImgFinder_SL>();
-            Slash.RegisterCommands<MiniGame_SL>();
-            Slash.RegisterCommands<Misc_SL>();
-            Slash.RegisterCommands<Moderation_SL>();
             //Slash.RegisterCommands<PokeDiary_SL>();
             Slash.RegisterCommands<Ticket_SL>();
             Slash.RegisterCommands<Troll_SL>();
@@ -109,17 +104,8 @@ namespace DarkBot
             Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;
             Client.ModalSubmitted += Modals.HandleModal;
 
-            Client.GuildMemberAdded += JoinLeaveLogs.UserJoin;
-            Client.GuildMemberRemoved += JoinLeaveLogs.UserLeave;
-            
             Client.UnknownEvent += UnknownEvent;
             Client.ClientErrored += ClientErrored;
-
-            Client.InviteCreated += InviteLogs.InviteCreated;
-            Client.InviteDeleted += InviteLogs.InviteDeleted;
-
-            Client.GuildBanAdded += UnBanLogs.UserBanned;
-            Client.GuildBanRemoved += UnBanLogs.UserUnbanned;
 
             // Start the uptime counter
             Console.Title = $"{settings.Name}-{settings.Version}";
@@ -152,7 +138,7 @@ namespace DarkBot
         public static async Task RunAsync()
         {
             // Set the initial activity and connect the bot to Discord
-            var act = new DiscordActivity("Developed by zKingStef", ActivityType.ListeningTo);
+            var act = new DiscordActivity("PokemonGo Services", ActivityType.Playing);
             await Client.ConnectAsync(act, UserStatus.Online).ConfigureAwait(false);
         }
 

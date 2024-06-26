@@ -164,7 +164,7 @@ namespace DarkBot.src.Common
         // Methode zur Fehlerbehandlung
         public static async Task HandleException(InteractionContext ctx, Exception e)
         {
-            string errorMessage = $"Fehler aufgetreten: {e.Message}\n Bitte melde das Problem bei einem Techniker";
+            string errorMessage = $"Eror: {e.Message}\nPlease report to a Developer";
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(errorMessage));
         }
 
