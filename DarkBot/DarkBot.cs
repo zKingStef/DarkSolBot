@@ -129,7 +129,7 @@ namespace DarkBot
             return Task.CompletedTask;
         }
 
-        private static async Task OnGuildMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
+        private static async Task GuildMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
         {
             // Automatically give new Users the "Member" Role
             ulong roleId = 1221805367466528908;
