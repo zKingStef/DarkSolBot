@@ -89,12 +89,10 @@ namespace DarkBot
             Slash = Client.UseSlashCommands();
             Client.GetSlashCommands();
             Slash.RegisterCommands<AutoRole_SL>();
-            Slash.RegisterCommands<Calculator_SL>();
             Slash.RegisterCommands<DarkSolutions_SL>();
             Slash.RegisterCommands<DB_SL>();
             //Slash.RegisterCommands<PokeDiary_SL>();
             Slash.RegisterCommands<Ticket_SL>();
-            Slash.RegisterCommands<Troll_SL>();
             Slash.SlashCommandErrored += SlashCommandErrored;
 
             Client.ComponentInteractionCreated += UserInteraction_Handler.HandleInteraction;

@@ -21,6 +21,7 @@ namespace DarkBot.src.SlashCommands
     [SlashCommandGroup("pokediary", "Slash Commands for the Pokemon Go Diary.")]
     public class PokeDiary_SL : PokeDiary
     {
+        /*
         [SlashCommand("addstats", "Add daily statistics")]
         public static async Task AddStats(InteractionContext ctx,
                           [Option("date", "DateTime Format: (YYYY-MM-dd)")] string date,
@@ -66,7 +67,7 @@ namespace DarkBot.src.SlashCommands
 
             await ctx.CreateResponseAsync($":white_check_mark: Daily statistics for {DateTime.Now.ToShortDateString()} added successfully.");
         }
-
+        */
 
         [SlashCommand("dailystats", "Show today's statistics")]
         public async Task ShowTodayStats(InteractionContext ctx)

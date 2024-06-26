@@ -73,9 +73,11 @@ namespace DarkBot.src.Database
 
         public async Task<long> GetTopSalesId()
         {
+            SalesData sales = new();
+
             try
             {
-                using (var conn = new NpgsqlConnection(connectionString))
+                using (var conn = new NpgsqlConnection(sales.connectionString))
                 {
                     await conn.OpenAsync();
 
