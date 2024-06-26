@@ -43,7 +43,7 @@ namespace DarkBot.src.Common
 
     public class Roles
     {
-        public static long ceo = 978346565225816152;
+        public static ulong ceo = 978346565225816152;
 
     }
 
