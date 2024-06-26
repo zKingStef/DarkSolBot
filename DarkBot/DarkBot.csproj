@@ -9,8 +9,8 @@
     <ApplicationIcon>docs\DeveloperZentrale.ico</ApplicationIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>zKingStef</Authors>
-    <Title>DiscordBot</Title>
-    <Product>DarkBot</Product>
+    <Title>DarkSolutionsBot</Title>
+    <Product>DarkSolutionsBot</Product>
     <Description>DiscordBot written in C#</Description>
     <PackageIcon></PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -22,6 +22,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
     <SignAssembly>false</SignAssembly>
+    <Copyright>DarkSolutions</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
