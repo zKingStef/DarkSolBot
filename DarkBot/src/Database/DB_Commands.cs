@@ -77,7 +77,7 @@ namespace DarkBot.src.Database
 
             try
             {
-                using (var conn = new NpgsqlConnection(sales.connectionString))
+                using (var conn = new NpgsqlConnection(connectionString))
                 {
                     await conn.OpenAsync();
 
