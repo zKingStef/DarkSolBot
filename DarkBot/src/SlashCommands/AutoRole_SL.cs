@@ -26,7 +26,7 @@ namespace DarkBot.src.SlashCommands
                         "dd_RoleDarkServices",
                         "Access to all DarkSolutions Channels",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":DarkServices:"))),
-                   };
+                 };
 
             var autoRoleDropdown = new DiscordSelectComponent("autoRoleDropdown", "Choose a Role", options, false, 0, 1);
 

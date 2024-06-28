@@ -18,6 +18,7 @@ using DarkBot.src.Common;
 using DSharpPlus.EventArgs;
 using Npgsql.Replication.PgOutput.Messages;
 using static System.Net.WebRequestMethods;
+using DarkBot.src.CommandHandler;
 
 namespace DarkBot.src.SlashCommands
 {
@@ -30,9 +31,9 @@ namespace DarkBot.src.SlashCommands
                                         [Choice("Stardust+Shadow", 2)]
                                         [Choice("XP", 3)]
                                         [Choice("Raids", 4)]
-                                        [Choice("Custom", 5)]
+                                        [Choice("RareCandy", 5)]
+                                        [Choice("Custom", 6)]
                                         [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
-                                        [Option("Article", "Further Description of the Article")] string Article,
                                         [Option("Price", "Price of the Article")] string SALES_Price,
                                         [Choice("Ebay", 0)]
                                         [Choice("Discord", 1)]
@@ -53,25 +54,31 @@ namespace DarkBot.src.SlashCommands
                 case 1:
                     platformName = "Discord";
                     break;
-
             }    
 
             switch (ART_Type)
             {  
                 case 0:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZdSP0XQrBiuPJTPLN-DYFRbuWkKUFajY7cw&s";
+                    await DarkSolutions_Handler.CreatePokecoinDropdown(ctx);
                     break;
                 case 1:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtPs4Cf0pQpN_EVeISKk4TaeCVoAvz68AvgQ&s";
+                    await DarkSolutions_Handler.CreateStardustDropdown(ctx);
                     break;
                 case 2:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiMVLiCD_zCwC007NHW9g4tUpScVMQwpdXA&s";
                     break;
                 case 3:
                     pictureURL = "https://cdn-icons-png.flaticon.com/256/6712/6712589.png";
+                    await DarkSolutions_Handler.CreateXpDropdown(ctx);
                     break;
                 case 4:
                     pictureURL = "https://gogames.news/wp-content/uploads/2019/12/tipps-fuer-den-lapras-raid-tag-guide-1.png";
+                    await DarkSolutions_Handler.CreateRaidsDropdown(ctx);
+                    break;
+                case 5:
+                    pictureURL = "https://static.wikia.nocookie.net/pokemongo/images/1/12/Rare_Candies.png/revision/latest?cb=20230208171511";
                     break;
 
                 default:
@@ -86,7 +93,7 @@ namespace DarkBot.src.SlashCommands
 
             var orderEmbed = new DiscordEmbedBuilder()
                 .WithColor(DiscordColor.Cyan)
-                .WithTitle("Order: " + Article)
+                .WithTitle("Order: Please select Article Quantity from the Dropdown Menu below")
                 .WithThumbnail(pictureURL)
                 .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n🛒 Platform:  **{platformName}**\n" +
                                  $"💰 Article Price:  **{SALES_Price}€**\n\n" +

@@ -14,9 +14,12 @@ namespace DarkBot.src.Handler
 
             switch (selectedOption)
             {
-                case "dd_RoleDarkServices":
-                case "dd_RolePokemonGo":
-                    AutoRole_Handler.GiveRoleToUser(e, selectedOption);
+                case "dd_1millstardust":
+                case "dd_2millstardust":
+                case "dd_5millstardust":
+                case "dd_10millstardust":
+                case "dd_25millstardust":
+                    await e.Channel.SendMessageAsync(selectedOption.FirstOrDefault() + " was selected!");
                     break;
 
                 default:
