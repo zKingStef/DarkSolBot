@@ -18,27 +18,22 @@ namespace DarkBot.src.CommandHandler
                     new (
                         "1200 Pokecoins",
                         "dd_1200coins",
-                        "Pokecoin Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Pokecoin1:"))),
                     new (
                         "2500 Pokecoins",
                         "dd_2500coins",
-                        "Pokecoin Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Pokecoin1:"))),
                     new (
                         "5200 Pokecoins",
                         "dd_5200coins",
-                        "Pokecoin Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Pokecoin1:"))),
                     new (
                         "14500 Pokecoins",
                         "dd_14500coins",
-                        "Pokecoin Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Pokecoin1:"))),
                     new (
                         "29000 Pokecoins",
                         "dd_29000coins",
-                        "Pokecoin Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Pokecoin1:"))),
                  };
 
