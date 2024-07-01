@@ -104,17 +104,17 @@ namespace DarkBot.src.CommandHandler
                         "XP Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Level40:"))),
                     new (
-                        "8 Million XP",
+                        "9 Million XP",
                         "dd_8millxp",
                         "XP Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Level40:"))),
                     new (
-                        "16 Million XP",
+                        "18 Million XP",
                         "dd_16millxp",
                         "XP Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Level40:"))),
                     new (
-                        "32 Million XP",
+                        "36 Million XP",
                         "dd_32millxp",
                         "XP Service",
                         emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Level40:"))),
@@ -137,16 +137,31 @@ namespace DarkBot.src.CommandHandler
         {
             var options = new List<DiscordSelectComponentOption>()
                 {
+                new (
+                        "10 Raids",
+                        "dd_10raids",
+                        "Raid Service",
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":raidpass:"))),
                     new (
                         "20 Raids",
                         "dd_20raids",
                         "Raid Service",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Pokecoin1:"))),
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":raidpass:"))),
                     new (
                         "40 Raids",
                         "dd_40raids",
                         "Raid Service",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":Pokecoin1:"))),
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":raidpass:"))),
+                    new (
+                        "60 Raids",
+                        "dd_60raids",
+                        "Raid Service",
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":raidpass:"))),
+                    new (
+                        "80 Raids",
+                        "dd_80raids",
+                        "Raid Service",
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":raidpass:"))),
                  };
 
             var artQtyDropdown = new DiscordSelectComponent("Dropdown_ArticleQuantity", "Article Quantity", options, false, 0, 1);

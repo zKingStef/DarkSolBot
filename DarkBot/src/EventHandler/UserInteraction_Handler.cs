@@ -14,12 +14,10 @@ namespace DarkBot.src.Handler
 
             switch (selectedOption)
             {
-                case "dd_1millstardust":
-                case "dd_2millstardust":
-                case "dd_5millstardust":
-                case "dd_10millstardust":
-                case "dd_25millstardust":
+                case "dd_20raids":
                     await e.Channel.SendMessageAsync(selectedOption.FirstOrDefault() + " was selected!");
+
+
                     break;
 
                 default:
@@ -32,9 +30,10 @@ namespace DarkBot.src.Handler
             string delPending = ":orange_square: Delivery pending";
             string inProgress = ":gear: In Progress";
             string ordDel = ":green_square: Order delivered";
-            string ordCancel = ":red_square: Order canceled";
+            string ordCancel = ":red_square: Order  ed";
             string progressPaused = ":pause_button: Progress paused";
             string startProcess = ":no_entry: Process not started";
+            var buttonStyle = ButtonStyle.Danger;
 
             switch (e.Interaction.Data.CustomId)
             {
@@ -74,12 +73,12 @@ namespace DarkBot.src.Handler
                         var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderDelivered", "✅ Complete Order");
                         var progressPausedBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_ProgressPaused", "⏸️ Pause Progress");
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
-                        var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "OrderDetailsBtn", "🛄 Order Details");
+                        var databaseDoneBtn = new DiscordButtonComponent(buttonStyle, "OrderDetailsBtn", "🗂️ Database done");
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
                             .AddComponents(orderDeliverBtn, progressPausedBtn)
-                            .AddComponents(accDetailsBtn, orderDetailsBtn);
+                            .AddComponents(accDetailsBtn, databaseDoneBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
                     }
@@ -97,11 +96,11 @@ namespace DarkBot.src.Handler
 
                         // Original Buttons wieder hinzufügen
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
-                        var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "OrderDetailsBtn", "🛄 Order Details");
+                        var databaseDoneBtn = new DiscordButtonComponent(buttonStyle, "OrderDetailsBtn", "🗂️ Database done");
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
-                            .AddComponents(accDetailsBtn, orderDetailsBtn);
+                            .AddComponents(accDetailsBtn, databaseDoneBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
                     }
@@ -118,12 +117,12 @@ namespace DarkBot.src.Handler
                         var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderDelivered", "✅ Complete Order");
                         var progressPausedBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_ProgressPaused", "⏸️ Pause Progress");
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails", "🛃 Account Details");
-                        var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_OrderDetails", "🛄 Order Details");
+                        var databaseDoneBtn = new DiscordButtonComponent(buttonStyle, "Button_DatabaseDone", "🗂️ Database done");
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
                             .AddComponents(orderDeliverBtn, progressPausedBtn)
-                            .AddComponents(accDetailsBtn, orderDetailsBtn);
+                            .AddComponents(accDetailsBtn, databaseDoneBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
                     }
@@ -139,12 +138,12 @@ namespace DarkBot.src.Handler
                         var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderDelivered", "✅ Complete Order");
                         var inProgressBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_InProgress", "⚙️ Resume Progress");
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails", "🛃 Account Details");
-                        var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_OrderDetails", "🛄 Order Details");
+                        var databaseDoneBtn = new DiscordButtonComponent(buttonStyle, "Button_DatabaseDone", "🗂️ Database done");
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
                             .AddComponents(orderDeliverBtn, inProgressBtn)
-                            .AddComponents(accDetailsBtn, orderDetailsBtn);
+                            .AddComponents(accDetailsBtn, databaseDoneBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
                     }
@@ -162,7 +161,8 @@ namespace DarkBot.src.Handler
                     break;
                 case "Button_AccDetails":
                     break;
-                case "Button_OrderDetails":
+                case "Button_DatabaseDone":
+                    buttonStyle = ButtonStyle.Success;
                     break;
                 default:
                     Console.WriteLine(e.Message);

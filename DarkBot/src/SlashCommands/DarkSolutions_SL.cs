@@ -34,6 +34,7 @@ namespace DarkBot.src.SlashCommands
                                         [Choice("RareCandy", 5)]
                                         [Choice("Custom", 6)]
                                         [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
+                                        [Option("Quantity", "Quantity of the Article")] string qty,
                                         [Option("Price", "Price of the Article")] string SALES_Price,
                                         [Choice("Ebay", 0)]
                                         [Choice("Discord", 1)]
@@ -45,6 +46,8 @@ namespace DarkBot.src.SlashCommands
 
             string pictureURL = "Error.pictureURL";
             string platformName = "Error.platformName";
+            string embedTitle = "Error.embedTitle";
+            DiscordColor embedColor = DiscordColor.Black;
 
             switch (Platform)
             {
@@ -60,25 +63,33 @@ namespace DarkBot.src.SlashCommands
             {  
                 case 0:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZdSP0XQrBiuPJTPLN-DYFRbuWkKUFajY7cw&s";
-                    await DarkSolutions_Handler.CreatePokecoinDropdown(ctx);
+                    embedTitle = " Pokecoins";
+                    embedColor = DiscordColor.Yellow;
                     break;
                 case 1:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtPs4Cf0pQpN_EVeISKk4TaeCVoAvz68AvgQ&s";
-                    await DarkSolutions_Handler.CreateStardustDropdown(ctx);
+                    embedTitle = " Million Stardust";
+                    embedColor = DiscordColor.Pink;
                     break;
                 case 2:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiMVLiCD_zCwC007NHW9g4tUpScVMQwpdXA&s";
+                    embedTitle = " Million Stardust + Shadow";
+                    embedColor = DiscordColor.Pink;
                     break;
                 case 3:
                     pictureURL = "https://cdn-icons-png.flaticon.com/256/6712/6712589.png";
-                    await DarkSolutions_Handler.CreateXpDropdown(ctx);
+                    embedTitle = " Million XP";
+                    embedColor = DiscordColor.Magenta;
                     break;
                 case 4:
                     pictureURL = "https://gogames.news/wp-content/uploads/2019/12/tipps-fuer-den-lapras-raid-tag-guide-1.png";
-                    await DarkSolutions_Handler.CreateRaidsDropdown(ctx);
+                    embedTitle = " Raids";
+                    embedColor = DiscordColor.Green;
                     break;
                 case 5:
                     pictureURL = "https://static.wikia.nocookie.net/pokemongo/images/1/12/Rare_Candies.png/revision/latest?cb=20230208171511";
+                    embedTitle = " RareCandies";
+                    embedColor = DiscordColor.Red;
                     break;
 
                 default:
@@ -87,13 +98,13 @@ namespace DarkBot.src.SlashCommands
             }
 
             var startProcessBtn   = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_StartProcess", "🚩 Start Process");
-            var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderCancel",   "❌ Cancel Order");
+            var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Danger, "Button_OrderCancel",   "❌ Cancel Order");
             var accDetailsBtn   = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails",    "🛃 Account Details");
-            var orderDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_OrderDetails",  "🛄 Order Details");
+            var databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Danger, "Button_DatabaseDone",  "🗂️ Database done");
 
-            var orderEmbed = new DiscordEmbedBuilder()
-                .WithColor(DiscordColor.Cyan)
-                .WithTitle("Order: Please select Article Quantity from the Dropdown Menu below")
+            var orderEmbed = new DiscordEmbedBuilder() 
+                .WithColor(embedColor)
+                .WithTitle(qty + embedTitle)
                 .WithThumbnail(pictureURL)
                 .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n🛒 Platform:  **{platformName}**\n" +
                                  $"💰 Article Price:  **{SALES_Price}€**\n\n" +
@@ -102,7 +113,7 @@ namespace DarkBot.src.SlashCommands
             var responseBuilder = new DiscordInteractionResponseBuilder()
                 .AddEmbed(orderEmbed)
                 .AddComponents(startProcessBtn, orderCancelBtn)
-                .AddComponents(accDetailsBtn, orderDetailsBtn);
+                .AddComponents(accDetailsBtn, databaseDoneBtn);
 
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, responseBuilder);
         }
