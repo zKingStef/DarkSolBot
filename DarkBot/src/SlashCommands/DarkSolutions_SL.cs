@@ -69,12 +69,12 @@ namespace DarkBot.src.SlashCommands
                 case 1:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtPs4Cf0pQpN_EVeISKk4TaeCVoAvz68AvgQ&s";
                     embedTitle = " Million Stardust";
-                    embedColor = DiscordColor.Pink;
+                    embedColor = DiscordColor.Magenta;
                     break;
                 case 2:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiMVLiCD_zCwC007NHW9g4tUpScVMQwpdXA&s";
                     embedTitle = " Million Stardust + Shadow";
-                    embedColor = DiscordColor.Pink;
+                    embedColor = DiscordColor.Magenta;
                     break;
                 case 3:
                     pictureURL = "https://cdn-icons-png.flaticon.com/256/6712/6712589.png";
