@@ -173,7 +173,7 @@ namespace DarkBot.src.Handler
                     break;
                 case "Button_DatabaseDone":
                     userDatabaseStatus[e.User.Id] = true;
-                    await e.Interaction.CreateResponseAsync("Database done!");
+                    Console.WriteLine("Database Entry!)");
                     break;
                 default:
                     Console.WriteLine(e.Message);
