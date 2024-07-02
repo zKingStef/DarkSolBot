@@ -3,12 +3,15 @@ using DSharpPlus.EventArgs;
 using DSharpPlus;
 using DarkBot.src.CommandHandler;
 using DarkBot.src.Common;
+using System.Collections.Concurrent;
 
 namespace DarkBot.src.Handler
 {
     public static class UserInteraction_Handler
     {
-        private bool databasedone = false;
+        // Eine ConcurrentDictionary zum Speichern des Zustands pro Benutzer
+        private static ConcurrentDictionary<ulong, bool> userDatabaseStatus = new ConcurrentDictionary<ulong, bool>();
+
         public static async Task HandleInteraction(DiscordClient client, ComponentInteractionCreateEventArgs e)
         {
             var selectedOption = e.Interaction.Data.Values.FirstOrDefault();
@@ -17,8 +20,6 @@ namespace DarkBot.src.Handler
             {
                 case "dd_20raids":
                     await e.Channel.SendMessageAsync(selectedOption.FirstOrDefault() + " was selected!");
-
-
                     break;
 
                 default:
@@ -31,10 +32,12 @@ namespace DarkBot.src.Handler
             string delPending = ":orange_square: Delivery pending";
             string inProgress = ":gear: In Progress";
             string ordDel = ":green_square: Order delivered";
-            string ordCancel = ":red_square: Order  ed";
+            string ordCancel = ":red_square: Order canceled";
             string progressPaused = ":pause_button: Progress paused";
             string startProcess = ":no_entry: Process not started";
             var databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Danger, "OrderDetailsBtn", "🗂️ Database done");
+
+            bool databasedone = userDatabaseStatus.GetOrAdd(e.User.Id, false);
 
             switch (e.Interaction.Data.CustomId)
             {
@@ -172,10 +175,8 @@ namespace DarkBot.src.Handler
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, new DiscordInteractionResponseBuilder().AddEmbed(newEmbed));
                     }
                     break;
-                case "Button_AccDetails":
-                    break;
                 case "Button_DatabaseDone":
-                    bool databasedone = true;
+                    userDatabaseStatus[e.User.Id] = true;
                     break;
                 default:
                     Console.WriteLine(e.Message);
