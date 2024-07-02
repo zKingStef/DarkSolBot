@@ -18,10 +18,6 @@ namespace DarkBot.src.Handler
 
             switch (selectedOption)
             {
-                case "dd_20raids":
-                    await e.Channel.SendMessageAsync(selectedOption.FirstOrDefault() + " was selected!");
-                    break;
-
                 default:
                     break;
             }
@@ -79,7 +75,7 @@ namespace DarkBot.src.Handler
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
                         if (databasedone)
                         {
-                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "OrderDetailsBtn", "🗂️ Database done");
+                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "Button_DatabaseDone", "🗂️ Database done");
                         }
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
@@ -105,7 +101,7 @@ namespace DarkBot.src.Handler
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
                         if (databasedone)
                         {
-                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "OrderDetailsBtn", "🗂️ Database done");
+                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "Button_DatabaseDone", "🗂️ Database done");
                         }
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
@@ -129,7 +125,7 @@ namespace DarkBot.src.Handler
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails", "🛃 Account Details");
                         if (databasedone)
                         {
-                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "OrderDetailsBtn", "🗂️ Database done");
+                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "Button_DatabaseDone", "🗂️ Database done");
                         }
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
@@ -153,7 +149,7 @@ namespace DarkBot.src.Handler
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails", "🛃 Account Details");
                         if (databasedone)
                         {
-                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "OrderDetailsBtn", "🗂️ Database done");
+                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "Button_DatabaseDone", "🗂️ Database done");
                         }
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
@@ -177,6 +173,7 @@ namespace DarkBot.src.Handler
                     break;
                 case "Button_DatabaseDone":
                     userDatabaseStatus[e.User.Id] = true;
+                    eawait e.Interaction.CreateResponseAsync("Database done!");
                     break;
                 default:
                     Console.WriteLine(e.Message);
