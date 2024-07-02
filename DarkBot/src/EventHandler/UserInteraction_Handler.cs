@@ -33,7 +33,8 @@ namespace DarkBot.src.Handler
             string ordCancel = ":red_square: Order  ed";
             string progressPaused = ":pause_button: Progress paused";
             string startProcess = ":no_entry: Process not started";
-            var buttonStyle = ButtonStyle.Danger;
+            bool databasedone = false;
+            var databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Danger, "OrderDetailsBtn", "🗂️ Database done");
 
             switch (e.Interaction.Data.CustomId)
             {
@@ -58,7 +59,7 @@ namespace DarkBot.src.Handler
                 case "closeReasonTicketButton":
                     await Modals.CreateReasonModal(e, "modalCloseReasonForm");
                     break;
-                    
+
                 // Cases for New-Order Buttons
                 case "Button_StartProcess":
 
@@ -73,7 +74,10 @@ namespace DarkBot.src.Handler
                         var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderDelivered", "✅ Complete Order");
                         var progressPausedBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_ProgressPaused", "⏸️ Pause Progress");
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
-                        var databaseDoneBtn = new DiscordButtonComponent(buttonStyle, "OrderDetailsBtn", "🗂️ Database done");
+                        if (databasedone)
+                        {
+                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "OrderDetailsBtn", "🗂️ Database done");
+                        }
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
@@ -84,7 +88,7 @@ namespace DarkBot.src.Handler
                     }
                     break;
                 case "Button_OrderDelivered":
-                    
+
                     if (originalEmbed != null)
                     {
 
@@ -96,7 +100,10 @@ namespace DarkBot.src.Handler
 
                         // Original Buttons wieder hinzufügen
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "AccDetailsBtn", "🛃 Account Details");
-                        var databaseDoneBtn = new DiscordButtonComponent(buttonStyle, "OrderDetailsBtn", "🗂️ Database done");
+                        if (databasedone)
+                        {
+                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "OrderDetailsBtn", "🗂️ Database done");
+                        }
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
@@ -117,7 +124,10 @@ namespace DarkBot.src.Handler
                         var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderDelivered", "✅ Complete Order");
                         var progressPausedBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_ProgressPaused", "⏸️ Pause Progress");
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails", "🛃 Account Details");
-                        var databaseDoneBtn = new DiscordButtonComponent(buttonStyle, "Button_DatabaseDone", "🗂️ Database done");
+                        if (databasedone)
+                        {
+                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "OrderDetailsBtn", "🗂️ Database done");
+                        }
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
@@ -138,7 +148,10 @@ namespace DarkBot.src.Handler
                         var orderDeliverBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_OrderDelivered", "✅ Complete Order");
                         var inProgressBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_InProgress", "⚙️ Resume Progress");
                         var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails", "🛃 Account Details");
-                        var databaseDoneBtn = new DiscordButtonComponent(buttonStyle, "Button_DatabaseDone", "🗂️ Database done");
+                        if (databasedone)
+                        {
+                            databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "OrderDetailsBtn", "🗂️ Database done");
+                        }
 
                         var responseBuilder = new DiscordInteractionResponseBuilder()
                             .AddEmbed(newEmbed)
@@ -162,7 +175,7 @@ namespace DarkBot.src.Handler
                 case "Button_AccDetails":
                     break;
                 case "Button_DatabaseDone":
-                    buttonStyle = ButtonStyle.Success;
+                    bool databasedone = true;
                     break;
                 default:
                     Console.WriteLine(e.Message);
