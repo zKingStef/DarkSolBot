@@ -9,7 +9,7 @@ namespace DarkBot.src.Handler
 {
     public static class UserInteraction_Handler
     {
-        public bool databasedone = false;
+        public int count;
         public static async Task HandleInteraction(DiscordClient client, ComponentInteractionCreateEventArgs e)
         {
             var selectedOption = e.Interaction.Data.Values.FirstOrDefault();
@@ -30,6 +30,8 @@ namespace DarkBot.src.Handler
             string progressPaused = ":pause_button: Progress paused";
             string startProcess = ":no_entry: Process not started";
             var databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Danger, "OrderDetailsBtn", "🗂️ Database done");
+
+            bool databasedone = false;
 
             switch (e.Interaction.Data.CustomId)
             {
