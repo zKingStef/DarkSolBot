@@ -9,8 +9,6 @@ namespace DarkBot.src.Handler
 {
     public static class UserInteraction_Handler
     {
-        private static ConcurrentDictionary<(ulong, string), bool> buttonStates = new ConcurrentDictionary<(ulong, string), bool>();
-
         public static async Task HandleInteraction(DiscordClient client, ComponentInteractionCreateEventArgs e)
         {
             var selectedOption = e.Interaction.Data.Values.FirstOrDefault();
@@ -32,7 +30,7 @@ namespace DarkBot.src.Handler
             string startProcess = ":no_entry: Process not started";
             var databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Danger, "OrderDetailsBtn", "🗂️ Database done");
 
-            bool databasedone = userDatabaseStatus.GetOrAdd(e.User.Id, false);
+            bool databasedone = false;
 
             switch (e.Interaction.Data.CustomId)
             {
@@ -171,32 +169,7 @@ namespace DarkBot.src.Handler
                     }
                     break;
                 case "Button_DatabaseDone":
-                case "Button_DatabaseDone":
-                    var key = (e.Message.Id, e.Interaction.Data.CustomId);
-                    if (!buttonStates.TryGetValue(key, out bool isButtonClicked) || !isButtonClicked)
-                    {
-                        // Set the button state to clicked (true)
-                        buttonStates[key] = true;
-
-                        if (originalEmbed != null)
-                        {
-                            var newEmbed = new DiscordEmbedBuilder(originalEmbed);
-
-                            // Create updated buttons
-                            var startProcessBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_StartProcess", "🚩 Start Process");
-                            var orderCancelBtn = new DiscordButtonComponent(ButtonStyle.Danger, "Button_OrderCancel", "❌ Cancel Order");
-                            var accDetailsBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails", "🛃 Account Details");
-                            var databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Success, "Button_DatabaseDone", "🗂️ Database done", true);
-
-                            var responseBuilder = new DiscordInteractionResponseBuilder()
-                                .AddEmbed(newEmbed)
-                                .AddComponents(startProcessBtn, orderCancelBtn)
-                                .AddComponents(accDetailsBtn, databaseDoneBtn);
-
-                            await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
-                        }
-                    }
-                    break;
+                    databasedone = true;
                     break;
                 default:
                     Console.WriteLine(e.Message);
