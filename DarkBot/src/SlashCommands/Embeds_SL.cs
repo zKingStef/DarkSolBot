@@ -4,11 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DarkBot.src.CommandHandler.PokeDiary;
+using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
+using DSharpPlus;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DarkBot.src.Common;
+using DSharpPlus.CommandsNext.Attributes;
 
 namespace DarkBot.src.SlashCommands
 {
-    public class Embeds_SL
+    public class Embeds_SL : ApplicationCommandModule
     {
         [SlashCommand("embeds", "Send an embed message by the bot")]
         public static async Task SendEmbed(InteractionContext ctx,
