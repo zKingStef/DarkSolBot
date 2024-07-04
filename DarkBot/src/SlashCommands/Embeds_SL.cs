@@ -49,7 +49,7 @@ namespace DarkBot.src.SlashCommands
 
                 var messageBuilder = new DiscordMessageBuilder()
                     .WithEmbed(embedTicketButtons)
-                    .AddComponents(pokemonGoBtn);
+                    .AddComponents(createTicketBtn);
 
                 await ctx.Channel.SendMessageAsync(messageBuilder);
             }
