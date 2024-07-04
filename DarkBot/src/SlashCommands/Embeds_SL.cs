@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DarkBot.src.Common;
 using DSharpPlus.CommandsNext.Attributes;
 
 namespace DarkBot.src.SlashCommands

@@ -78,7 +78,8 @@ namespace DarkBot
             Client.GetSlashCommands();
             Slash.RegisterCommands<AutoRole_SL>();
             Slash.RegisterCommands<DarkSolutions_SL>();
-            Slash.RegisterCommands<DB_SL>();
+            Slash.RegisterCommands<DB_SL>(); 
+            Slash.RegisterCommands<Embeds_SL>(); 
             //Slash.RegisterCommands<PokeDiary_SL>();
             Slash.RegisterCommands<Ticket_SL>();
             Slash.SlashCommandErrored += SlashCommandErrored;
