@@ -61,6 +61,21 @@ namespace DarkBot.src.CommandHandler
                         new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
                     ];
                     break;
+
+                case "modalPokecoinForm":
+                    ticketDesc = $"**Your Order:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - Pokemon Go ";
+
+                    overwrites =
+                    [
+                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
+                    ];
+                    break;
                 case "modalTechnicForm":
                     ticketDesc = $"**Problem:** {e.Values["issueTextBox"]}\n\n" +
                                  "Danke für deine Anfrage. Wir werden uns sobald wie möglich bei dir melden!";
@@ -92,7 +107,7 @@ namespace DarkBot.src.CommandHandler
             //    ticketId = 1 //result
             //};
 
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Ticket erstellt: {ticketChannel.Mention}").AsEphemeral(true));
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Ticket created: {ticketChannel.Mention}").AsEphemeral(true));
 
             var ticketEmbed = new DiscordMessageBuilder()
                     .AddEmbed(new DiscordEmbedBuilder()

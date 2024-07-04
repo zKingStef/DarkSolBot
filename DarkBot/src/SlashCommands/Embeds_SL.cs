@@ -35,17 +35,16 @@ namespace DarkBot.src.SlashCommands
                     .WithTitle("")
                     .WithColor(DiscordColor.Yellow)
                     .WithDescription("**What is the process?**\n" +
-                                     "After the purchase, I need the login details.\n" +
-                                     "After you confirm the payment the coins will  be added to your account within a few minutes.\n\n" +
+                                     "After you confirm the payment and send me the login details the coins will be added to your account within a few minutes.\n\n" +
                                      "**Is it safe?**\n" +
-                                     "Absolutely! All transactions are conducted through the Google Play Store's Android app, ensuring your account remains safe and risk-free.\n\n" +
+                                     "Absolutely! All transactions are conducted through the original App, ensuring your account remains safe and risk-free.\n\n" +
                                      "**Do I need to share my login information?**\n" +
-                                     "Yes, for this offer, we require access to your account to provide the service.\n\n" +
+                                     "Yes, for this offer, we require access to your account.\n\n" +
                                      "**Can I access my account during this process?**\n" +
-                                     "To ensure security, it is important that you do not access your account during the process. The security of your account is the highest priority.\n\n" +
+                                     "To ensure security, it's important that you stay logged out during the process. The security of your account is the highest priority.\n\n" +
                                      "**What login methods are accepted?**\n" +
-                                     "You can use either Google, Facebook, or the Pokemon Trainer Club (PTC). PTC can now be linked and unlinked at any time, offering flexibility and security for both parties.\n\n" +
-                                     ":envelope_with_arrow: **Don't hesitate to send me a message before purchasing if you have any questions.**")
+                                     "Google, Facebook, or the Pokemon Trainer Club (PTC). PTC can now be linked and unlinked at any time, offering flexibility and security for both parties.\n\n" +
+                                     "**Don't hesitate to send me a message before purchasing if you have any questions.**")
                     .WithImageUrl("https://i.ebayimg.com/images/g/TncAAOSwz7FfP~5R/s-l400.jpg");
 
                 var createTicketBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_TicketPokecoin", "📩 Create Ticket");
