@@ -31,12 +31,21 @@ namespace DarkBot.src.SlashCommands
                 //    await command.RespondWithFileAsync(stream, Path.GetFileName(filePath), "Here is your image");
                 //}
 
-
                 var embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("")
                     .WithColor(DiscordColor.Yellow)
-                    .WithDescription("**Current Prices :**\r\n:Pokecoin1: 2500 - €12\r\n:Pokecoin1: 5200 - €23\r\n:Pokecoin1: 14.500 - €54\r\n:Pokecoin1: 19700 - €69\r\n:Pokecoin1: 29000 - €94\r\n:Pokecoin1: 43500 - €130\r\n:Pokecoin1: 58000 - €165")
-                    .WithThumbnail(ctx.User.AvatarUrl) // get the user darksolutions user
+                    .WithDescription("**What is the process?**\n" +
+                                     "After the purchase, I need the login details.\n" +
+                                     "After you confirm the payment the coins will  be added to your account within a few minutes.\n\n" +
+                                     "**Is it safe?**\n" +
+                                     "Absolutely! All transactions are conducted through the Google Play Store's Android app, ensuring your account remains safe and risk-free.\n\n" +
+                                     "**Do I need to share my login information?**\n" +
+                                     "Yes, for this offer, we require access to your account to provide the service.\n\n" +
+                                     "**Can I access my account during this process?**\n" +
+                                     "To ensure security, it is important that you do not access your account during the process. The security of your account is the highest priority.\n\n" +
+                                     "**What login methods are accepted?**\n" +
+                                     "You can use either Google, Facebook, or the Pokemon Trainer Club (PTC). PTC can now be linked and unlinked at any time, offering flexibility and security for both parties.\n\n" +
+                                     ":envelope_with_arrow: **Don't hesitate to send me a message before purchasing if you have any questions.**")
                     .WithImageUrl("https://i.ebayimg.com/images/g/TncAAOSwz7FfP~5R/s-l400.jpg");
 
                 var createTicketBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_TicketPokecoin", "📩 Create Ticket");
