@@ -9,7 +9,6 @@ namespace DarkBot.src.Handler
 {
     public static class UserInteraction_Handler
     {
-        public int count;
         public static async Task HandleInteraction(DiscordClient client, ComponentInteractionCreateEventArgs e)
         {
             var selectedOption = e.Interaction.Data.Values.FirstOrDefault();
