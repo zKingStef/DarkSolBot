@@ -21,12 +21,12 @@ namespace DarkBot.src.SlashCommands
 
             if (choice == 0)
             {
-                var filePath = "path/to/your/image.png"; // Replace with the path to your image file
-
-                using (var stream = new FileStream(filePath, FileMode.Open))
-                {
-                    await command.RespondWithFileAsync(stream, Path.GetFileName(filePath), "Here is your image");
-                }
+                //var filePath = "path/to/your/image.png"; // Replace with the path to your image file
+                //
+                //using (var stream = new FileStream(filePath, FileMode.Open))
+                //{
+                //    await command.RespondWithFileAsync(stream, Path.GetFileName(filePath), "Here is your image");
+                //}
 
 
                 var embedTicketButtons = new DiscordEmbedBuilder()
