@@ -19,7 +19,7 @@ namespace DarkBot.src.CommandHandler
         public string username { get; set; }
         public string issue { get; set; }
         public ulong ticketId { get; set; }
-        public static async Task HandleGeneralTickets(ModalSubmitEventArgs e, string ticketType)
+        public static async Task HandleGeneralTickets(ModalSubmitEventArgs e)
         {
             DiscordMember? user = e.Interaction.User as DiscordMember;
             DiscordGuild guild = e.Interaction.Guild;
