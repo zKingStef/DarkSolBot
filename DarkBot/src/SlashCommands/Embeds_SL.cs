@@ -24,13 +24,6 @@ namespace DarkBot.src.SlashCommands
 
             if (choice == 0)
             {
-                //var filePath = "path/to/your/image.png"; // Replace with the path to your image file
-                //
-                //using (var stream = new FileStream(filePath, FileMode.Open))
-                //{
-                //    await command.RespondWithFileAsync(stream, Path.GetFileName(filePath), "Here is your image");
-                //}
-
                 var embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("")
                     .WithColor(DiscordColor.Yellow)
@@ -44,8 +37,7 @@ namespace DarkBot.src.SlashCommands
                                      "To ensure security, it's important that you stay logged out during the process. The security of your account is the highest priority.\n\n" +
                                      "**What login methods are accepted?**\n" +
                                      "Google, Facebook, or the Pokemon Trainer Club (PTC). PTC can now be linked and unlinked at any time, offering flexibility and security for both parties.\n\n" +
-                                     "**Don't hesitate to send me a message before purchasing if you have any questions.**")
-                    .WithImageUrl("https://i.ebayimg.com/images/g/TncAAOSwz7FfP~5R/s-l400.jpg");
+                                     "**Don't hesitate to send me a message before purchasing if you have any questions.**");
 
                 var createTicketBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_TicketPokecoin", "📩 Create Ticket");
 
