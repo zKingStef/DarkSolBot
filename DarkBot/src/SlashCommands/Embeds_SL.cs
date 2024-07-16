@@ -49,7 +49,7 @@ namespace DarkBot.src.SlashCommands
             }
             else if (choice == 1)
             {
-                ;
+                Console.WriteLine("XP");
             }
             else if (choice == 2)
             {
