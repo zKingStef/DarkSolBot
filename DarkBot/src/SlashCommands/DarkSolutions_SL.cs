@@ -28,7 +28,8 @@ namespace DarkBot.src.SlashCommands
                                         [Choice("XP", 3)]
                                         [Choice("Raids", 4)]
                                         [Choice("RareCandy", 5)]
-                                        [Choice("Custom", 6)]
+                                        [Choice("Raidpasses", 6)]
+                                        [Choice("Custom", 7)]
                                         [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
                                         [Option("Quantity", "Quantity of the Article")] string qty,
                                         [Option("Price", "Price of the Article")] string SALES_Price,
@@ -65,7 +66,7 @@ namespace DarkBot.src.SlashCommands
                 case 1:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtPs4Cf0pQpN_EVeISKk4TaeCVoAvz68AvgQ&s";
                     embedTitle = " Million Stardust";
-                    embedColor = DiscordColor.Magenta;
+                    embedColor = DiscordColor.Purple;
                     break;
                 case 2:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiMVLiCD_zCwC007NHW9g4tUpScVMQwpdXA&s";
@@ -75,7 +76,7 @@ namespace DarkBot.src.SlashCommands
                 case 3:
                     pictureURL = "https://cdn-icons-png.flaticon.com/256/6712/6712589.png";
                     embedTitle = " Million XP";
-                    embedColor = DiscordColor.Magenta;
+                    embedColor = DiscordColor.White;
                     break;
                 case 4:
                     pictureURL = "https://gogames.news/wp-content/uploads/2019/12/tipps-fuer-den-lapras-raid-tag-guide-1.png";
@@ -86,6 +87,16 @@ namespace DarkBot.src.SlashCommands
                     pictureURL = "https://static.wikia.nocookie.net/pokemongo/images/1/12/Rare_Candies.png/revision/latest?cb=20230208171511";
                     embedTitle = " RareCandies";
                     embedColor = DiscordColor.Red;
+                    break;
+                case 6:
+                    pictureURL = "https://static.wikia.nocookie.net/pokemongo/images/1/12/Rare_Candies.png/revision/latest?cb=20230208171511";
+                    embedTitle = " Raid Passes";
+                    embedColor = DiscordColor.SapGreen;
+                    break;
+                case 7:
+                    pictureURL = "https://assets.bigcartel.com/product_images/356421655/Custom+Order.png?auto=format&fit=max&h=1200&w=1200";
+                    embedTitle = "Custom Order";
+                    embedColor = DiscordColor.HotPink;
                     break;
 
                 default:
@@ -127,6 +138,8 @@ namespace DarkBot.src.SlashCommands
             DiscordChannel orderChannel = await ctx.Interaction.Guild.CreateTextChannelAsync($"{CUS_Name} {platformName}", category, overwrites: overwrites, position: 0);
 
             await orderChannel.SendMessageAsync(orderMessage);
+            await DarkSolutions_Handler.SendPhoneDropdown(ctx);
+            await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!" + orderChannel.Mention);
         }
     }
 }
