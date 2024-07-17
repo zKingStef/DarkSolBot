@@ -105,13 +105,28 @@ namespace DarkBot.src.SlashCommands
                 .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n🛒 Platform:  **{platformName}**\n" +
                                  $"💰 Article Price:  **{SALES_Price}€**\n\n" +
                                   "🚦 Order Status: **:no_entry: Process not started**");
-
-            var responseBuilder = new DiscordInteractionResponseBuilder()
-                .AddEmbed(orderEmbed)
-                .AddComponents(startProcessBtn, orderCancelBtn)
+            
+            var orderMessage = new DiscordMessageBuilder()
+                    .AddEmbed(orderEmbed)
+                    .AddComponents(startProcessBtn, orderCancelBtn)
                 .AddComponents(accDetailsBtn, databaseDoneBtn);
 
-            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, responseBuilder);
+            if (ctx.Interaction.Guild.GetChannel(1263000023822762035) is not DiscordChannel category || category.Type != ChannelType.Category)
+            {
+                await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().WithContent("Error occured while creating a new Order: No Order category found!").AsEphemeral(true));
+                return;
+            }
+
+            var overwrites = new List<DiscordOverwriteBuilder>
+            {
+                new DiscordOverwriteBuilder(ctx.Interaction.Guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                new DiscordOverwriteBuilder(ctx.Interaction.Guild.GetRole(1210230414011011124)).Allow(Permissions.AccessChannels), // Developer Role
+            };
+
+            DiscordChannel orderChannel = await ctx.Interaction.Guild.CreateTextChannelAsync($"{CUS_Name} {platformName}", category, overwrites: overwrites, position: 0);
+
+            await orderChannel.SendMessageAsync(orderMessage);
         }
     }
 }

@@ -32,11 +32,11 @@ namespace DarkBot.src.SlashCommands
                                      "**Is it safe?**\n" +
                                      "Absolutely! All transactions are conducted through the original App, ensuring your account remains safe and risk-free.\n\n" +
                                      "**Do I need to share my login information?**\n" +
-                                     "Yes, for this offer, we require access to your account.\n\n" +
+                                     "Yes, for this service, we require access to your account.\n\n" +
                                      "**Can I access my account during this process?**\n" +
                                      "To ensure security, it's important that you stay logged out during the process. The security of your account is the highest priority.\n\n" +
                                      "**What login methods are accepted?**\n" +
-                                     "Google, Facebook, or the Pokemon Trainer Club (PTC). PTC can now be linked and unlinked at any time, offering flexibility and security for both parties.\n\n" +
+                                     "Google, Facebook, or PokemonTrainerClub.\n\n" +
                                      "**Don't hesitate to send me a message before purchasing if you have any questions.**");
 
                 var createTicketBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_TicketPokecoin", "📩 Create Ticket");

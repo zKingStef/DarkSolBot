@@ -17,7 +17,7 @@ namespace DarkBot.src.Common
                 await Ticket_Handler.HandleGeneralTickets(e);
             }
             if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalPokecoinForm")
+             && e.Interaction.Data.CustomId == "modalPokecoin")
             {
                 await Ticket_Handler.HandleGeneralTickets(e);
             }
@@ -55,7 +55,7 @@ namespace DarkBot.src.Common
                 .WithTitle("DarkSolutions")
                 .WithCustomId(modalId)
                 .AddComponents(
-                    new TextInputComponent("How many Pokecoins do you want to order?", "orderTextBox", value: ""))
+                    new TextInputComponent("How many Coins do you want to order?", "orderTextBox", value: ""))
                 .AddComponents(
                     new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(

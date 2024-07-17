@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
 using System;
@@ -11,6 +12,6 @@ namespace DarkBot.src.CommandHandler
 {
     public class DarkSolutions_Handler
     {
-        
+
     }
 }
