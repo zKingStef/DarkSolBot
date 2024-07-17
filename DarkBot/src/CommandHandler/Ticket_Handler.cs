@@ -62,7 +62,7 @@ namespace DarkBot.src.CommandHandler
                     ];
                     break;
 
-                case "modalPokecoinForm":
+                case "modalPokecoin":
                     ticketDesc = $"**Your Order:** {e.Values["orderTextBox"]}\n\n" +
                                  $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
                                  $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
