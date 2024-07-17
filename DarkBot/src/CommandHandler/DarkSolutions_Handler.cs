@@ -12,7 +12,7 @@ namespace DarkBot.src.CommandHandler
 {
     public class DarkSolutions_Handler
     {
-        public static async Task SendPhoneDropdown(InteractionContext ctx)
+        public static async Task SendPhoneDropdown(InteractionContext ctx, DiscordChannel orderChannel)
         {
             var options = new List<DiscordSelectComponentOption>()
                 {
@@ -48,8 +48,8 @@ namespace DarkBot.src.CommandHandler
                 .WithDescription("Which Phone is being used for this Service?")
                 )
                 .AddComponents(phoneDropdown);
-
-            await ctx.Channel.SendMessageAsync(dropdownEmbed);
+            
+            await orderChannel.SendMessageAsync(dropdownEmbed);
         }
     }
 }

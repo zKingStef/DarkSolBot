@@ -16,16 +16,20 @@ namespace DarkBot.src.Handler
             switch (selectedOption)
             {
                 case "dd_CarbonOnePlus":
-                    await e.Channel.SendMessageAsync("Carbon OnePlus used for this Account!");
+                    await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                                                            new DiscordInteractionResponseBuilder().WithContent("Carbon OnePlus used for this Account!"));
                     break;
                 case "dd_HellblauOnePlus":
-                    await e.Channel.SendMessageAsync("Hellblau OnePlus used for this Account!");
+                    await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                                                            new DiscordInteractionResponseBuilder().WithContent("Hellblau OnePlus used for this Account!"));
                     break;
                 case "dd_GooglePixel":
-                    await e.Channel.SendMessageAsync("Google Pixel used for this Account!");
+                    await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                                                            new DiscordInteractionResponseBuilder().WithContent("Google Pixel used for this Account!"));
                     break;
                 case "dd_NoPhone":
-                    await e.Channel.SendMessageAsync("No Phone used for this Account!!!");
+                    await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                                                            new DiscordInteractionResponseBuilder().WithContent("No Phone needed for this Account!"));
                     break;
 
                 default:

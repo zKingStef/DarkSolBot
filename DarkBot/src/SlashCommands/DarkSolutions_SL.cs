@@ -138,7 +138,7 @@ namespace DarkBot.src.SlashCommands
             DiscordChannel orderChannel = await ctx.Interaction.Guild.CreateTextChannelAsync($"{CUS_Name} {platformName}", category, overwrites: overwrites, position: 0);
 
             await orderChannel.SendMessageAsync(orderMessage);
-            await DarkSolutions_Handler.SendPhoneDropdown(ctx);
+            await DarkSolutions_Handler.SendPhoneDropdown(ctx, orderChannel);
             await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!" + orderChannel.Mention);
         }
     }
