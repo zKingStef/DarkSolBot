@@ -17,7 +17,7 @@ namespace DarkBot.src.SlashCommands
         public static async Task SendEmbed(InteractionContext ctx,
                                 [Choice("pokecoins", 0)]
                                 [Choice("xp-service", 1)]
-                                [Choice("raids", 1)]
+                                [Choice("raids", 2)]
                                 [Option("form", "Choose a embed")] long choice)
         {
             // Pre Execution Checks
