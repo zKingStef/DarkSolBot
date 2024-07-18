@@ -63,7 +63,7 @@ namespace DarkBot.src.CommandHandler
                     break;
 
                 case "modalPokecoin":
-                    ticketDesc = $"**Your Order:** {e.Values["orderTextBox"]}\n\n" +
+                    ticketDesc = $"**Pokecoin Amount:** {e.Values["orderTextBox"]}\n\n" +
                                  $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
                                  $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
@@ -77,11 +77,26 @@ namespace DarkBot.src.CommandHandler
                     ];
                     break;
                 case "modalXP":
-                    ticketDesc = $"**Your Order:** {e.Values["orderTextBox"]}\n\n" +
+                    ticketDesc = $"**XP Amount:** {e.Values["orderTextBox"]}\n\n" +
                                  $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
                                  $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - XP Service ";
+
+                    overwrites =
+                    [
+                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
+                    ];
+                    break;
+                case "modalRaids":
+                    ticketDesc = $"**Raid Amount:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Raid Pokemon:** {e.Values["raidpokeTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - Raid Service ";
 
                     overwrites =
                     [

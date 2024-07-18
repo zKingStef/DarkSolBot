@@ -17,14 +17,20 @@ namespace DarkBot.src.SlashCommands
         public static async Task SendEmbed(InteractionContext ctx,
                                 [Choice("pokecoins", 0)]
                                 [Choice("xp-service", 1)]
+                                [Choice("raids", 1)]
                                 [Option("form", "Choose a embed")] long choice)
         {
             // Pre Execution Checks
             await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
-            if (choice == 0)
+            var embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("");
+            string buttonName = "Button_Error";
+
+            switch (choice)
             {
-                var embedTicketButtons = new DiscordEmbedBuilder()
+                case 0:
+                    embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("")
                     .WithColor(DiscordColor.Yellow)
                     .WithDescription("**What is the process?**\n" +
@@ -39,17 +45,10 @@ namespace DarkBot.src.SlashCommands
                                      "Google, Facebook, or PokemonTrainerClub.\n\n" +
                                      "**Don't hesitate to send me a message before purchasing if you have any questions.**");
 
-                var createTicketBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_TicketPokecoin", "📩 Create Ticket");
-
-                var messageBuilder = new DiscordMessageBuilder()
-                    .WithEmbed(embedTicketButtons)
-                    .AddComponents(createTicketBtn);
-
-                await ctx.Channel.SendMessageAsync(messageBuilder);
-            }
-            else if (choice == 1)
-            {
-                var embedTicketButtons = new DiscordEmbedBuilder()
+                    buttonName = "Button_TicketPokecoin";
+                    break;
+                case 1:
+                    embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("")
                     .WithColor(DiscordColor.Cyan)
                     .WithDescription("**What is the process?**\n" +
@@ -66,22 +65,41 @@ namespace DarkBot.src.SlashCommands
                                      "Google, Facebook, or PokemonTrainerClub.\n\n" +
                                      "**Don't hesitate to send me a message before purchasing if you have any questions.**");
 
-                var createTicketBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_TicketXP", "📩 Create Ticket");
+                    buttonName = "Button_TicketXP";
+                    break;
+                case 2:
+                    embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("")
+                    .WithColor(DiscordColor.Cyan)
+                    .WithDescription("**What is the process?**\n" +
+                                     "You can select any raid that is currently available. Event Raid Days are also possible. **The Raid Passes have to be in your Inventory**!\n\n" +
+                                     "**How long does it take before I can login to my account again?**\n" +
+                                     "You can log back in to your account 2h after we've send you a message that we finished the service.\n\n" +
+                                     "**Is it safe?**\n" +
+                                     "The method that we use is considered the safest method. We would not offer our services if we didn't consider them safe. Account safety if our top priority\n\n" +
+                                     "**Do I need to share my login information?**\n" +
+                                     "Yes, for this service, we require access to your account.\n\n" +
+                                     "**Can I access my account during this process?**\n" +
+                                     "To ensure security, it's important that you stay logged out during the process.\n\n" +
+                                     "**What login methods are accepted?**\n" +
+                                     "Google, Facebook, or PokemonTrainerClub.\n\n" +
+                                     "**Don't hesitate to send me a message before purchasing if you have any questions.**");
 
-                var messageBuilder = new DiscordMessageBuilder()
+                    buttonName = "Button_TicketRaids";
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
+
+            var createTicketBtn = new DiscordButtonComponent(ButtonStyle.Primary, buttonName, "📩 Create Ticket");
+
+            var messageBuilder = new DiscordMessageBuilder()
                     .WithEmbed(embedTicketButtons)
                     .AddComponents(createTicketBtn);
 
-                await ctx.Channel.SendMessageAsync(messageBuilder);
-            }
-            else if (choice == 2)
-            {
-                ;
-            }
-            else if (choice == 3)
-            {
-                ;
-            }
+            await ctx.Channel.SendMessageAsync(messageBuilder);
         }
     }
 }
