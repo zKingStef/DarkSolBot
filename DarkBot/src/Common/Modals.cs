@@ -95,7 +95,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(
-                new TextInputComponent("Login Method (PTC, Google, FB)", "loginTextBox", value: ""));
+                new TextInputComponent("Login Method (Trainer-Club, Google, Facebook)", "loginTextBox", value: ""));
 
             await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
         }

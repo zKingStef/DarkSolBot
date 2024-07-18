@@ -40,10 +40,7 @@ namespace DarkBot.src.SlashCommands
                                      "**Do I need to share my login information?**\n" +
                                      "Yes, for this service, we require access to your account.\n\n" +
                                      "**Can I access my account during this process?**\n" +
-                                     "To ensure security, it's important that you stay logged out during the process. The security of your account is the highest priority.\n\n" +
-                                     "**What login methods are accepted?**\n" +
-                                     "Google, Facebook, or PokemonTrainerClub.\n\n" +
-                                     "**Don't hesitate to send me a message before purchasing if you have any questions.**");
+                                     "To ensure security, it's important that you stay logged out during the process. The security of your account is the highest priority.\n\n");
 
                     buttonName = "Button_TicketPokecoin";
                     break;
@@ -60,10 +57,7 @@ namespace DarkBot.src.SlashCommands
                                      "**Do I need to share my login information?**\n" +
                                      "Yes, for this service, we require access to your account.\n\n" +
                                      "**Can I access my account during this process?**\n" +
-                                     "To ensure security, it's important that you stay logged out during the process.\n\n" +
-                                     "**What login methods are accepted?**\n" +
-                                     "Google, Facebook, or PokemonTrainerClub.\n\n" +
-                                     "**Don't hesitate to send me a message before purchasing if you have any questions.**");
+                                     "To ensure security, it's important that you stay logged out during the process.\n\n");
 
                     buttonName = "Button_TicketXP";
                     break;
@@ -80,10 +74,7 @@ namespace DarkBot.src.SlashCommands
                                      "**Do I need to share my login information?**\n" +
                                      "Yes, for this service, we require access to your account.\n\n" +
                                      "**Can I access my account during this process?**\n" +
-                                     "To ensure security, it's important that you stay logged out during the process.\n\n" +
-                                     "**What login methods are accepted?**\n" +
-                                     "Google, Facebook, or PokemonTrainerClub.\n\n" +
-                                     "**Don't hesitate to send me a message before purchasing if you have any questions.**");
+                                     "To ensure security, it's important that you stay logged out during the process.\n\n");
 
                     buttonName = "Button_TicketRaids";
                     break;
