@@ -35,32 +35,48 @@ namespace DarkBot.src.SlashCommands
                                         [Option("Price", "Price of the Article")] string SALES_Price,
                                         [Choice("Ebay", 0)]
                                         [Choice("Discord", 1)]
+                                        [Choice("Whatsapp", 2)]
                                         [Option("Platform", "Selling platform")] long Platform,
                                         [Option("Customer", "Name of the Customer")] string CUS_Name)
         {
             // Pre Execution Checks
             await CmdShortener.CheckIfUserHasCeoRole(ctx);
 
+            // Define a dictionary for mapping the article type
+            var articleTypeMapping = new Dictionary<long, string>
+            {
+                { 0, "Pokecoins" },
+                { 1, "Stardust" },
+                { 2, "Stardust+Shadow" },
+                { 3, "XP" },
+                { 4, "Raids" },
+                { 5, "RareCandy" },
+                { 6, "Raidpasses" },
+                { 7, "Custom" }
+            };
+
+            // Define a dictionary for mapping the platform
+            var platformMapping = new Dictionary<long, string>
+            {
+                { 0, "Ebay" },
+                { 1, "Discord" },
+                { 2, "Whatsapp" }
+            };
+
+            // Get the string values based on the provided choices
+            var articleTypeString = articleTypeMapping.TryGetValue(ART_Type, out var articleType) ? articleType : "Unknown";
+            var platformString = platformMapping.TryGetValue(Platform, out var platform) ? platform : "Unknown";
+
             string pictureURL = "Error.pictureURL";
-            string platformName = "Error.platformName";
             string embedTitle = "Error.embedTitle";
             DiscordColor embedColor = DiscordColor.Black;
-
-            switch (Platform)
-            {
-                case 0:
-                    platformName = "Ebay";
-                    break;
-                case 1:
-                    platformName = "Discord";
-                    break;
-            }    
 
             switch (ART_Type)
             {  
                 case 0:
                     pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZdSP0XQrBiuPJTPLN-DYFRbuWkKUFajY7cw&s";
                     embedTitle = " Pokecoins";
+                    
                     embedColor = DiscordColor.Yellow;
                     break;
                 case 1:
@@ -95,7 +111,7 @@ namespace DarkBot.src.SlashCommands
                     break;
                 case 7:
                     pictureURL = "https://assets.bigcartel.com/product_images/356421655/Custom+Order.png?auto=format&fit=max&h=1200&w=1200";
-                    embedTitle = "Custom Order";
+                    embedTitle = "";
                     embedColor = DiscordColor.HotPink;
                     break;
 
@@ -106,21 +122,18 @@ namespace DarkBot.src.SlashCommands
 
             var startProcessBtn   = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_StartProcess", "🚩 Start Process");
             var orderCancelBtn  = new DiscordButtonComponent(ButtonStyle.Danger, "Button_OrderCancel",   "❌ Cancel Order");
-            var accDetailsBtn   = new DiscordButtonComponent(ButtonStyle.Primary, "Button_AccDetails",    "🛃 Account Details");
-            var databaseDoneBtn = new DiscordButtonComponent(ButtonStyle.Danger, "Button_DatabaseDone",  "🗂️ Database done");
 
             var orderEmbed = new DiscordEmbedBuilder() 
                 .WithColor(embedColor)
                 .WithTitle(qty + embedTitle)
                 .WithThumbnail(pictureURL)
-                .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n🛒 Platform:  **{platformName}**\n" +
+                .WithDescription($"🙎🏻‍♂️ Customer:  **{CUS_Name}**\n🛒 Platform:  **{platformString}**\n" +
                                  $"💰 Article Price:  **{SALES_Price}€**\n\n" +
                                   "🚦 Order Status: **:no_entry: Process not started**");
             
             var orderMessage = new DiscordMessageBuilder()
                     .AddEmbed(orderEmbed)
-                    .AddComponents(startProcessBtn, orderCancelBtn)
-                .AddComponents(accDetailsBtn, databaseDoneBtn);
+                    .AddComponents(startProcessBtn, orderCancelBtn);
 
             if (ctx.Interaction.Guild.GetChannel(1263000023822762035) is not DiscordChannel category || category.Type != ChannelType.Category)
             {
@@ -135,11 +148,11 @@ namespace DarkBot.src.SlashCommands
                 new DiscordOverwriteBuilder(ctx.Interaction.Guild.GetRole(1210230414011011124)).Allow(Permissions.AccessChannels), // Developer Role
             };
 
-            DiscordChannel orderChannel = await ctx.Interaction.Guild.CreateTextChannelAsync($"{CUS_Name} {platformName}", category, overwrites: overwrites, position: 0);
+            DiscordChannel orderChannel = await ctx.Interaction.Guild.CreateTextChannelAsync($"{CUS_Name} {articleTypeString}", category, overwrites: overwrites, position: 0);
 
             await orderChannel.SendMessageAsync(orderMessage);
             await DarkSolutions_Handler.SendPhoneDropdown(ctx, orderChannel);
-            await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!" + orderChannel.Mention);
+            await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!  " + orderChannel.Mention);
         }
     }
 }
