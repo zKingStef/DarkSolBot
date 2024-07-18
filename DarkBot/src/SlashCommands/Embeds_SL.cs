@@ -40,7 +40,7 @@ namespace DarkBot.src.SlashCommands
                                      "**Do I need to share my login information?**\n" +
                                      "Yes, for this service, we require access to your account.\n\n" +
                                      "**Can I access my account during this process?**\n" +
-                                     "To ensure security, it's important that you stay logged out during the process. The security of your account is the highest priority.\n\n");
+                                     "Yes, you can stay logged in while we add the coins.\n\n");
 
                     buttonName = "Button_TicketPokecoin";
                     break;
