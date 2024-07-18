@@ -70,7 +70,7 @@ namespace DarkBot.src.SlashCommands
                 case 2:
                     embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("")
-                    .WithColor(DiscordColor.Cyan)
+                    .WithColor(DiscordColor.Green)
                     .WithDescription("**What is the process?**\n" +
                                      "You can select any raid that is currently available. Event Raid Days are also possible. **The Raid Passes have to be in your Inventory**!\n\n" +
                                      "**How long does it take before I can login to my account again?**\n" +
