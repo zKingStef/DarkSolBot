@@ -76,10 +76,12 @@ namespace DarkBot.src.CommandHandler
                         new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
                     ];
                     break;
-                case "modalTechnicForm":
-                    ticketDesc = $"**Problem:** {e.Values["issueTextBox"]}\n\n" +
-                                 "Danke für deine Anfrage. Wir werden uns sobald wie möglich bei dir melden!";
-                    ticketTitle = "Technische Hilfe";
+                case "modalXP":
+                    ticketDesc = $"**Your Order:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - XP Service ";
 
                     overwrites =
                     [

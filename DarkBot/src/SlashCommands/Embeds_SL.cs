@@ -49,7 +49,30 @@ namespace DarkBot.src.SlashCommands
             }
             else if (choice == 1)
             {
-                Console.WriteLine("XP");
+                var embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("")
+                    .WithColor(DiscordColor.Cyan)
+                    .WithDescription("**What is the process?**\n" +
+                                     "I will catch all pokemon from the wild including spinning pokestops, completing research takes and hatching eggs.\n\n" +
+                                     "**How long does it take before I can login to my account again?**\n" +
+                                     "You can log back in to your account 2h after we've send you a message that we finished the service.\n\n" +
+                                     "**Is it safe?**\n" +
+                                     "The method that we use is considered the safest method. We would not offer our services if we didn't consider them safe. Account safety if our top priority\n\n" +
+                                     "**Do I need to share my login information?**\n" +
+                                     "Yes, for this service, we require access to your account.\n\n" +
+                                     "**Can I access my account during this process?**\n" +
+                                     "To ensure security, it's important that you stay logged out during the process.\n\n" +
+                                     "**What login methods are accepted?**\n" +
+                                     "Google, Facebook, or PokemonTrainerClub.\n\n" +
+                                     "**Don't hesitate to send me a message before purchasing if you have any questions.**");
+
+                var createTicketBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_TicketXP", "📩 Create Ticket");
+
+                var messageBuilder = new DiscordMessageBuilder()
+                    .WithEmbed(embedTicketButtons)
+                    .AddComponents(createTicketBtn);
+
+                await ctx.Channel.SendMessageAsync(messageBuilder);
             }
             else if (choice == 2)
             {

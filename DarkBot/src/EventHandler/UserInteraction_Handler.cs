@@ -55,9 +55,10 @@ namespace DarkBot.src.Handler
                 case "Button_TicketPokecoin":
                     await Modals.CreatePokecoinModal(e, "modalPokecoin");
                     break;
-                case "ticketTechnicBtn":
-                    await Modals.CreateTechnicModal(e, "modalTechnicForm");
+                case "Button_TicketXP":
+                    await Modals.CreateXPModal(e, "modalXP");
                     break;
+
                 case "claimTicketButton":
                     if (Ticket_Handler.CheckIfUserHasTicketPermissions(e))
                     {
