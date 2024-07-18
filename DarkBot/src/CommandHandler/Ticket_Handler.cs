@@ -67,7 +67,7 @@ namespace DarkBot.src.CommandHandler
                                  $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
                                  $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
-                    ticketTitle = "DarkSolutions - Pokemon Go ";
+                    ticketTitle = "DarkSolutions - Pokecoins ";
 
                     overwrites =
                     [
