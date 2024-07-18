@@ -31,7 +31,7 @@ namespace DarkBot.src.SlashCommands
             {
                 case 0:
                     embedTicketButtons = new DiscordEmbedBuilder()
-                    .WithTitle("")
+                    .WithTitle("Pokecoin Service")
                     .WithColor(DiscordColor.Yellow)
                     .WithDescription("**What is the process?**\n" +
                                      "After you confirm the payment and send me the login details the coins will be added to your account within a few minutes.\n\n" +
@@ -46,7 +46,7 @@ namespace DarkBot.src.SlashCommands
                     break;
                 case 1:
                     embedTicketButtons = new DiscordEmbedBuilder()
-                    .WithTitle("")
+                    .WithTitle("XP Service")
                     .WithColor(DiscordColor.Cyan)
                     .WithDescription("**What is the process?**\n" +
                                      "I will catch all pokemon from the wild including spinning pokestops, completing research takes and hatching eggs.\n\n" +
@@ -63,7 +63,7 @@ namespace DarkBot.src.SlashCommands
                     break;
                 case 2:
                     embedTicketButtons = new DiscordEmbedBuilder()
-                    .WithTitle("")
+                    .WithTitle("Raid Service")
                     .WithColor(DiscordColor.Green)
                     .WithDescription("**What is the process?**\n" +
                                      "You can select any raid that is currently available. Event Raid Days are also possible. **The Raid Passes have to be in your Inventory**!\n\n" +
