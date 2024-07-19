@@ -24,7 +24,10 @@ namespace DarkBot.src.SlashCommands
                                 [Choice("comday", 4)]
                                 [Option("form", "Choose an embed")] long choice)
         {
-            CmdShortener.CheckIfDev(ctx);
+            if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
+            {
+                await CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
+            }
 
             var embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("");

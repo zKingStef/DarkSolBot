@@ -24,8 +24,10 @@ namespace DarkBot.src.SlashCommands
                                 [Choice("Technic", 1)]
                                 [Option("form", "Choose a form")] long systemChoice)
         {
-            // Pre Execution Checks
-            await CmdShortener.CheckIfUserHasCeoRole(ctx);
+            if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
+            {
+                await CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
+            }
 
             if (systemChoice == 0)
             {
@@ -64,7 +66,7 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
-            await CheckIfChannelIsTicket(ctx);
+            await Ticket_Handler.CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
             {
@@ -84,7 +86,7 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
-            await CheckIfChannelIsTicket(ctx);
+            await Ticket_Handler.CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
             {
@@ -104,16 +106,15 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
-            await CheckIfChannelIsTicket(ctx);
+            await Ticket_Handler.CheckIfChannelIsTicket(ctx);
 
             var oldChannelName = ctx.Channel.Mention;
 
             var embedMessage = new DiscordEmbedBuilder()
             {
                 Title = "Ticket",
-                Description = $"Ticket {ctx.Channel.Mention} renamed by {ctx.User.Mention}!\n\n" +
+                Description = $"Ticket {oldChannelName} renamed by {ctx.User.Mention}!\n\n" +
                               $"New Ticketname: ```{newChannelName}```",
-                Timestamp = DateTime.UtcNow
             };
 
             await ctx.CreateResponseAsync(embedMessage);
@@ -122,19 +123,6 @@ namespace DarkBot.src.SlashCommands
         }
 
 
-        private async Task<bool> CheckIfChannelIsTicket(InteractionContext ctx)
-        {
-            const ulong categoryId = 1207086767623381092;
-
-            if (ctx.Channel.Parent.Id != categoryId || ctx.Channel.Parent == null)
-            {
-                await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().WithContent(":warning: **This command is for tickets only!**").AsEphemeral(true));
-
-                return true;
-            }
-
-            return false;
-        }
+        
     }
 }

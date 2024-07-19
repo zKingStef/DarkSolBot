@@ -18,6 +18,11 @@ namespace DarkBot.src.SlashCommands
         [SlashCommand("GetTopSalesId", "Performs a select * on the Sales Table")]
         public static async Task GetTopSalesId(InteractionContext ctx)
         {
+            if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
+            {
+                await CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
+            }
+
             var dbCommands = new DB_Commands();
             var SALES_Id = await dbCommands.GetTopSalesId();
             await ctx.CreateResponseAsync($"The highest SALES_Id is: {SALES_Id}");

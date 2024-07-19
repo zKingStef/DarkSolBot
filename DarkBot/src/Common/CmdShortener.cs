@@ -126,17 +126,7 @@ namespace DarkBot.src.Common
             return ctx.Member.Permissions.HasPermission(requiredPermissions);
         }
 
-        public static async void CheckIfDev(InteractionContext ctx)
-        {
-            if (!CheckPermissions(ctx, Permissions.ManageEvents))
-            {
-                await SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
-            }
-        }
-        // Pre Execution Checks
-            
-
-    public static bool CheckRole(InteractionContext ctx, ulong roleId)
+        public static bool CheckRole(InteractionContext ctx, ulong roleId)
         {
             var member = ctx.Member;
             return member.Roles.Any(r => r.Id == roleId);

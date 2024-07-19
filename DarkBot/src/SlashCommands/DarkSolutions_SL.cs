@@ -39,8 +39,10 @@ namespace DarkBot.src.SlashCommands
                                         [Option("Platform", "Selling platform")] long Platform,
                                         [Option("Customer", "Name of the Customer")] string CUS_Name)
         {
-            // Pre Execution Checks
-            await CmdShortener.CheckIfUserHasCeoRole(ctx);
+            if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
+            {
+                await CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
+            }
 
             // Define a dictionary for mapping the article type
             var articleTypeMapping = new Dictionary<long, string>
