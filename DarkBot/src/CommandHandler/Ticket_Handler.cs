@@ -105,6 +105,13 @@ namespace DarkBot.src.CommandHandler
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - Raidpass Service ";
                     break;
+                case "modalStardust":
+                    ticketDesc = $"**Stardust Amount:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - Stardust Service ";
+                    break;
             }
 
             ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);

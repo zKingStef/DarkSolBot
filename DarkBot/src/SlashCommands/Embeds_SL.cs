@@ -24,6 +24,7 @@ namespace DarkBot.src.SlashCommands
                                 [Choice("comday", 4)]
                                 [Choice("100iv", 5)]
                                 [Choice("raidpass", 6)]
+                                [Choice("stardust", 7)]
                                 [Option("form", "Choose an embed")] long choice)
         {
             if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
@@ -164,6 +165,21 @@ namespace DarkBot.src.SlashCommands
                     buttonName = "Button_TicketRaidpass";
                     break;
                 case 7:
+                    embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("__Stardust Service__")
+                    .WithColor(DiscordColor.SapGreen)
+                    .WithDescription("**What is the process?**\n" +
+                                     "I can get upto 2 Million Stardust per day by mass catching pokemon\n" +
+                                     "**How long does it take before I can login to my account again?**\n" +
+                                     "You can log back in to your account 2h after we've send you a message that we finished the service.\n\n" +
+                                     "**Is it safe?**\n" +
+                                     "The method that we use is considered the safest method. We would not offer our services if we didn't consider them safe. Account safety if our top priority\n\n" +
+                                     "**Do I need to share my login information?**\n" +
+                                     "Yes, for this service, we require access to your account.\n\n" +
+                                     "**Can I access my account during this process?**\n" +
+                                     "To ensure security, it's important that you stay logged out during the process.\n\n");
+
+                    buttonName = "Button_TicketStardust";
                     break;
                 case 8:
                     break;

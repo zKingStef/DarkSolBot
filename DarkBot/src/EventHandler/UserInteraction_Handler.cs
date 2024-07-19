@@ -73,6 +73,9 @@ namespace DarkBot.src.Handler
                 case "Button_TicketRaidpass":
                     await Modals.CreateRaidpassModal(e, "modalComday");
                     break;
+                case "Button_TicketStardust":
+                    await Modals.CreateStardustModal(e, "modalStardust");
+                    break;
 
                 case "claimTicketButton":
                     if (!Ticket_Handler.CheckIfUserHasTicketPermissions(e))
