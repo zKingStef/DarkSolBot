@@ -20,6 +20,7 @@ namespace DarkBot.src.SlashCommands
             if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
             {
                 await CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
+                return;
             }
 
             var options = new List<DiscordSelectComponentOption>()
