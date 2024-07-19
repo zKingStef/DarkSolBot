@@ -56,20 +56,20 @@ namespace DarkBot.src.SlashCommands
         public async Task Add(InteractionContext ctx,
                              [Option("User", "The user which will be added to the ticket")] DiscordUser user)
         {
-            // Pre Execution Checks
             if (!Ticket_Handler.CheckIfUserHasTicketPermissions(ctx))
-                return;
-            await CheckIfChannelIsTicket(ctx);
+            { 
+                await CheckIfChannelIsTicket(ctx);
 
-            var embedMessage = new DiscordEmbedBuilder()
-            {
-                Title = "Ticket",
-                Description = $"{user.Mention} has been added to the ticket by {ctx.User.Mention}!\n",
-                Timestamp = DateTime.UtcNow
-            };
-            await ctx.CreateResponseAsync(embedMessage);
+                var embedMessage = new DiscordEmbedBuilder()
+                {
+                    Title = "Ticket",
+                    Description = $"{user.Mention} has been added to the ticket by {ctx.User.Mention}!\n",
+                    Timestamp = DateTime.UtcNow
+                };
+                await ctx.CreateResponseAsync(embedMessage);
 
-            await ctx.Channel.AddOverwriteAsync((DiscordMember)user, Permissions.AccessChannels);
+                await ctx.Channel.AddOverwriteAsync((DiscordMember)user, Permissions.AccessChannels);
+            }   
         }
 
         [SlashCommand("remove", "Remove a User from the Ticket")]
@@ -77,20 +77,20 @@ namespace DarkBot.src.SlashCommands
         public async Task Remove(InteractionContext ctx,
                                 [Option("User", "The user, which will be removed from the ticket")] DiscordUser user)
         {
-            // Pre Execution Checks
             if (!Ticket_Handler.CheckIfUserHasTicketPermissions(ctx))
-                return;
-            await CheckIfChannelIsTicket(ctx);
-
-            var embedMessage = new DiscordEmbedBuilder()
             {
-                Title = "Ticket",
-                Description = $"{user.Mention} has been removed from the ticket by {ctx.User.Mention}!\n",
-                Timestamp = DateTime.UtcNow
-            };
-            await ctx.CreateResponseAsync(embedMessage);
+                await CheckIfChannelIsTicket(ctx);
 
-            await ctx.Channel.AddOverwriteAsync((DiscordMember)user, Permissions.None);
+                var embedMessage = new DiscordEmbedBuilder()
+                {
+                    Title = "Ticket",
+                    Description = $"{user.Mention} has been removed from the ticket by {ctx.User.Mention}!\n",
+                    Timestamp = DateTime.UtcNow
+                };
+                await ctx.CreateResponseAsync(embedMessage);
+
+                await ctx.Channel.AddOverwriteAsync((DiscordMember)user, Permissions.None);
+            }
         }
 
         [SlashCommand("rename", "Ändere den Namen eines Tickets")]
@@ -100,21 +100,22 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             if (!Ticket_Handler.CheckIfUserHasTicketPermissions(ctx))
-                return;
-            await CheckIfChannelIsTicket(ctx);
+            { 
+                await CheckIfChannelIsTicket(ctx);
 
-            var oldChannelName = ctx.Channel.Mention;
+                var oldChannelName = ctx.Channel.Mention;
 
-            var embedMessage = new DiscordEmbedBuilder()
-            {
-                Title = "Ticket",
-                Description = $"Ticket {oldChannelName} renamed by {ctx.User.Mention}!\n\n" +
-                              $"New Ticketname: ```{newChannelName}```",
-            };
+                var embedMessage = new DiscordEmbedBuilder()
+                {
+                    Title = "Ticket",
+                    Description = $"Ticket {oldChannelName} renamed by {ctx.User.Mention}!\n\n" +
+                                  $"New Ticketname: ```{newChannelName}```",
+                };
 
-            await ctx.CreateResponseAsync(embedMessage);
+                await ctx.CreateResponseAsync(embedMessage);
 
-            await ctx.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                await ctx.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+            }
         }
 
 
