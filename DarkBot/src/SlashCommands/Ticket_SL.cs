@@ -57,14 +57,8 @@ namespace DarkBot.src.SlashCommands
                              [Option("User", "The user which will be added to the ticket")] DiscordUser user)
         {
             // Pre Execution Checks
-            await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
-            if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
-             || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
-             || !CmdShortener.CheckRole(ctx, 1216171388830744686))) // DarkBot Role
-            {
-                await CmdShortener.SendNotification(ctx, "Error", "You are not allowed to use Ticket Commands!", DiscordColor.Red, 0);
+            if (!Ticket_Handler.CheckIfUserHasTicketPermissions(ctx))
                 return;
-            }
             await CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
@@ -84,7 +78,8 @@ namespace DarkBot.src.SlashCommands
                                 [Option("User", "The user, which will be removed from the ticket")] DiscordUser user)
         {
             // Pre Execution Checks
-            await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
+            if (!Ticket_Handler.CheckIfUserHasTicketPermissions(ctx))
+                return;
             await CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
@@ -104,7 +99,8 @@ namespace DarkBot.src.SlashCommands
                              [Option("Name", "Neuer Ticketname")] string newChannelName)
         {
             // Pre Execution Checks
-            await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
+            if (!Ticket_Handler.CheckIfUserHasTicketPermissions(ctx))
+                return;
             await CheckIfChannelIsTicket(ctx);
 
             var oldChannelName = ctx.Channel.Mention;

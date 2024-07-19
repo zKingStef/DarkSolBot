@@ -154,8 +154,6 @@ namespace DarkBot.src.CommandHandler
             }
         }
 
-
-
         public static async Task CloseTicket(ComponentInteractionCreateEventArgs e)
         {
             if (!CheckIfUserHasTicketPermissions(e))
@@ -248,15 +246,16 @@ namespace DarkBot.src.CommandHandler
             await e.Interaction.Channel.DeleteAsync(e.Values.Values.First());
         }
 
-        public static async Task CheckIfUserHasTicketPermissions(InteractionContext ctx)
+        public static bool CheckIfUserHasTicketPermissions(InteractionContext ctx)
         {
             if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
              || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
              || !CmdShortener.CheckRole(ctx, 1216171388830744686))) // DarkBot Role
             {
-                await CmdShortener.SendNotification(ctx, "Error", "You are not allowed to use Ticket Commands!", DiscordColor.Red, 0);
-                return;
+                CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
+                return false;
             }
+            return true;
         }
 
         public static bool CheckIfUserHasTicketPermissions(ComponentInteractionCreateEventArgs ctx)
@@ -266,7 +265,7 @@ namespace DarkBot.src.CommandHandler
              || !CmdShortener.CheckRole(ctx, 1216171388830744686))) // DarkBot Role
 
             {
-                CmdShortener.SendAsEphemeral(ctx, "You are not allowed to use Ticket Commands!");
+                CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
                 return false;
             }
             return true;
@@ -279,7 +278,7 @@ namespace DarkBot.src.CommandHandler
              || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
              || !CmdShortener.CheckRole(ctx, 1216171388830744686))) // DarkBot Role
             {
-                CmdShortener.SendAsEphemeral(ctx, "You are not allowed to use Ticket Commands!");
+                CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
                 return false;
             }
             return true;

@@ -69,7 +69,7 @@ namespace DarkBot.src.Handler
                     break;
 
                 case "claimTicketButton":
-                    if (Ticket_Handler.CheckIfUserHasTicketPermissions(e))
+                    if (!Ticket_Handler.CheckIfUserHasTicketPermissions(e))
                     {
                         await Ticket_Handler.RemoveClaimButtonAsync(e);
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
