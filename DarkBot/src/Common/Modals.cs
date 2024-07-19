@@ -51,7 +51,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("What do you want to order", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (PTC, Google, FB)", "loginTextBox", value: ""));
 
@@ -66,7 +66,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("How many Coins do you want to order?", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (PTC, Google, FB)", "loginTextBox", value: ""));
 
@@ -81,7 +81,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("How much XP do you want to order?", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (PTC, Google, FB)", "loginTextBox", value: ""));
 
@@ -98,7 +98,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("Which Raid Pokemon(s)?", "raidpokeTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (Trainer-Club, Google, Facebook)", "loginTextBox", value: ""));
 
@@ -113,7 +113,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("How many Shundos do you want?", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (Trainer-Club, Google, Facebook)", "loginTextBox", value: ""));
 
