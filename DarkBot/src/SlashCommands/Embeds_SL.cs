@@ -152,8 +152,8 @@ namespace DarkBot.src.SlashCommands
                     .WithDescription("**What is the process?**\n" +
                                      "With referral feature, i will create clone accounts, add friend and do referral task.\n" +
                                      "All you have to do is accept my clone's friend requests, claim the passes and delete friends.\n" +
-                                     "Minimum order is 100 Passes!\n" +
-                                     "Make sure to have space on your friendlist (100 Passes = 100 friends)\n\n" +
+                                     "- Minimum order is 100 Passes!\n" +
+                                     "- Make sure to have space on your friendlist (100 Passes = 100 friends)\n\n" +
                                      "**Is it safe?**\n" +
                                      "There is no risk at all because i am not logged in your account.\n\n" +
                                      "**Do I need to share my login information?**\n" +
