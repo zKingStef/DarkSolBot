@@ -167,7 +167,7 @@ namespace DarkBot.src.SlashCommands
                 case 7:
                     embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("__Stardust Service__")
-                    .WithColor(DiscordColor.SapGreen)
+                    .WithColor(DiscordColor.HotPink)
                     .WithDescription("**What is the process?**\n" +
                                      "I can get upto 2 Million Stardust per day by mass catching pokemon\n" +
                                      "**How long does it take before I can login to my account again?**\n" +
