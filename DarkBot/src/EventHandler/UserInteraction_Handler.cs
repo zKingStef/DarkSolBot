@@ -61,6 +61,9 @@ namespace DarkBot.src.Handler
                 case "Button_TicketRaids":
                     await Modals.CreateRaidsModal(e, "modalRaids");
                     break;
+                case "Button_TicketShundo":
+                    await Modals.CreateShundoModal(e, "modalShundo");
+                    break;
 
                 case "claimTicketButton":
                     if (Ticket_Handler.CheckIfUserHasTicketPermissions(e))

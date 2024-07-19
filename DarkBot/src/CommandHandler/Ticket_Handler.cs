@@ -105,6 +105,20 @@ namespace DarkBot.src.CommandHandler
                         new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
                     ];
                     break;
+                case "modalShundo":
+                    ticketDesc = $"**Shundo Amount:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - Shundo Service ";
+
+                    overwrites =
+                    [
+                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
+                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
+                    ];
+                    break;
             }
 
             ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
