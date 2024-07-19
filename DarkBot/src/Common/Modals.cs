@@ -42,6 +42,16 @@ namespace DarkBot.src.Common
                 await Ticket_Handler.HandleGeneralTickets(e);
             }
             if (e.Interaction.Type == InteractionType.ModalSubmit
+             && e.Interaction.Data.CustomId == "modal100IV")
+            {
+                await Ticket_Handler.HandleGeneralTickets(e);
+            }
+            if (e.Interaction.Type == InteractionType.ModalSubmit
+             && e.Interaction.Data.CustomId == "modalRaidpass")
+            {
+                await Ticket_Handler.HandleGeneralTickets(e);
+            }
+            if (e.Interaction.Type == InteractionType.ModalSubmit
              && e.Interaction.Data.CustomId == "modalCloseReasonForm")
             {
                 await Ticket_Handler.CloseTicket(e);
@@ -56,7 +66,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("What do you want to order", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (PTC, Google, FB)", "loginTextBox", value: ""));
 
@@ -71,7 +81,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("How many Coins do you want to order?", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (PTC, Google, FB)", "loginTextBox", value: ""));
 
@@ -86,7 +96,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("How much XP do you want to order?", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (PTC, Google, FB)", "loginTextBox", value: ""));
 
@@ -103,7 +113,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("Which Raid Pokemon(s)?", "raidpokeTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (Trainer-Club, Google, Facebook)", "loginTextBox", value: ""));
 
@@ -118,7 +128,7 @@ namespace DarkBot.src.Common
                 .AddComponents(
                     new TextInputComponent("How many Shundos do you want?", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (Trainer-Club, Google, Facebook)", "loginTextBox", value: ""));
 
@@ -131,11 +141,39 @@ namespace DarkBot.src.Common
                 .WithTitle("DarkSolutions")
                 .WithCustomId(modalId)
                 .AddComponents(
-                    new TextInputComponent("Do you want the Com-Day Shundo. If yes, how many?", "orderTextBox", value: ""))
+                    new TextInputComponent("Additional ComDay Shundo ? (Y/N)", "orderTextBox", value: ""))
                 .AddComponents(
-                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
                 .AddComponents(
                 new TextInputComponent("Login Method (Trainer-Club, Google, Facebook)", "loginTextBox", value: ""));
+
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
+        }
+
+        public static async Task Create100IVModal(ComponentInteractionCreateEventArgs e, string modalId)
+        {
+            var modal = new DiscordInteractionResponseBuilder()
+                .WithTitle("DarkSolutions")
+                .WithCustomId(modalId)
+                .AddComponents(
+                    new TextInputComponent("Which Pokemon do you want ?", "orderTextBox", value: ""))
+                .AddComponents(
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""))
+                .AddComponents(
+                new TextInputComponent("Login Method (Trainer-Club, Google, Facebook)", "loginTextBox", value: ""));
+
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
+        }
+
+        public static async Task CreateRaidpassModal(ComponentInteractionCreateEventArgs e, string modalId)
+        {
+            var modal = new DiscordInteractionResponseBuilder()
+                .WithTitle("DarkSolutions")
+                .WithCustomId(modalId)
+                .AddComponents(
+                    new TextInputComponent("How many Raidpasses ?", "orderTextBox", value: ""))
+                .AddComponents(
+                    new TextInputComponent("Payment Method", "paymethodTextBox", value: ""));
 
             await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
         }

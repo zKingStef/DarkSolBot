@@ -92,6 +92,19 @@ namespace DarkBot.src.CommandHandler
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - Community Day Service ";
                     break;
+                case "modal100IV":
+                    ticketDesc = $"**Pokemon:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - 100IV Pokemon Service ";
+                    break;
+                case "modalRaidpass":
+                    ticketDesc = $"**Raidpass Amount:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - Raidpass Service ";
+                    break;
             }
 
             ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);

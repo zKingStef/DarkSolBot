@@ -22,6 +22,8 @@ namespace DarkBot.src.SlashCommands
                                 [Choice("raids", 2)]
                                 [Choice("shundo", 3)]
                                 [Choice("comday", 4)]
+                                [Choice("100iv", 5)]
+                                [Choice("raidpass", 6)]
                                 [Option("form", "Choose an embed")] long choice)
         {
             if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
@@ -126,8 +128,40 @@ namespace DarkBot.src.SlashCommands
                     buttonName = "Button_TicketComday";
                     break;
                 case 5:
+                    embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("__100IV Service__")
+                    .WithColor(DiscordColor.Orange)
+                    .WithDescription("**What is the process?**\n" +
+                                     "I will catch any specific Pokemon with Perfect IVs for you.\n" +
+                                     "Not available: Legendary/Mythical/Shadow\n\n" +
+                                     "**How long does it take before I can login to my account again?**\n" +
+                                     "You can log back in to your account 2h after we've send you a message that we finished the service.\n\n" +
+                                     "**Is it safe?**\n" +
+                                     "The method that we use is considered the safest method. We would not offer our services if we didn't consider them safe. Account safety if our top priority\n\n" +
+                                     "**Do I need to share my login information?**\n" +
+                                     "Yes, for this service, we require access to your account.\n\n" +
+                                     "**Can I access my account during this process?**\n" +
+                                     "To ensure security, it's important that you stay logged out during the process.\n\n");
+
+                    buttonName = "Button_Ticket100IV";
                     break;
                 case 6:
+                    embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("__Raidpass Service__")
+                    .WithColor(DiscordColor.SapGreen)
+                    .WithDescription("**What is the process?**\n" +
+                                     "With referral feature, i will create clone accounts, add friend and do referral task.\n" +
+                                     "All you have to do is accept my clone's friend requests, claim the passes and delete friends.\n" +
+                                     "Minimum order is 100 Passes!\n" +
+                                     "Make sure to have space on your friendlist (100 Passes = 100 friends)\n\n" +
+                                     "**Is it safe?**\n" +
+                                     "There is no risk at all because i am not logged in your account.\n\n" +
+                                     "**Do I need to share my login information?**\n" +
+                                     "No, i just need your friend code and referral code.\n\n" +
+                                     "**Can I access my account during this process?**\n" +
+                                     "Yes, you can play the game normally.");
+
+                    buttonName = "Button_TicketRaidpass";
                     break;
                 case 7:
                     break;
