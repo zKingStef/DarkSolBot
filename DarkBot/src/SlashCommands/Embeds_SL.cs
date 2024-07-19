@@ -169,7 +169,7 @@ namespace DarkBot.src.SlashCommands
                     .WithTitle("__Stardust Service__")
                     .WithColor(DiscordColor.HotPink)
                     .WithDescription("**What is the process?**\n" +
-                                     "I can get upto 2 Million Stardust per day by mass catching pokemon\n" +
+                                     "I can get upto 2 Million Stardust per day by mass catching pokemon.\n\n" +
                                      "**How long does it take before I can login to my account again?**\n" +
                                      "You can log back in to your account 2h after we've send you a message that we finished the service.\n\n" +
                                      "**Is it safe?**\n" +
