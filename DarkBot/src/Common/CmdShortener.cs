@@ -156,7 +156,7 @@ namespace DarkBot.src.Common
         {
             if (!CmdShortener.CheckRole(ctx, 978346565225816152))
             {
-                await CmdShortener.SendNotification(ctx, "Error", "CEO Role needed for this Command!", DiscordColor.Red, 0);
+                await CmdShortener.SendNotification(ctx, "Error", "CEO Role is needed for this Command!", DiscordColor.Red, 0);
                 return;
             }
         }
@@ -164,7 +164,7 @@ namespace DarkBot.src.Common
         // Methode zur Fehlerbehandlung
         public static async Task HandleException(InteractionContext ctx, Exception e)
         {
-            string errorMessage = $"Eror: {e.Message}\nPlease report to a Developer";
+            string errorMessage = $"Error: {e.Message}\nPlease report to a Developer";
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(errorMessage));
         }
 

@@ -8,6 +8,8 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus;
 using DSharpPlus.CommandsNext.Attributes;
+using static System.Net.Mime.MediaTypeNames;
+using DSharpPlus.CommandsNext;
 
 namespace DarkBot.src.SlashCommands
 {
@@ -19,11 +21,15 @@ namespace DarkBot.src.SlashCommands
                                 [Choice("xp-service", 1)]
                                 [Choice("raids", 2)]
                                 [Choice("shundo", 3)]
-                                [Choice("shundo", 4)]
+                                [Choice("comday", 4)]
                                 [Option("form", "Choose an embed")] long choice)
         {
             // Pre Execution Checks
-            await CmdShortener.CheckIfUserHasCeoRole(ctx);
+            if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
+            {
+                await CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
+                return;
+            }
 
             var embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("");
