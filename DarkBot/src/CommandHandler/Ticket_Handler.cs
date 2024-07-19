@@ -42,7 +42,8 @@ namespace DarkBot.src.CommandHandler
             var overwrites = new List<DiscordOverwriteBuilder>
             {
                 new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                new DiscordOverwriteBuilder(guild.GetRole(1209284430229803008)).Allow(Permissions.AccessChannels), // Techniker Rolle
+                new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
+                new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
             };
 
             switch (e.Interaction.Data.CustomId)
@@ -53,13 +54,6 @@ namespace DarkBot.src.CommandHandler
                                  $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - Pokemon Go ";
-
-                    overwrites =
-                    [
-                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
-                    ];
                     break;
 
                 case "modalPokecoin":
@@ -68,13 +62,6 @@ namespace DarkBot.src.CommandHandler
                                  $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - Pokecoins ";
-
-                    overwrites =
-                    [
-                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
-                    ];
                     break;
                 case "modalXP":
                     ticketDesc = $"**XP Amount:** {e.Values["orderTextBox"]}\n\n" +
@@ -82,13 +69,6 @@ namespace DarkBot.src.CommandHandler
                                  $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - XP Service ";
-
-                    overwrites =
-                    [
-                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
-                    ];
                     break;
                 case "modalRaids":
                     ticketDesc = $"**Raid Amount:** {e.Values["orderTextBox"]}\n\n" +
@@ -97,13 +77,6 @@ namespace DarkBot.src.CommandHandler
                                  $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - Raid Service ";
-
-                    overwrites =
-                    [
-                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
-                    ];
                     break;
                 case "modalShundo":
                     ticketDesc = $"**Shundo Amount:** {e.Values["orderTextBox"]}\n\n" +
@@ -111,13 +84,13 @@ namespace DarkBot.src.CommandHandler
                                  $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
                                  "Thank you for submitting your Order.";
                     ticketTitle = "DarkSolutions - Shundo Service ";
-
-                    overwrites =
-                    [
-                        new DiscordOverwriteBuilder(guild.EveryoneRole).Deny(Permissions.AccessChannels),
-                        new DiscordOverwriteBuilder(user).Allow(Permissions.AccessChannels).Deny(Permissions.None),
-                        new DiscordOverwriteBuilder(guild.GetRole(Roles.ceo)).Allow(Permissions.AccessChannels), // CEO Role
-                    ];
+                    break;
+                case "modalComday":
+                    ticketDesc = $"**Additional Shundos ?:** {e.Values["orderTextBox"]}\n\n" +
+                                 $"**Payment Method:** {e.Values["paymethodTextBox"]}\n\n" +
+                                 $"**Login Method:** {e.Values["loginTextBox"]}\n\n" +
+                                 "Thank you for submitting your Order.";
+                    ticketTitle = "DarkSolutions - Community Day Service ";
                     break;
             }
 

@@ -37,6 +37,11 @@ namespace DarkBot.src.Common
                 await Ticket_Handler.HandleGeneralTickets(e);
             }
             if (e.Interaction.Type == InteractionType.ModalSubmit
+             && e.Interaction.Data.CustomId == "modalComday")
+            {
+                await Ticket_Handler.HandleGeneralTickets(e);
+            }
+            if (e.Interaction.Type == InteractionType.ModalSubmit
              && e.Interaction.Data.CustomId == "modalCloseReasonForm")
             {
                 await Ticket_Handler.CloseTicket(e);
@@ -112,6 +117,21 @@ namespace DarkBot.src.Common
                 .WithCustomId(modalId)
                 .AddComponents(
                     new TextInputComponent("How many Shundos do you want?", "orderTextBox", value: ""))
+                .AddComponents(
+                    new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
+                .AddComponents(
+                new TextInputComponent("Login Method (Trainer-Club, Google, Facebook)", "loginTextBox", value: ""));
+
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
+        }
+
+        public static async Task CreateComdayModal(ComponentInteractionCreateEventArgs e, string modalId)
+        {
+            var modal = new DiscordInteractionResponseBuilder()
+                .WithTitle("DarkSolutions")
+                .WithCustomId(modalId)
+                .AddComponents(
+                    new TextInputComponent("Do you want the Com-Day Shundo. If yes, how many?", "orderTextBox", value: ""))
                 .AddComponents(
                     new TextInputComponent("Payment Method (Paypal, Wise, BankTransfer, Giftcard)", "paymethodTextBox", value: ""))
                 .AddComponents(

@@ -19,7 +19,8 @@ namespace DarkBot.src.SlashCommands
                                 [Choice("xp-service", 1)]
                                 [Choice("raids", 2)]
                                 [Choice("shundo", 3)]
-                                [Option("form", "Choose a embed")] long choice)
+                                [Choice("shundo", 4)]
+                                [Option("form", "Choose an embed")] long choice)
         {
             // Pre Execution Checks
             await CmdShortener.CheckIfUserHasCeoRole(ctx);
@@ -100,6 +101,33 @@ namespace DarkBot.src.SlashCommands
                     buttonName = "Button_TicketShundo";
                     break;
                 case 4:
+                    embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("__Community Day Service__")
+                    .WithColor(DiscordColor.IndianRed)
+                    .WithDescription("**What is the process?**\n" +
+                                     "I will play the full 3 hours of Community Day for you. In these 3 hours the average loot will be:" +
+                                     "\n70+ Shinys\n1000 XL Bonbons (mega evolution needed for more XL)\n10000 Bonbons\n2 Million Stardust\n25 Million XP\n" +
+                                     "Additionally you can order one or multiple Shundos of the Com-Day Pokemon." +
+                                     "**How long does it take before I can login to my account again?**\n" +
+                                     "You can log back in to your account 2h after we've send you a message that we finished the service.\n\n" +
+                                     "**Is it safe?**\n" +
+                                     "The method that we use is considered the safest method. We would not offer our services if we didn't consider them safe. Account safety if our top priority\n\n" +
+                                     "**Do I need to share my login information?**\n" +
+                                     "Yes, for this service, we require access to your account.\n\n" +
+                                     "**Can I access my account during this process?**\n" +
+                                     "To ensure security, it's important that you stay logged out during the process.\n\n");
+
+                    buttonName = "Button_TicketComday";
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
                     break;
             }
 
