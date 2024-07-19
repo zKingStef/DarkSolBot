@@ -21,7 +21,6 @@ namespace DarkBot.src.SlashCommands
         [SlashCommand("system", "Ticket System")]
         public static async Task Ticketsystem(InteractionContext ctx,
                                 [Choice("PokemonGo", 0)]
-                                [Choice("Technic", 1)]
                                 [Option("form", "Choose a form")] long systemChoice)
         {
             if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
@@ -49,14 +48,6 @@ namespace DarkBot.src.SlashCommands
             {
                 ;
             }
-            else if (systemChoice == 2)
-            {
-                ;
-            }
-            else if (systemChoice == 3)
-            {
-                ;
-            }
         }
 
         [SlashCommand("add", "Add a User to the Ticket")]
@@ -66,7 +57,7 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
-            await Ticket_Handler.CheckIfChannelIsTicket(ctx);
+            await CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
             {
@@ -86,7 +77,7 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
-            await Ticket_Handler.CheckIfChannelIsTicket(ctx);
+            await CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
             {
@@ -106,7 +97,7 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
-            await Ticket_Handler.CheckIfChannelIsTicket(ctx);
+            await CheckIfChannelIsTicket(ctx);
 
             var oldChannelName = ctx.Channel.Mention;
 
@@ -123,6 +114,19 @@ namespace DarkBot.src.SlashCommands
         }
 
 
-        
+        private async Task<bool> CheckIfChannelIsTicket(InteractionContext ctx)
+        {
+            const ulong categoryId = 1207086767623381092;
+
+            if (ctx.Channel.Parent.Id != categoryId || ctx.Channel.Parent == null)
+            {
+                await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().WithContent(":warning: **This command is for tickets only!**").AsEphemeral(true));
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

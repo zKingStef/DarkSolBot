@@ -252,7 +252,7 @@ namespace DarkBot.src.CommandHandler
         {
             if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
              || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
-             || !CmdShortener.CheckRole(ctx, 1216171388830744686) // DarkBot Role
+             || !CmdShortener.CheckRole(ctx, 1216171388830744686))) // DarkBot Role
             {
                 await CmdShortener.SendNotification(ctx, "Error", "You are not allowed to use Ticket Commands!", DiscordColor.Red, 0);
                 return;
@@ -277,8 +277,7 @@ namespace DarkBot.src.CommandHandler
         {
             if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
              || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
-             || !CmdShortener.CheckRole(ctx, 1216171388830744686) // DarkBot Role
-             || !CmdShortener.CheckRole(ctx, 1239551770238255147))) // Spezial Rolle 
+             || !CmdShortener.CheckRole(ctx, 1216171388830744686))) // DarkBot Role
             {
                 CmdShortener.SendAsEphemeral(ctx, "You are not allowed to use Ticket Commands!");
                 return false;
@@ -286,18 +285,6 @@ namespace DarkBot.src.CommandHandler
             return true;
         }
 
-        public async Task<bool> CheckIfChannelIsTicket(InteractionContext ctx)
-        {
-            const ulong categoryId = 1207086767623381092;
-
-            if (ctx.Channel.Parent.Id != categoryId || ctx.Channel.Parent == null)
-            {
-                await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().WithContent(":warning: **This command is for tickets only!**").AsEphemeral(true));
-
-                return true;
-            }
-            return false;
-        }
+        
     }
 }
