@@ -58,6 +58,13 @@ namespace DarkBot.src.SlashCommands
         {
             // Pre Execution Checks
             await Ticket_Handler.CheckIfUserHasTicketPermissions(ctx);
+            if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
+             || !CmdShortener.CheckRole(ctx, 978346565225816152) // CEO Role
+             || !CmdShortener.CheckRole(ctx, 1216171388830744686))) // DarkBot Role
+            {
+                await CmdShortener.SendNotification(ctx, "Error", "You are not allowed to use Ticket Commands!", DiscordColor.Red, 0);
+                return;
+            }
             await CheckIfChannelIsTicket(ctx);
 
             var embedMessage = new DiscordEmbedBuilder()
