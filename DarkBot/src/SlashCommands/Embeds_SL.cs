@@ -115,7 +115,7 @@ namespace DarkBot.src.SlashCommands
                     .WithDescription("**What is the process?**\n" +
                                      "This Service includes the full 3 hours of the Community Day." +
                                      "The average loot in this time is:" +
-                                     "\n- 70+ Shinys\n- 1000 XL Bonbons (mega evolution needed for more XL)\n- 10000 Bonbons\n- 2 Million Stardust\n- 25 Million XP\n\n" +
+                                     "\n- 70+ Shinys\n- 1000 XL Candy (mega evolution needed for more XL)\n- 20000 Candy\n- 2 Million Stardust\n- 25 Million XP\n\n" +
                                      "Additionally you can order one or multiple Shundos of the Com-Day Pokemon.\n\n" +
                                      "**How long does it take before I can login to my account again?**\n" +
                                      "You can log back in to your account 2h after we've send you a message that we finished the service.\n\n" +
