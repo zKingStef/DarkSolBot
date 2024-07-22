@@ -21,7 +21,7 @@ namespace DarkBot.src.SlashCommands
     [SlashCommandGroup("pokediary", "Slash Commands for the Pokemon Go Diary.")]
     public class PokeDiary_SL : PokeDiary
     {
-        /*
+        
         [SlashCommand("addstats", "Add daily statistics")]
         public static async Task AddStats(InteractionContext ctx,
                           [Option("date", "DateTime Format: (YYYY-MM-dd)")] string date,
@@ -39,36 +39,31 @@ namespace DarkBot.src.SlashCommands
                           [Option("shundos", "Shiny Hundo Pokemon")] long shundos)
 
         {
-            await CmdShortener.CheckIfUserHasCeoRole(ctx);
-            DBEngine dbEngine = new();
+            CmdShortener.CheckPermissions(ctx, Permissions.Administrator);
 
-            try
-            {
-                using var conn = new NpgsqlConnection(dbEngine.connectionString);
-                await conn.OpenAsync();
+            string query = "INSERT INTO bmocfdpnmiqmcbuykudg.POKEDIARY " +
+                           "(ENTRY_DATE, POKEMON_CAUGHT, POKESTOPS_VISITED, " +
+                           "DISTANCE_WALKED, TOTAL_XP, STARDUST, " +
+                           "WEEKLY_DISTANCE, POKECOINS, RAIDPASSES, " +
+                           "SHINYS, LEGENDARYS, HUNDOS, SHUNDOS)" +
+                           $"VALUES('{date}', {pokemon}, {pokestops}, {distance}, " +
+                           $"{totalXP}, {stardust}, {weeklyKilometers}, {pokecoins}," +
+                           $" {raidpasses}, {shinys}, {legendarys}, {hundos}, {shundos});";
 
-                string query = "INSERT INTO bmocfdpnmiqmcbuykudg.POKEDIARY " +
-                               "(ENTRY_DATE, POKEMON_CAUGHT, POKESTOPS_VISITED, " +
-                               "DISTANCE_WALKED, TOTAL_XP, STARDUST, " +
-                               "WEEKLY_DISTANCE, POKECOINS, RAIDPASSES, " +
-                               "SHINYS, LEGENDARYS, HUNDOS, SHUNDOS)" +
-                               $"VALUES('{date}', {pokemon}, {pokestops}, {distance}, " +
-                               $"{totalXP}, {stardust}, {weeklyKilometers}, {pokecoins}," +
-                               $" {raidpasses}, {shinys}, {legendarys}, {hundos}, {shundos})";
+            await ctx.CreateResponseAsync($":white_check_mark: Daily statistics for {DateTime.Now.ToShortDateString()} saved!");
 
-                using var cmd = new NpgsqlCommand(query, conn);
-                await cmd.ExecuteNonQueryAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return;
-            }
+            var embed = new DiscordMessageBuilder()
+                .AddEmbed(new DiscordEmbedBuilder()
 
-            await ctx.CreateResponseAsync($":white_check_mark: Daily statistics for {DateTime.Now.ToShortDateString()} added successfully.");
+                .WithColor(DiscordColor.Rose)
+                .WithTitle("Daily Statistics for " + DateTime.Now.ToShortDateString())
+                .WithDescription(query));
+
+            var logChannel = ctx.Guild.GetChannel(1264833483629662208);
+            await logChannel.SendMessageAsync(embed);
         }
-        */
-
+        
+        /*
         [SlashCommand("dailystats", "Show today's statistics")]
         public async Task ShowTodayStats(InteractionContext ctx)
         {
@@ -108,8 +103,9 @@ namespace DarkBot.src.SlashCommands
                 await ctx.CreateResponseAsync($"No statistics found for today.");
             }
         }
+        */
 
-
+        /*
         [SlashCommand("stats", "Get statistics for a specific date")]
         public async Task GetStats(InteractionContext ctx,
                                   [Option("date", "The date to get statistics for (format: yyyy-MM-dd)")] string dateString)
@@ -158,7 +154,7 @@ namespace DarkBot.src.SlashCommands
                 await ctx.CreateResponseAsync("Invalid date format. Please use the format yyyy-MM-dd.");
             }
         }
-
+        */
         /*
         [SlashCommand("allstats", "Get all statistics")]
         [RequireRoles(RoleCheckMode.Any, "🧰 CEO")]
@@ -232,36 +228,5 @@ namespace DarkBot.src.SlashCommands
             }
         }
         */
-
-        private static DiscordEmbedBuilder BuildStatsPageEmbed(List<DailyStatsEntry> entries, int pageIndex)
-        {
-            var embed = new DiscordEmbedBuilder
-            {
-                Title = "Daily Statistics",
-                Color = DiscordColor.Green
-            };
-
-            int startIndex = pageIndex * 5;
-            int endIndex = Math.Min(startIndex + 5, entries.Count);
-
-            for (int i = startIndex; i < endIndex; i++)
-            {
-                var entry = entries[i];
-                embed.AddField($"{entry.Date.ToShortDateString()}",
-                    $"Distance: {entry.Distance} km\n" +
-                    $"Pokémon: {entry.Pokemon}\n" +
-                    $"Pokestops: {entry.Pokestops}\n" +
-                    $"Total XP: {entry.TotalXP}\n" +
-                    $"Stardust: {entry.Stardust}\n" +
-                    $"Weekly kilometers: {entry.WeeklyKilometers} km");
-            }
-
-            return embed;
-        }
-
-
-
-
-
     }
 }
