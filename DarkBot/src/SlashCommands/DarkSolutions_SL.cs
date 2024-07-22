@@ -157,5 +157,130 @@ namespace DarkBot.src.SlashCommands
             await DarkSolutions_Handler.SendPhoneDropdown(ctx, orderChannel);
             await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!  " + orderChannel.Mention);
         }
+
+        //
+        [SlashCommand("new-sale", "Add Entry in Sales Table")]
+        public static async Task NewSale(InteractionContext ctx,
+                          [Option("date", "DateTime Format: (YYYY-MM-dd)")] string date,
+                          [Option("distance", "Distance walked in kilometers")] double distance,
+                          [Option("pokemon", "Number of Pokémon caught")] long pokemon,
+                          [Option("pokestops", "Number of PokéStops visited")] long pokestops,
+                          [Option("total_xp", "Total XP gained")] long totalXP,
+                          [Option("stardust", "Amount of Stardust collected")] long stardust,
+                          [Option("weekly_kilometers", "Kilometers walked in the week")] long weeklyKilometers,
+                          [Option("pokecoins", "Amount of Pokecoins")] long pokecoins,
+                          [Option("raidpasses", "Amount of Raidpasses")] long raidpasses,
+                          [Option("shinys", "Shiny Pokemon")] long shinys,
+                          [Option("legendarys", "Legendary Pokemon")] long legendarys,
+                          [Option("hundos", "Hundo Pokemon")] long hundos,
+                          [Option("shundos", "Shiny Hundo Pokemon")] long shundos)
+
+        {
+            CmdShortener.CheckIfUserHasCeoRole(ctx);
+
+            string query = "INSERT INTO bmocfdpnmiqmcbuykudg.SALES " +
+                           "(ENTRY_DATE, POKEMON_CAUGHT, POKESTOPS_VISITED, " +
+                           "DISTANCE_WALKED, TOTAL_XP, STARDUST, " +
+                           "WEEKLY_DISTANCE, POKECOINS, RAIDPASSES, " +
+                           "SHINYS, LEGENDARYS, HUNDOS, SHUNDOS)" +
+                           $"VALUES('{date}', '{pokemon}', '{pokestops}', '{distance}', " +
+                           $"'{totalXP}', '{stardust}', '{weeklyKilometers}', '{pokecoins}'," +
+                           $" '{raidpasses}', '{shinys}', '{legendarys}', '{hundos}', '{shundos}');";
+
+            await ctx.CreateResponseAsync($":white_check_mark: New Sales Insert printed!");
+
+            var embed = new DiscordMessageBuilder()
+                .AddEmbed(new DiscordEmbedBuilder()
+
+                .WithColor(DiscordColor.Rose)
+                .WithTitle("Sales Insert")
+                .WithDescription(query));
+
+            var logChannel = ctx.Guild.GetChannel(1226142440050659410);
+            await logChannel.SendMessageAsync(embed);
+        }
+
+        //
+        [SlashCommand("new-customer", "Add Entry in Customer Table")]
+        public static async Task NewCustomer(InteractionContext ctx,
+                          [Option("date", "DateTime Format: (YYYY-MM-dd)")] string date,
+                          [Option("distance", "Distance walked in kilometers")] double distance,
+                          [Option("pokemon", "Number of Pokémon caught")] long pokemon,
+                          [Option("pokestops", "Number of PokéStops visited")] long pokestops,
+                          [Option("total_xp", "Total XP gained")] long totalXP,
+                          [Option("stardust", "Amount of Stardust collected")] long stardust,
+                          [Option("weekly_kilometers", "Kilometers walked in the week")] long weeklyKilometers,
+                          [Option("pokecoins", "Amount of Pokecoins")] long pokecoins,
+                          [Option("raidpasses", "Amount of Raidpasses")] long raidpasses,
+                          [Option("shinys", "Shiny Pokemon")] long shinys,
+                          [Option("legendarys", "Legendary Pokemon")] long legendarys,
+                          [Option("hundos", "Hundo Pokemon")] long hundos,
+                          [Option("shundos", "Shiny Hundo Pokemon")] long shundos)
+
+        {
+            CmdShortener.CheckIfUserHasCeoRole(ctx);
+
+            string query = "INSERT INTO bmocfdpnmiqmcbuykudg.CUSTOMER " +
+                           "(ENTRY_DATE, POKEMON_CAUGHT, POKESTOPS_VISITED, " +
+                           "DISTANCE_WALKED, TOTAL_XP, STARDUST, " +
+                           "WEEKLY_DISTANCE, POKECOINS, RAIDPASSES, " +
+                           "SHINYS, LEGENDARYS, HUNDOS, SHUNDOS)" +
+                           $"VALUES('{date}', '{pokemon}', '{pokestops}', '{distance}', " +
+                           $"'{totalXP}', '{stardust}', '{weeklyKilometers}', '{pokecoins}'," +
+                           $" '{raidpasses}', '{shinys}', '{legendarys}', '{hundos}', '{shundos}');";
+
+            await ctx.CreateResponseAsync($":white_check_mark: New Customer Insert printed!");
+
+            var embed = new DiscordMessageBuilder()
+                .AddEmbed(new DiscordEmbedBuilder()
+
+                .WithColor(DiscordColor.Rose)
+                .WithTitle("Customer Insert")
+                .WithDescription(query));
+
+            var logChannel = ctx.Guild.GetChannel(1226142440050659410);
+            await logChannel.SendMessageAsync(embed);
+        }
+
+        [SlashCommand("new-article", "Add Entry in Sales Table")]
+        public static async Task NewArticle(InteractionContext ctx,
+                          [Option("date", "DateTime Format: (YYYY-MM-dd)")] string date,
+                          [Option("distance", "Distance walked in kilometers")] double distance,
+                          [Option("pokemon", "Number of Pokémon caught")] long pokemon,
+                          [Option("pokestops", "Number of PokéStops visited")] long pokestops,
+                          [Option("total_xp", "Total XP gained")] long totalXP,
+                          [Option("stardust", "Amount of Stardust collected")] long stardust,
+                          [Option("weekly_kilometers", "Kilometers walked in the week")] long weeklyKilometers,
+                          [Option("pokecoins", "Amount of Pokecoins")] long pokecoins,
+                          [Option("raidpasses", "Amount of Raidpasses")] long raidpasses,
+                          [Option("shinys", "Shiny Pokemon")] long shinys,
+                          [Option("legendarys", "Legendary Pokemon")] long legendarys,
+                          [Option("hundos", "Hundo Pokemon")] long hundos,
+                          [Option("shundos", "Shiny Hundo Pokemon")] long shundos)
+
+        {
+            CmdShortener.CheckIfUserHasCeoRole(ctx);
+
+            string query = "INSERT INTO bmocfdpnmiqmcbuykudg.ARTICLE " +
+                           "(ENTRY_DATE, POKEMON_CAUGHT, POKESTOPS_VISITED, " +
+                           "DISTANCE_WALKED, TOTAL_XP, STARDUST, " +
+                           "WEEKLY_DISTANCE, POKECOINS, RAIDPASSES, " +
+                           "SHINYS, LEGENDARYS, HUNDOS, SHUNDOS)" +
+                           $"VALUES('{date}', '{pokemon}', '{pokestops}', '{distance}', " +
+                           $"'{totalXP}', '{stardust}', '{weeklyKilometers}', '{pokecoins}'," +
+                           $" '{raidpasses}', '{shinys}', '{legendarys}', '{hundos}', '{shundos}');";
+
+            await ctx.CreateResponseAsync($":white_check_mark: New Article Insert printed!");
+
+            var embed = new DiscordMessageBuilder()
+                .AddEmbed(new DiscordEmbedBuilder()
+
+                .WithColor(DiscordColor.Rose)
+                .WithTitle("Article Insert")
+                .WithDescription(query));
+
+            var logChannel = ctx.Guild.GetChannel(1226142440050659410);
+            await logChannel.SendMessageAsync(embed);
+        }
     }
 }
