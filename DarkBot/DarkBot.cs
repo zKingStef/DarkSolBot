@@ -90,8 +90,6 @@ namespace DarkBot
             Client.UnknownEvent += UnknownEvent;
             Client.ClientErrored += ClientErrored;
 
-            Client.GuildMemberAdded += GuildMemberAdded;
-
             // Start the uptime counter
             Console.Title = $"{settings.Name}-{settings.Version}";
             settings.ProcessStarted = DateTime.Now;
@@ -118,18 +116,6 @@ namespace DarkBot
             Client.Logger.LogError(EventId, "SlashCommand did not execute...");
             Client.Logger.LogError(EventId, $"Exception: {e.Exception}");
             return Task.CompletedTask;
-        }
-
-        private static async Task GuildMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
-        {
-            // Automatically give new Users the "Member" Role
-            ulong roleId = 1221805367466528908;
-            var role = e.Guild.GetRole(roleId);
-
-            if (role != null)
-            {
-                await e.Member.GrantRoleAsync(role);
-            }
         }
 
         public static async Task RunAsync()
