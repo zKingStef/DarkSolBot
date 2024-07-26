@@ -11,56 +11,34 @@ namespace DarkBot.src.Common
     {
         public static async Task HandleModal(DiscordClient client, ModalSubmitEventArgs e)
         {
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalPokemonGoForm")
+            if (e.Interaction.Type == InteractionType.ModalSubmit)
             {
-                await Ticket_Handler.HandleGeneralTickets(e);
+                // Liste der CustomIds, die dieselbe Handler-Methode aufrufen
+                var customIdsForGeneralTickets = new HashSet<string>
+                {
+                    "modalPokemonGoForm",
+                    "modalPokecoin",
+                    "modalXP",
+                    "modalRaids",
+                    "modalShundo",
+                    "modalComday",
+                    "modal100IV",
+                    "modalRaidpass",
+                    "modalStardust"
+                };
+
+                // Überprüfen, ob die CustomId in der Sammlung enthalten ist
+                if (customIdsForGeneralTickets.Contains(e.Interaction.Data.CustomId))
+                {
+                    await Ticket_Handler.HandleGeneralTickets(e);
+                }
+                // Spezielle Behandlung für modalCloseReasonForm
+                else if (e.Interaction.Data.CustomId == "modalCloseReasonForm")
+                {
+                    await Ticket_Handler.CloseTicket(e);
+                }
             }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalPokecoin")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalXP")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalRaids")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalShundo")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalComday")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modal100IV")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalRaidpass")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalStardust")
-            {
-                await Ticket_Handler.HandleGeneralTickets(e);
-            }
-            if (e.Interaction.Type == InteractionType.ModalSubmit
-             && e.Interaction.Data.CustomId == "modalCloseReasonForm")
-            {
-                await Ticket_Handler.CloseTicket(e);
-            }
+
         }
 
         public static async Task CreatePokemonGoModal(ComponentInteractionCreateEventArgs e, string modalId)
