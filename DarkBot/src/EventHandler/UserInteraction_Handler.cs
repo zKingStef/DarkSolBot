@@ -104,7 +104,7 @@ namespace DarkBot.src.Handler
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
 
-                        var newChannelName = "⚙️" + e.Channel.Name.Substring(1);
+                        var newChannelName = "🔧" + e.Channel.Name.Substring(1);
 
                         await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
@@ -168,7 +168,7 @@ namespace DarkBot.src.Handler
                         if (!string.IsNullOrEmpty(originalChannelName) && originalChannelName.Length > 1)
                         {
                             // Das erste Zeichen vom Kanalnamen entfernen
-                            var newChannelName = "⚙️" + originalChannelName.Substring(1);
+                            var newChannelName = "🔧" + originalChannelName.Substring(1);
 
                             // Kanalname aktualisieren
                             await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
@@ -176,7 +176,7 @@ namespace DarkBot.src.Handler
                         else
                         {
                             // Fallback, wenn der Kanalname leer oder zu kurz ist
-                            var newChannelName = "⚙️";
+                            var newChannelName = "🔧";
                             await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                         }
                     }
