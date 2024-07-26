@@ -104,7 +104,7 @@ namespace DarkBot.src.Handler
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
 
-                        var newChannelName = "⚙️" + e.Channel.Name;
+                        var newChannelName = "⚙️" + e.Channel.Name.Substring(1);
 
                         await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
@@ -148,7 +148,7 @@ namespace DarkBot.src.Handler
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
 
-                        var newChannelName = "⚙️" + e.Channel.Name;
+                        var newChannelName = "⚙️" + e.Channel.Name.Substring(1);
 
                         await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
@@ -170,7 +170,7 @@ namespace DarkBot.src.Handler
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
 
-                        var newChannelName = "⏸️" + e.Channel.Name;
+                        var newChannelName = "⏸️" + e.Channel.Name.Substring(1);
 
                         await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
