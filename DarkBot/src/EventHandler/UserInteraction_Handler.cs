@@ -103,6 +103,10 @@ namespace DarkBot.src.Handler
                             .AddComponents(orderDeliverBtn, progressPausedBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+
+                        var newChannelName = "⚙️" + e.Channel.Name;
+
+                        await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
                     break;
                 case "Button_OrderDelivered":
@@ -143,6 +147,10 @@ namespace DarkBot.src.Handler
                             .AddComponents(orderDeliverBtn, progressPausedBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+
+                        var newChannelName = "⚙️" + e.Channel.Name;
+
+                        await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
                     break;
                 case "Button_ProgressPaused":
@@ -161,6 +169,10 @@ namespace DarkBot.src.Handler
                             .AddComponents(orderDeliverBtn, inProgressBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+
+                        var newChannelName = "⏸️" + e.Channel.Name;
+
+                        await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
                     break;
                 case "Button_OrderCancel":

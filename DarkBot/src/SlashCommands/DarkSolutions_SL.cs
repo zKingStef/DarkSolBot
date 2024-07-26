@@ -165,7 +165,7 @@ namespace DarkBot.src.SlashCommands
                 new DiscordOverwriteBuilder(ctx.Interaction.Guild.GetRole(1210230414011011124)).Allow(Permissions.AccessChannels), // Developer Role
             };
 
-            DiscordChannel orderChannel = await ctx.Interaction.Guild.CreateTextChannelAsync($"{CUS_Name} {articleTypeString}", category, overwrites: overwrites, position: 0);
+            DiscordChannel orderChannel = await ctx.Interaction.Guild.CreateTextChannelAsync($"🛑{CUS_Name} {articleTypeString}", category, overwrites: overwrites, position: 0);
             await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!  " + orderChannel.Mention);
 
             await orderChannel.SendMessageAsync(orderMessage);
