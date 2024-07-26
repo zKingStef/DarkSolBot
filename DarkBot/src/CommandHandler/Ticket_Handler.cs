@@ -12,13 +12,8 @@ namespace DarkBot.src.CommandHandler
 {
     public class Ticket_Handler
     {
-        private static DiscordMessage ticketMessage;
-
         private static Dictionary<ulong, ulong> ticketChannelMap = new Dictionary<ulong, ulong>();
 
-        public string username { get; set; }
-        public string issue { get; set; }
-        public ulong ticketId { get; set; }
         public static async Task HandleGeneralTickets(ModalSubmitEventArgs e)
         {
             DiscordMember? user = e.Interaction.User as DiscordMember;
@@ -36,7 +31,7 @@ namespace DarkBot.src.CommandHandler
             ulong roleId = 999999999999;
             var closeButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeTicketButton", "🔒 Close");
             var closeReasonButton = new DiscordButtonComponent(ButtonStyle.Secondary, "closeReasonTicketButton", "🔒 Close Reason");
-            var claimButton = new DiscordButtonComponent(ButtonStyle.Primary, "claimTicketButton", "☑️ Claim");
+            // var claimButton = new DiscordButtonComponent(ButtonStyle.Primary, "claimTicketButton", "☑️ Claim");
             DiscordChannel ticketChannel = e.Interaction.Channel;
 
             var overwrites = new List<DiscordOverwriteBuilder>
@@ -116,21 +111,6 @@ namespace DarkBot.src.CommandHandler
 
             ticketChannel = await guild.CreateTextChannelAsync($"{e.Interaction.User.Username}-Ticket", category, overwrites: overwrites, position: 0);
 
-            //var random = new Random();
-            //
-            //ulong minValue = 1000000000000000000;
-            //ulong maxValue = 9999999999999999999;
-            //
-            //ulong randomNumber = (ulong)random.Next((int)(minValue >> 32), int.MaxValue) << 32 | (ulong) random.Next(); 
-            //ulong result = randomNumber % (maxValue - minValue + 1) + minValue;
-
-            //var supportTicket = new Ticket_Handler()
-            //{
-            //    username = e.Interaction.User.Username,
-            //    issue = e.Values.Values.First(),
-            //    ticketId = 1 //result
-            //};
-
             await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Ticket created: {ticketChannel.Mention}").AsEphemeral(true));
 
             var ticketEmbed = new DiscordMessageBuilder()
@@ -139,7 +119,7 @@ namespace DarkBot.src.CommandHandler
                     .WithTitle($"__{ticketTitle}__")
                     .WithThumbnail(guild.IconUrl)
                     .WithDescription(ticketDesc))
-                    .AddComponents(closeButton, closeReasonButton, claimButton);
+                    .AddComponents(closeButton, closeReasonButton/*, claimButton*/);
 
             // Mention the User in the Chat and then remove the Message
             var mentionMessage = await ticketChannel.SendMessageAsync(user.Mention + $"<@&{roleId}>");
@@ -147,33 +127,8 @@ namespace DarkBot.src.CommandHandler
 
             await ticketChannel.SendMessageAsync(ticketEmbed);
         }
-
-        public static async Task RemoveClaimButtonAsync(ComponentInteractionCreateEventArgs e)
-        {
-            // Überprüfen, ob der Button claimTicketButton angeklickt wurde
-            if (e.Interaction.Data.CustomId == "claimTicketButton")
-            {
-                // Überprüfen, ob die ticketMessage vorhanden ist und einen claimButton enthält
-                if (ticketMessage != null && ticketMessage.Components.Any(c => c.CustomId == "claimTicketButton"))
-                {
-                    // Entfernen des claimButton aus der Nachricht
-                    var components = ticketMessage.Components.ToList();
-                    var claimButtonIndex = components.FindIndex(c => c.CustomId == "claimTicketButton");
-                    components.RemoveAt(claimButtonIndex);
-
-                    // Bearbeiten der Nachricht, um den entfernten Button anzuwenden
-                    await ticketMessage.ModifyAsync(message =>
-                    {
-                        message.ClearComponents();
-                        foreach (var component in components)
-                        {
-                            message.AddComponents(component);
-                        }
-                    });
-                }
-            }
-        }
-
+        
+        //
         public static async Task CloseTicket(ComponentInteractionCreateEventArgs e)
         {
             if (!CheckIfUserHasTicketPermissions(e))
@@ -226,6 +181,7 @@ namespace DarkBot.src.CommandHandler
             //await e.Channel.DeleteAsync("Ticket geschlossen");
         }
 
+        //
         public static async Task CloseTicket(ModalSubmitEventArgs e)
         {
 
@@ -266,6 +222,7 @@ namespace DarkBot.src.CommandHandler
             await e.Interaction.Channel.DeleteAsync(e.Values.Values.First());
         }
 
+        //
         public static bool CheckIfUserHasTicketPermissions(InteractionContext ctx)
         {
             if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
@@ -278,6 +235,7 @@ namespace DarkBot.src.CommandHandler
             return true;
         }
 
+        //
         public static bool CheckIfUserHasTicketPermissions(ComponentInteractionCreateEventArgs ctx)
         {
             if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
@@ -292,6 +250,7 @@ namespace DarkBot.src.CommandHandler
 
         }
 
+        //
         public static bool CheckIfUserHasTicketPermissions(ModalSubmitEventArgs ctx)
         {
             if (!(CmdShortener.CheckRole(ctx, 978346565225816151) // Manager Role
