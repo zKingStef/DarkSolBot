@@ -128,6 +128,10 @@ namespace DarkBot.src.Handler
                             .AddEmbed(newEmbed);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+
+                        var newChannelName = "✅" + e.Channel.Name;
+
+                        await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
                     break;
                 case "Button_InProgress":
@@ -176,6 +180,10 @@ namespace DarkBot.src.Handler
                             .Replace(delPending, ordCancel));
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, new DiscordInteractionResponseBuilder().AddEmbed(newEmbed));
+
+                        var newChannelName = "☑️" + e.Channel.Name;
+
+                        await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
                     }
                     break;
 
