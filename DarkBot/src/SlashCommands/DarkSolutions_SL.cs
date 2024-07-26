@@ -29,7 +29,9 @@ namespace DarkBot.src.SlashCommands
                                         [Choice("Raids", 4)]
                                         [Choice("RareCandy", 5)]
                                         [Choice("Raidpasses", 6)]
-                                        [Choice("Custom", 7)]
+                                        [Choice("Shundo", 7)]
+                                        [Choice("Trade", 8)]
+                                        [Choice("Custom", 9)]
                                         [Option("ArticleType", "Which Article is being purchased ?")] long ART_Type,
                                         [Option("Quantity", "Quantity of the Article")] string qty,
                                         [Option("Price", "Price of the Article")] string SALES_Price,
@@ -55,7 +57,9 @@ namespace DarkBot.src.SlashCommands
                 { 4, "Raids" },
                 { 5, "RareCandy" },
                 { 6, "Raidpasses" },
-                { 7, "Custom" }
+                { 7, "Shundo" },
+                { 8, "Trade" },
+                { 9, "Custom" }
             };
 
             // Define a dictionary for mapping the platform
@@ -83,19 +87,19 @@ namespace DarkBot.src.SlashCommands
                     embedColor = DiscordColor.Yellow;
                     break;
                 case 1:
-                    pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtPs4Cf0pQpN_EVeISKk4TaeCVoAvz68AvgQ&s";
+                    pictureURL = "https://pokemodgo.wordpress.com/wp-content/uploads/2018/06/stardust.png?w=256";
                     embedTitle = " Million Stardust";
                     embedColor = DiscordColor.Purple;
                     break;
                 case 2:
-                    pictureURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxiMVLiCD_zCwC007NHW9g4tUpScVMQwpdXA&s";
+                    pictureURL = "https://pokemodgo.wordpress.com/wp-content/uploads/2018/06/stardust.png?w=256";
                     embedTitle = " Million Stardust + Shadow";
                     embedColor = DiscordColor.Magenta;
                     break;
                 case 3:
                     pictureURL = "https://cdn-icons-png.flaticon.com/256/6712/6712589.png";
                     embedTitle = " Million XP";
-                    embedColor = DiscordColor.White;
+                    embedColor = DiscordColor.Cyan;
                     break;
                 case 4:
                     pictureURL = "https://gogames.news/wp-content/uploads/2019/12/tipps-fuer-den-lapras-raid-tag-guide-1.png";
@@ -113,6 +117,16 @@ namespace DarkBot.src.SlashCommands
                     embedColor = DiscordColor.SapGreen;
                     break;
                 case 7:
+                    pictureURL = "https://img.ws.mms.shopee.com.my/efedacaa87eba6e775a3def2f9c06bb2";
+                    embedTitle = " Shundo";
+                    embedColor = DiscordColor.DarkRed;
+                    break;
+                case 8:
+                    pictureURL = "https://static.wikia.nocookie.net/pokemongo/images/3/35/Icon_Friendship_Trade.png/revision/latest?cb=20190416114051";
+                    embedTitle = "";
+                    embedColor = DiscordColor.White;
+                    break;
+                case 9:
                     pictureURL = "https://assets.bigcartel.com/product_images/356421655/Custom+Order.png?auto=format&fit=max&h=1200&w=1200";
                     embedTitle = "";
                     embedColor = DiscordColor.HotPink;
@@ -152,11 +166,12 @@ namespace DarkBot.src.SlashCommands
             };
 
             DiscordChannel orderChannel = await ctx.Interaction.Guild.CreateTextChannelAsync($"{CUS_Name} {articleTypeString}", category, overwrites: overwrites, position: 0);
+            await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!  " + orderChannel.Mention);
 
             await orderChannel.SendMessageAsync(orderMessage);
             await DarkSolutions_Handler.SendPhoneDropdown(ctx, orderChannel);
-            await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!  " + orderChannel.Mention);
         }
+
 
         //
         [SlashCommand("new-sale", "Add Entry in Sales Table")]
