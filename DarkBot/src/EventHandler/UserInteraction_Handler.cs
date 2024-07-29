@@ -103,6 +103,24 @@ namespace DarkBot.src.Handler
                             .AddComponents(orderDeliverBtn, progressPausedBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+
+                        var originalChannelName = e.Channel.Name;
+
+                        // Überprüfen, ob der Kanalname nicht leer ist
+                        if (!string.IsNullOrEmpty(originalChannelName) && originalChannelName.Length > 1)
+                        {
+                            // Das erste Zeichen vom Kanalnamen entfernen
+                            var newChannelName = string.Concat("🔧", originalChannelName.AsSpan(1));
+
+                            // Kanalname aktualisieren
+                            await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        }
+                        else
+                        {
+                            // Fallback, wenn der Kanalname leer oder zu kurz ist
+                            var newChannelName = "🔧";
+                            await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        }
                     }
                     break;
                 case "Button_OrderDelivered":
@@ -121,9 +139,23 @@ namespace DarkBot.src.Handler
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
 
-                        var newChannelName = "✅" + e.Channel.Name;
+                        var originalChannelName = e.Channel.Name;
 
-                        await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        // Überprüfen, ob der Kanalname nicht leer ist
+                        if (!string.IsNullOrEmpty(originalChannelName) && originalChannelName.Length > 1)
+                        {
+                            // Das erste Zeichen vom Kanalnamen entfernen
+                            var newChannelName = string.Concat("✅", originalChannelName.AsSpan(1));
+
+                            // Kanalname aktualisieren
+                            await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        }
+                        else
+                        {
+                            // Fallback, wenn der Kanalname leer oder zu kurz ist
+                            var newChannelName = "✅";
+                            await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        }
                     }
                     break;
                 case "Button_InProgress":
@@ -143,6 +175,24 @@ namespace DarkBot.src.Handler
                             .AddComponents(orderDeliverBtn, progressPausedBtn);
 
                         await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+                     
+                        var originalChannelName = e.Channel.Name;
+
+                        // Überprüfen, ob der Kanalname nicht leer ist
+                        if (!string.IsNullOrEmpty(originalChannelName) && originalChannelName.Length > 1)
+                        {
+                            // Das erste Zeichen vom Kanalnamen entfernen
+                            var newChannelName = string.Concat("🔧", originalChannelName.AsSpan(1));
+
+                            // Kanalname aktualisieren
+                            await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        }
+                        else
+                        {
+                            // Fallback, wenn der Kanalname leer oder zu kurz ist
+                            var newChannelName = "🔧";
+                            await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        }
                     }
                     break;
                 case "Button_ProgressPaused":
@@ -160,7 +210,25 @@ namespace DarkBot.src.Handler
                             .AddEmbed(newEmbed)
                             .AddComponents(orderDeliverBtn, inProgressBtn);
 
-                        await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+                        await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);;
+
+                        var originalChannelName = e.Channel.Name;
+
+                        // Überprüfen, ob der Kanalname nicht leer ist
+                        if (!string.IsNullOrEmpty(originalChannelName) && originalChannelName.Length > 1)
+                        {
+                            // Das erste Zeichen vom Kanalnamen entfernen
+                            var newChannelName = "⏸️" + originalChannelName.Substring(1);
+
+                            // Kanalname aktualisieren
+                            await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        }
+                        else
+                        {
+                            // Fallback, wenn der Kanalname leer oder zu kurz ist
+                            var newChannelName = "⏸️";
+                            await e.Channel.ModifyAsync(properties => properties.Name = newChannelName);
+                        }
                     }
                     break;
                 case "Button_OrderCancel":
