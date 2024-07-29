@@ -10,7 +10,7 @@ namespace DarkBot.src.Database
 {
     public class DB_Commands
     {
-        public string connectionString = "Host=bunjwqxejjdivx62llgi-postgresql.services.clever-cloud.com;" +
+        public string connectionString = "bunjwqxejjdivx62llgi-postgresql.services.clever-cloud.com;" +
                                          "Username=ugaseupaiagerifnbppr;" +
                                          "Password=7BnA9hzCfoL46bt5W0n8Cf4jp80DKJ;" +
                                          "Database=bunjwqxejjdivx62llgi";
