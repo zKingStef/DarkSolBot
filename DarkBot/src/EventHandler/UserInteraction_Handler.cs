@@ -68,10 +68,10 @@ namespace DarkBot.src.Handler
                     await Modals.CreateComdayModal(e, "modalComday");
                     break;
                 case "Button_Ticket100IV":
-                    await Modals.Create100IVModal(e, "modalComday");
+                    await Modals.Create100IVModal(e, "modal100IV");
                     break;
                 case "Button_TicketRaidpass":
-                    await Modals.CreateRaidpassModal(e, "modalComday");
+                    await Modals.CreateRaidpassModal(e, "modalRaidpass");
                     break;
                 case "Button_TicketStardust":
                     await Modals.CreateStardustModal(e, "modalStardust");
