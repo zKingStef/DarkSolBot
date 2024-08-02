@@ -10,13 +10,16 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext.Attributes;
 using static System.Net.Mime.MediaTypeNames;
 using DSharpPlus.CommandsNext;
+using System.Reflection;
+using DSharpPlus.Interactivity.Extensions;
 
 namespace DarkBot.src.SlashCommands
 {
+    [SlashCommandGroup("ticket", "Alle Ticket Befehle")]
     public class Embeds_SL : ApplicationCommandModule
     {
-        [SlashCommand("embeds", "Send an embed message by the bot")]
-        public static async Task SendEmbed(InteractionContext ctx,
+        [SlashCommand("shop", "Send an embed message by the bot")]
+        public static async Task SendShopEmbed(InteractionContext ctx,
                                 [Choice("pokecoins", 0)]
                                 [Choice("xp-service", 1)]
                                 [Choice("raids", 2)]
@@ -194,6 +197,95 @@ namespace DarkBot.src.SlashCommands
                     .AddComponents(createTicketBtn);
 
             await ctx.Channel.SendMessageAsync(messageBuilder);
+        }
+
+        [SlashCommand("license", "Send an embed message by the bot")]
+        public static async Task SendLicenseEmbed(InteractionContext ctx,
+                                [Choice("PAC", 0)]
+                                [Choice("Shungo", 1)] 
+                                [Option("form", "Choose an embed")] long choice,
+                                [Option("License", "License ID/Name")] string license)
+        {
+            if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
+            {
+                await CmdShortener.SendAsEphemeral(ctx, "You don't have the necessary permissions to execute this command");
+                return;
+            }
+
+            var embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("");
+
+            switch (choice)
+            {
+                case 0:
+                    embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("PAC")
+                    .WithColor(DiscordColor.Yellow)
+                    .WithImageUrl("https://management.pgtools.net/static/media/logo.94746d37694b283b5f0b.png")
+                    .WithDescription($":PokemonGo:  ID: {license}" +
+                                     ":bust_in_silhouette: Used by:" +
+                                     ":calendar_spiral: Used since:" +
+                                     ":mobilephone: Used Phone: ");
+
+                    break;
+                case 1:
+                    embedTicketButtons = new DiscordEmbedBuilder()
+                    .WithTitle("Shungo")
+                    .WithColor(DiscordColor.White)
+                    .WithImageUrl("https://www.pokewiki.de/images/0/0d/Sugimori_Premierball.png")
+                    .WithDescription($":PokemonGo:  ID: Shungo" +
+                                     ":bust_in_silhouette: Used by:" +
+                                     ":calendar_spiral: Used since:" +
+                                     ":mobilephone: Used Phone: ");
+
+                    break;
+            }
+
+            var TimerBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_ResetTimer", "⌛ Reset Timer");
+
+            var messageBuilder = new DiscordMessageBuilder()
+                    .WithEmbed(embedTicketButtons)
+                    .AddComponents(TimerBtn);
+
+            await ctx.Channel.SendMessageAsync(messageBuilder);
+
+            // 
+            var selectMenu = new DiscordSelectComponent(
+                    customId: "test_dropdown",
+                    placeholder: "Wähle eine Option aus",
+                    options: new[]
+                    {
+                        new DiscordSelectComponentOption("Option 1", "option_1", "Beschreibung für Option 1"),
+                        new DiscordSelectComponentOption("Option 2", "option_2", "Beschreibung für Option 2"),
+                        new DiscordSelectComponentOption("Option 3", "option_3", "Beschreibung für Option 3"),
+                    },
+                    minOptions: 1,
+                    maxOptions: 1
+                );
+
+            // Nachricht mit Dropdown-Menü senden
+            var builder = new DiscordMessageBuilder()
+                .WithContent("Bitte wähle eine Option aus:")
+                .AddComponents(selectMenu);
+
+            var message = await ctx.Channel.SendMessageAsync(builder);
+
+            // Interaktion abwarten
+            var interactivity = ctx.Client.GetInteractivity();
+
+            var result = await interactivity.WaitForSelectAsync(message, ctx.User, "test_dropdown", TimeSpan.FromMinutes(1));
+
+
+            if (result.TimedOut)
+            {
+                await ctx.Channel.SendMessageAsync("Zeitüberschreitung. Bitte versuche es erneut.");
+                return;
+            }
+
+            // Gewählte Option verarbeiten
+            var selectedOption = result.Result.Values[0];
+
+            await ctx.Channel.SendMessageAsync($"Du hast {selectedOption} ausgewählt.");
         }
     }
 }
