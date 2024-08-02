@@ -15,10 +15,10 @@ using DSharpPlus.Interactivity.Extensions;
 
 namespace DarkBot.src.SlashCommands
 {
-    [SlashCommandGroup("embeds", "Send an embed message by the Bot")]
+    [SlashCommandGroup("embed", "Send an embed message by the Bot")]
     public class Embeds_SL : ApplicationCommandModule
     {
-        [SlashCommand("shop", "")]
+        [SlashCommand("services", "service display")]
         public static async Task SendShopEmbed(InteractionContext ctx,
                                 [Choice("pokecoins", 0)]
                                 [Choice("xp-service", 1)]
@@ -200,7 +200,7 @@ namespace DarkBot.src.SlashCommands
         }
 
         //
-        [SlashCommand("license", "")]
+        [SlashCommand("license", "add license")]
         public static async Task SendLicenseEmbed(InteractionContext ctx,
                                 [Choice("PAC", 0)]
                                 [Choice("Shungo", 1)] 
@@ -222,8 +222,8 @@ namespace DarkBot.src.SlashCommands
                     embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("PAC")
                     .WithColor(DiscordColor.Yellow)
-                    .WithImageUrl("https://management.pgtools.net/static/media/logo.94746d37694b283b5f0b.png")
-                    .WithDescription($":PokemonGo:  ID: {license}" +
+                    .WithThumbnail("https://management.pgtools.net/static/media/logo.94746d37694b283b5f0b.png")
+                    .WithDescription($"ID: {license}" +
                                      ":bust_in_silhouette: Used by:" +
                                      ":calendar_spiral: Used since:" +
                                      ":mobilephone: Used Phone: ");
@@ -233,8 +233,8 @@ namespace DarkBot.src.SlashCommands
                     embedTicketButtons = new DiscordEmbedBuilder()
                     .WithTitle("Shungo")
                     .WithColor(DiscordColor.White)
-                    .WithImageUrl("https://www.pokewiki.de/images/0/0d/Sugimori_Premierball.png")
-                    .WithDescription($":PokemonGo:  ID: Shungo" +
+                    .WithThumbnail("https://www.pokewiki.de/images/0/0d/Sugimori_Premierball.png")
+                    .WithDescription($"ID: Shungo" +
                                      ":bust_in_silhouette: Used by:" +
                                      ":calendar_spiral: Used since:" +
                                      ":mobilephone: Used Phone: ");

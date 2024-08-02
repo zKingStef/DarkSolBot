@@ -23,7 +23,7 @@ namespace DarkBot.src.SlashCommands
     {
         [SlashCommand("addstats", "Add daily statistics")]
         public static async Task AddStats(InteractionContext ctx,
-                          [Option("date", "DateTime Format: (YYYY-MM-dd)")] string date,
+                          [Option("date", "Date Format: (YYYY-MM-dd)")] string date,
                           [Option("distance", "Distance walked in kilometers")] double distance,
                           [Option("pokemon", "Number of Pokémon caught")] long pokemon,
                           [Option("pokestops", "Number of PokéStops visited")] long pokestops,

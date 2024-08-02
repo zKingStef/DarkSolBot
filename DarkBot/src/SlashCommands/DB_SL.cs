@@ -15,7 +15,7 @@ namespace DarkBot.src.SlashCommands
     [SlashCommandGroup("db", "Database Commands")]
     public class DB_SL : ApplicationCommandModule
     {
-        [SlashCommand("GetTopSalesId", "Performs a select * on the Sales Table")]
+        [SlashCommand("GetTopSalesId", "Performs a select on the Sales Table")]
         public static async Task GetTopSalesId(InteractionContext ctx)
         {
             if (!CmdShortener.CheckPermissions(ctx, Permissions.ManageEvents))
