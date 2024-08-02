@@ -15,10 +15,10 @@ using DSharpPlus.Interactivity.Extensions;
 
 namespace DarkBot.src.SlashCommands
 {
-    [SlashCommandGroup("ticket", "Alle Ticket Befehle")]
+    [SlashCommandGroup("embeds", "Send an embed message by the Bot")]
     public class Embeds_SL : ApplicationCommandModule
     {
-        [SlashCommand("shop", "Send an embed message by the bot")]
+        [SlashCommand("shop", "")]
         public static async Task SendShopEmbed(InteractionContext ctx,
                                 [Choice("pokecoins", 0)]
                                 [Choice("xp-service", 1)]
@@ -199,7 +199,8 @@ namespace DarkBot.src.SlashCommands
             await ctx.Channel.SendMessageAsync(messageBuilder);
         }
 
-        [SlashCommand("license", "Send an embed message by the bot")]
+        //
+        [SlashCommand("license", "")]
         public static async Task SendLicenseEmbed(InteractionContext ctx,
                                 [Choice("PAC", 0)]
                                 [Choice("Shungo", 1)] 
