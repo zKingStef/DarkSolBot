@@ -220,24 +220,22 @@ namespace DarkBot.src.SlashCommands
             {
                 case 0:
                     embedTicketButtons = new DiscordEmbedBuilder()
-                    .WithTitle("PAC")
+                    .WithTitle("PAC License: " + license)
                     .WithColor(DiscordColor.Yellow)
                     .WithThumbnail("https://management.pgtools.net/static/media/logo.94746d37694b283b5f0b.png")
-                    .WithDescription($"ID: {license}" +
-                                     ":bust_in_silhouette: Used by:" +
-                                     ":calendar_spiral: Used since:" +
-                                     ":mobilephone: Used Phone: ");
+                    .WithDescription(":bust_in_silhouette: Used by: None\n\n" +
+                                     ":mobile_phone: Used Phone: None\n\n" +
+                                     ":calendar_spiral: Used since: <t:1722605220:R>");
 
                     break;
                 case 1:
                     embedTicketButtons = new DiscordEmbedBuilder()
-                    .WithTitle("Shungo")
+                    .WithTitle("Shungo License")
                     .WithColor(DiscordColor.White)
                     .WithThumbnail("https://www.pokewiki.de/images/0/0d/Sugimori_Premierball.png")
-                    .WithDescription($"ID: Shungo" +
-                                     ":bust_in_silhouette: Used by:" +
-                                     ":calendar_spiral: Used since:" +
-                                     ":mobilephone: Used Phone: ");
+                    .WithDescription(":bust_in_silhouette: Used by: None\n\n" +
+                                     ":mobile_phone: Used Phone: None\n\n" +
+                                     ":calendar_spiral: Used since: <t:1722605220:R>");
 
                     break;
             }
@@ -248,45 +246,68 @@ namespace DarkBot.src.SlashCommands
                     .WithEmbed(embedTicketButtons)
                     .AddComponents(TimerBtn);
 
-            await ctx.Channel.SendMessageAsync(messageBuilder);
+
+            var channel = ctx.Guild.GetChannel(1268820158835724372);
+            var message =  await channel.SendMessageAsync(messageBuilder);
+
+            await CmdShortener.SendAsEphemeral(ctx, "New License has been created!  " + message.JumpLink);
 
             // 
+            var options = new List<DiscordSelectComponentOption>()
+                {
+                    new ( "Carbon OnePlus", "dd_CarbonOnePlus", "",
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":mobile_phone:"))),
+                    new ( "Hellblau OnePlus", "dd_HellblauOnePlus", "",
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":mobile_phone:"))),
+                    new ( "Google Pixel", "dd_GooglePixel", "",
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":mobile_phone:"))),
+                    new ( "No Phone", "dd_NoPhone", "",
+                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":no_mobile_phones:"))),
+                 };
+
+            var phoneDropdown = new DiscordSelectComponent("phoneDropdown", "", options, false, 0, 1);
+
+            var builder = new DiscordMessageBuilder()
+                .WithContent("**Phone:**")
+                .AddComponents(phoneDropdown);
+
+            await channel.SendMessageAsync(builder);
+
+            //
+            ulong categoryId = 1263000023822762035;
+
+            var category = ctx.Guild.GetChannel(categoryId);
+            if (category == null || category.Type != ChannelType.Category)
+            {
+                await ctx.Channel.SendMessageAsync("Category not found!");
+                return;
+            }
+
+            var channels = category.Children
+                    .Where(c => c.Type == ChannelType.Text) // Nur Textkanäle anzeigen
+                    .Select(c => new DiscordSelectComponentOption(c.Name, c.Id.ToString(), $"Channel ID: {c.Id}"))
+                    .ToList();
+
+            if (channels.Count == 0)
+            {
+                await ctx.Channel.SendMessageAsync("No channels in this category!");
+                return;
+            }
+
             var selectMenu = new DiscordSelectComponent(
-                    customId: "test_dropdown",
-                    placeholder: "Wähle eine Option aus",
-                    options: new[]
-                    {
-                        new DiscordSelectComponentOption("Option 1", "option_1", "Beschreibung für Option 1"),
-                        new DiscordSelectComponentOption("Option 2", "option_2", "Beschreibung für Option 2"),
-                        new DiscordSelectComponentOption("Option 3", "option_3", "Beschreibung für Option 3"),
-                    },
+                    customId: "channelDropdown",
+                    placeholder: "",
+                    options: channels,
                     minOptions: 1,
                     maxOptions: 1
                 );
 
             // Nachricht mit Dropdown-Menü senden
-            var builder = new DiscordMessageBuilder()
-                .WithContent("Bitte wähle eine Option aus:")
+            var builder2 = new DiscordMessageBuilder()
+                .WithContent("**User:**")
                 .AddComponents(selectMenu);
 
-            var message = await ctx.Channel.SendMessageAsync(builder);
-
-            // Interaktion abwarten
-            var interactivity = ctx.Client.GetInteractivity();
-
-            var result = await interactivity.WaitForSelectAsync(message, ctx.User, "test_dropdown", TimeSpan.FromMinutes(1));
-
-
-            if (result.TimedOut)
-            {
-                await ctx.Channel.SendMessageAsync("Zeitüberschreitung. Bitte versuche es erneut.");
-                return;
-            }
-
-            // Gewählte Option verarbeiten
-            var selectedOption = result.Result.Values[0];
-
-            await ctx.Channel.SendMessageAsync($"Du hast {selectedOption} ausgewählt.");
+            await ctx.Channel.SendMessageAsync(builder2);
         }
     }
 }
