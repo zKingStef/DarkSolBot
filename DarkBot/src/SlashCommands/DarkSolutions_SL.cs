@@ -169,6 +169,7 @@ namespace DarkBot.src.SlashCommands
             await CmdShortener.SendAsEphemeral(ctx, "New Order has been created!  " + orderChannel.Mention);
 
             await orderChannel.SendMessageAsync(orderMessage);
+            await DarkSolutions_Handler.SendPhoneDropdown(ctx, orderChannel);
         }
 
 

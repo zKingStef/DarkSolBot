@@ -89,7 +89,6 @@ namespace DarkBot.src.Handler
 
                     if (originalEmbed != null)
                     {
-
                         var newEmbed = new DiscordEmbedBuilder(originalEmbed)
                             .WithDescription(originalEmbed.Description
                             .Replace(startProcess, inProgress));
