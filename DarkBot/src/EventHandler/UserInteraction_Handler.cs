@@ -308,8 +308,16 @@ namespace DarkBot.src.Handler
                     break;
 
                 case "Button_ResetTimer":
-                    
-                    
+
+                    // Unix-Zeitstempel erstellen
+                    var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+                    // Discord Zeitstempel Format
+                    var discordTimestamp = $"<t:{unixTimestamp}:T>";
+
+                    // Nachricht senden
+                    await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
+                        .WithContent($"Die aktuelle Uhrzeit ist: {discordTimestamp}"));
                     break;
 
 
