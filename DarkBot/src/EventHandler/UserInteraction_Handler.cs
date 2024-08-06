@@ -308,18 +308,27 @@ namespace DarkBot.src.Handler
                     break;
 
                 case "Button_ResetTimer":
+                    if (originalEmbed != null)
+                    {
+                        var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                        string textTimestamp = $"<t:{unixTimestamp}:R>";
 
-                    // Unix-Zeitstempel erstellen
-                    var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                        var newEmbed = new DiscordEmbedBuilder(originalEmbed)
+                            .WithDescription(originalEmbed.Description
+                            .Replace("Used since2:", "Used since2:" + textTimestamp)
+                            .Replace("Used s3ince2:", "Used since:"));
 
-                    // Discord Zeitstempel Format
-                    var discordTimestamp = $"<t:{unixTimestamp}:T>";
+                        var PhoneBtn = new DiscordButtonComponent(ButtonStyle.Danger, "Button_ChangePhone", "📱 Change Phone");
+                        var UserBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_ChangeUser", "👤 Change User");
+                        var TimerBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_ResetTimer", "⌛ Reset Timer");
 
-                    // Nachricht senden
-                    await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
-                        .WithContent($"Die aktuelle Uhrzeit ist: {discordTimestamp}"));
+                        var responseBuilder = new DiscordInteractionResponseBuilder()
+                                 .AddEmbed(newEmbed)
+                                 .AddComponents(UserBtn, PhoneBtn, TimerBtn);
+
+                        await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, responseBuilder);
+                    }
                     break;
-
 
                 default:
                     Console.WriteLine(e.Message);
