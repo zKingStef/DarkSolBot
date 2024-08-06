@@ -59,7 +59,7 @@ namespace DarkBot.src.SlashCommands
                 { 6, "Raidpasses" },
                 { 7, "Shundo" },
                 { 8, "Trade" },
-                { 9, "Custom" }
+                { 9, qty }
             };
 
             // Define a dictionary for mapping the platform

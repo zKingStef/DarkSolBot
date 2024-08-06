@@ -240,74 +240,19 @@ namespace DarkBot.src.SlashCommands
                     break;
             }
 
-            var TimerBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_ResetTimer", "⌛ Reset Timer");
+            var PhoneBtn = new DiscordButtonComponent(ButtonStyle.Danger, "Button_ChangePhone", "📱 Change Phone");
+            var UserBtn = new DiscordButtonComponent(ButtonStyle.Primary, "Button_ChangeUser", "👤 Change User");
+            var TimerBtn = new DiscordButtonComponent(ButtonStyle.Secondary, "Button_ResetTimer", "⌛ Reset Timer");
 
             var messageBuilder = new DiscordMessageBuilder()
                     .WithEmbed(embedTicketButtons)
-                    .AddComponents(TimerBtn);
+                    .AddComponents(UserBtn, PhoneBtn, TimerBtn);
 
 
             var channel = ctx.Guild.GetChannel(1268820158835724372);
             var message =  await channel.SendMessageAsync(messageBuilder);
 
             await CmdShortener.SendAsEphemeral(ctx, "New License has been created!  " + message.JumpLink);
-
-            // 
-            var options = new List<DiscordSelectComponentOption>()
-                {
-                    new ( "Carbon OnePlus", "dd_CarbonOnePlus", "",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":mobile_phone:"))),
-                    new ( "Hellblau OnePlus", "dd_HellblauOnePlus", "",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":mobile_phone:"))),
-                    new ( "Google Pixel", "dd_GooglePixel", "",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":mobile_phone:"))),
-                    new ( "No Phone", "dd_NoPhone", "",
-                        emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(ctx.Client, ":no_mobile_phones:"))),
-                 };
-
-            var phoneDropdown = new DiscordSelectComponent("phoneDropdown", "", options, false, 0, 1);
-
-            var builder = new DiscordMessageBuilder()
-                .WithContent("**Phone:**")
-                .AddComponents(phoneDropdown);
-
-            await channel.SendMessageAsync(builder);
-
-            //
-            ulong categoryId = 1263000023822762035;
-
-            var category = ctx.Guild.GetChannel(categoryId);
-            if (category == null || category.Type != ChannelType.Category)
-            {
-                await ctx.Channel.SendMessageAsync("Category not found!");
-                return;
-            }
-
-            var channels = category.Children
-                    .Where(c => c.Type == ChannelType.Text) // Nur Textkanäle anzeigen
-                    .Select(c => new DiscordSelectComponentOption(c.Name, c.Id.ToString(), $"Channel ID: {c.Id}"))
-                    .ToList();
-
-            if (channels.Count == 0)
-            {
-                await ctx.Channel.SendMessageAsync("No channels in this category!");
-                return;
-            }
-
-            var selectMenu = new DiscordSelectComponent(
-                    customId: "channelDropdown",
-                    placeholder: "",
-                    options: channels,
-                    minOptions: 1,
-                    maxOptions: 1
-                );
-
-            // Nachricht mit Dropdown-Menü senden
-            var builder2 = new DiscordMessageBuilder()
-                .WithContent("**User:**")
-                .AddComponents(selectMenu);
-
-            await ctx.Channel.SendMessageAsync(builder2);
         }
     }
 }
